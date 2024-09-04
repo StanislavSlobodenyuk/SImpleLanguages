@@ -9,6 +9,6 @@ namespace Domain.Entity.Content.Image
         public MyImage? Image { get; set; }
         
         public int QuestionId { get; set; }
-        public BaseQuestion? Question { get; set; }
+        public  TestQuestion? Question { get; set; }
     }
 }

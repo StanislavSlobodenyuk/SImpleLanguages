@@ -6,7 +6,6 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity.Content.Question
 {
-    [NotMapped]
     public abstract class BaseQuestion : BaseEntity
     {
         public QuestionType Type { get; private set; }

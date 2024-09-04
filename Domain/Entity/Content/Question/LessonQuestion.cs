@@ -10,6 +10,6 @@ namespace Domain.Entity.Content.Question
         public Lesson? Lesson { get; set; }
 
         public int QuestionId { get; private set; }
-        public BaseQuestion? Question { get; set; }
+        public TestQuestion? Question { get; set; }
     }
 }

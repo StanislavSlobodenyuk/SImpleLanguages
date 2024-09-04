@@ -6,13 +6,14 @@ namespace Domain.Entity.Content.Lessons
 {
     public class ModuleOfLessons : BaseContent
     {
+
         public string? Description { get; private set; }
         public ICollection<Lesson> Lessons { get; private set; } = new List<Lesson>();
 
         public ModuleOfLessons() { }
 
-        public ModuleOfLessons(string description, string title, int languageId)
-            : base(title, languageId)
+        public ModuleOfLessons(string description, int languageId, string title, int languageCourseId)
+            : base(title, languageCourseId)
         {
             Description = description ?? throw new ArgumentNullException(nameof(description));
         }

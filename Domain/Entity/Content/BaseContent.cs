@@ -14,10 +14,9 @@ namespace Domain.Entity.Content
 
         protected BaseContent(string title, int languageCourseId)
         {
-            Title = title ?? throw new ArgumentNullException(nameof(title));
             LanguageCourseId = languageCourseId;
+            Title = title ?? throw new ArgumentNullException(nameof(title));
         }
-
         protected BaseContent() { }
     }
 }

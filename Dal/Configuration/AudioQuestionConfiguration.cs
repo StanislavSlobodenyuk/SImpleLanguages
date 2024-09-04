@@ -30,8 +30,6 @@ namespace Dal.Configuration
                 .IsRequired();
             builder.Property(e => e.Type)
                 .IsRequired();
-
-            builder.HasBaseType<BaseQuestion>();
         }
     }
 }

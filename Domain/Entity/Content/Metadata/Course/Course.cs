@@ -1,5 +1,6 @@
 ﻿using Domain.Entity.Base;
 using Domain.Entity.Content;
+using Domain.Entity.Content.Lessons;
 
 namespace Domain.Entity.Content.Metadata.Course
 {
@@ -9,8 +10,7 @@ namespace Domain.Entity.Content.Metadata.Course
         public string? Code { get; private set; }
         public string? Icon { get; private set; }
 
-
-        public ICollection<BaseContent> ModulesOfLessons { get; private set; } = new List<BaseContent>();
+        public ICollection<ModuleOfLessons> ModulesOfLessons { get; private set; } = new List<ModuleOfLessons>();
 
         public Course(string? languageName, string? code, string? icon)
         {

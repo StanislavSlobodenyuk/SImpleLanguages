@@ -25,7 +25,6 @@ namespace Dal.Configuration
                 .HasMaxLength(500);
             builder.Property(e => e.Type)
                .IsRequired();
-
         }
     }
 }

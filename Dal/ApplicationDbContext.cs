@@ -54,9 +54,6 @@ namespace Dal
             // Image 
             builder.ApplyConfiguration(new MyImageConfiguration());
             builder.ApplyConfiguration(new QuestionImageConfiguration());
-
-            //builder.ApplyConfiguration(new BaseContentConfiguration());
-            //builder.ApplyConfiguration(new BaseQuestionConfiguration());
         }
     }
 }
