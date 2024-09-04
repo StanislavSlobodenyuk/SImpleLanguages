@@ -9,7 +9,7 @@ namespace Domain.Entity.Content.Image
         public string? ImagePath { get; set; }
 
         public int LessonId { get; set; }
-        public Lesson? LessonImage { get; set; }
+        public Lesson? Lesson { get; set; }
 
         public ICollection<QuestionImage> QuestionImages { get; private set; } = new List<QuestionImage>();
 

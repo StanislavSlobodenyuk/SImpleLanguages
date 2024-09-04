@@ -14,4 +14,14 @@
     <PackageReference Include="System.Formats.Asn1" Version="8.0.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Repositories\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="SeedData\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,20 +1,23 @@
 ﻿
 using Domain.Entity.Base;
 using Domain.Entity.Content.Metadata.Course;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity.Content
 {
-    public class BaseContent : BaseEntity
+    public abstract class BaseContent : BaseEntity
     {
         public string? Title { get; private set; }
 
         public int LanguageCourseId { get; private set; }
         public Course? LanguageCourse { get; private set; }
 
-        public BaseContent(string title, int languageId)
+        protected BaseContent(string title, int languageCourseId)
         {
             Title = title ?? throw new ArgumentNullException(nameof(title));
-            LanguageCourseId = languageId;
+            LanguageCourseId = languageCourseId;
         }
+
+        protected BaseContent() { }
     }
 }
