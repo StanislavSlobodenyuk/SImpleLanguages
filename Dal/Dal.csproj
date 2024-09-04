@@ -15,13 +15,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Repositories\" />
-    <Folder Include="Interfaces\" />
     <Folder Include="SeedData\" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Exeption\MyExeption.csproj" />
   </ItemGroup>
 
 </Project>

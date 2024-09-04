@@ -24,6 +24,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{02827B
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "..\Domain\Domain.csproj", "{228E5F4F-8623-4E42-A710-3F35E1F57C7B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Exeption", "Exeption", "{8E1E5E3A-1ED8-4435-94F6-F951F6ADE3BE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyExeption", "..\Exeption\MyExeption.csproj", "{CA31C6C2-A76E-4320-9DD5-7AABD1FCCD8C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -50,6 +54,10 @@ Global
 		{228E5F4F-8623-4E42-A710-3F35E1F57C7B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{228E5F4F-8623-4E42-A710-3F35E1F57C7B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{228E5F4F-8623-4E42-A710-3F35E1F57C7B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA31C6C2-A76E-4320-9DD5-7AABD1FCCD8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA31C6C2-A76E-4320-9DD5-7AABD1FCCD8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA31C6C2-A76E-4320-9DD5-7AABD1FCCD8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA31C6C2-A76E-4320-9DD5-7AABD1FCCD8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -59,6 +67,7 @@ Global
 		{DD3AE056-50DE-4047-9CB1-057F9AA11F0A} = {DFF4AC77-55B3-42A5-8B36-71867801F77E}
 		{5B069447-050E-401D-9827-8982F86ECE0E} = {6E378A23-95A3-4F2F-82AC-F17C00060ADC}
 		{228E5F4F-8623-4E42-A710-3F35E1F57C7B} = {02827B90-0A56-4EC8-969A-2B63FF3E249B}
+		{CA31C6C2-A76E-4320-9DD5-7AABD1FCCD8C} = {8E1E5E3A-1ED8-4435-94F6-F951F6ADE3BE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A1191BBE-ECEA-4492-9368-E26137003E05}
