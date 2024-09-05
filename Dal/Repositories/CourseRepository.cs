@@ -1,4 +1,5 @@
 ﻿using Dal.Interfaces;
+using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
 using Exeption;
 using Microsoft.EntityFrameworkCore;
@@ -6,7 +7,7 @@ using System.Data.Common;
 
 namespace Dal.Repositories
 {
-    public class CourseRepository : ICourseInterface
+    public class CourseRepository : ICourseRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -111,6 +112,44 @@ namespace Dal.Repositories
             {
                 // Логирование исключения
                 return null;
+            }
+        }
+        public async Task<bool> AddModuleToCourse(int courseId, ModuleOfLessons entity)
+        {
+            Course? course = await _context.Courses
+               .Include(c => c.ModulesOfLessons)
+               .FirstOrDefaultAsync(e => e.Id == courseId);
+
+            if (course == null || entity == null) return false;
+
+            try
+            {
+                course.ModulesOfLessons.Add(entity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> DeleteModuleFromCourse(int courseId, ModuleOfLessons entity)
+        {
+            Course? course = await _context.Courses
+               .Include(c => c.ModulesOfLessons)
+               .FirstOrDefaultAsync(e => e.Id == courseId);
+
+            if (course == null || entity == null) return false;
+
+            try
+            {
+                course.ModulesOfLessons .Remove(entity);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
             }
         }
 

@@ -29,6 +29,9 @@ namespace Dal.Configuration
             builder.Property(x => x.Description)
                 .HasMaxLength(220)
                 .HasColumnName("Description");
+            builder.Property(x => x.IsAvailable)
+                 .HasDefaultValue(false)
+                .HasColumnName("IsAvailable");
 
             builder.Property(x => x.TimeStamp)
                 .IsRowVersion()

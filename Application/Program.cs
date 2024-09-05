@@ -1,3 +1,4 @@
+using Application.InitRepositories;
 using Dal;
 using Microsoft.EntityFrameworkCore;
 
@@ -21,6 +22,8 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
+DependencyInjectionSetup.RegisterRepositories(builder.Services);
 
 var app = builder.Build();
 

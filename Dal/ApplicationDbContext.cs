@@ -28,6 +28,7 @@ namespace Dal
         public DbSet<TestAnswerOption> TestQuestionAnswerOptions { get; set; }
         public DbSet<TestRightAnswer> TestQuestionRightAnswers { get; set; }
         public DbSet<AudioQuestion> AudioQuestions { get; set; } 
+        public DbSet<LessonQuestion> LessonQuestions { get; set; }
         // Image 
         public DbSet<MyImage> MyImages { get; set; }
         public DbSet<QuestionImage> QuestionImages { get; set; }
