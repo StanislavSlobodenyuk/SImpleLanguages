@@ -213,13 +213,13 @@ namespace Service.Implementations
             }
         }
 
-        public async Task<BaseResponse<bool>> AddModule(int courseId, ModuleLessons moduleOfLessons)
+        public async Task<BaseResponse<bool>> AddModule(int courseId, ModuleLessons moduleLessons)
         {
             var baseResponse = new BaseResponse<bool>();
 
             try
             {
-                baseResponse.Data = await _courseRepository.AddModuleToCourse(courseId, moduleOfLessons);
+                baseResponse.Data = await _courseRepository.AddModuleToCourse(courseId, moduleLessons);
                 baseResponse.StatusCode=MyStatusCode.OK;
 
                 return baseResponse;
@@ -229,13 +229,13 @@ namespace Service.Implementations
                 return HandleError<bool>("Unable remove module");
             }
         }
-        public async Task<BaseResponse<bool>> DeleteModule(int courseId, ModuleLessons moduleOfLessons)
+        public async Task<BaseResponse<bool>> DeleteModule(int courseId, ModuleLessons moduleLessons)
         {
             var baseResponse = new BaseResponse<bool>();
 
             try
             {
-                baseResponse.Data = await _courseRepository.DeleteModuleFromCourse(courseId, moduleOfLessons);
+                baseResponse.Data = await _courseRepository.DeleteModuleFromCourse(courseId, moduleLessons);
                 baseResponse.StatusCode = MyStatusCode.OK;
 
                 return baseResponse;

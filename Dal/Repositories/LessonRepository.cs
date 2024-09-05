@@ -19,7 +19,7 @@ namespace Dal.Repositories
             _context = context;
         }
 
-        public async Task<bool> Add(Lesson entity)
+        public async Task<bool> Create(Lesson entity)
         {
             if (entity == null || entity.Id == 0) return false;
 
@@ -61,19 +61,20 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> Update(Lesson entity)
+        public async Task<Lesson?> Update(Lesson entity)
         {
-            if (entity == null) return false;
+            if (entity == null) return null;
 
             try
             {
                 _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
-                return true;
+
+                return await _context.Lessons.FindAsync(entity.Id);
             }
             catch (DbUpdateException)
             {
-                return false;
+                return null;
             }
         }
 

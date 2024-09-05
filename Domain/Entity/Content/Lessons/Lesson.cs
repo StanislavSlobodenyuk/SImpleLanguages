@@ -8,17 +8,17 @@ namespace Domain.Entity.Content.Lessons
     public class Lesson : BaseEntity 
     {
         public LanguageLevel Difficulty { get; private set; }
-        public int ModuleOfLessonsId { get; private set; }
-        public ModuleOfLessons? ModuleOfLessons { get; private set; }
+        public int ModuleLessonsId { get; private set; }
+        public ModuleLessons? ModuleLessons { get; private set; }
 
         public int ImageId { get;  private set; }
         public MyImage? Image { get; set; }
 
         public ICollection<LessonQuestion> LessonQuestions { get; private set; } = new List<LessonQuestion>();
 
-        public Lesson(int moduleOfLessonsId, int imageId)
+        public Lesson(int moduleLessonsId, int imageId)
         {
-            ModuleOfLessonsId = moduleOfLessonsId;
+            ModuleLessonsId = moduleLessonsId;
             ImageId = imageId;
         }
     }

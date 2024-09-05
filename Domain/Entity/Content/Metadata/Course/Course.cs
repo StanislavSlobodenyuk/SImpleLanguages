@@ -10,7 +10,7 @@ namespace Domain.Entity.Content.Metadata.Course
         public string? Code { get; private set; }
         public string? Icon { get; private set; }
 
-        public ICollection<ModuleOfLessons> ModulesOfLessons { get; private set; } = new List<ModuleOfLessons>();
+        public ICollection<ModuleLessons> ModulesOfLessons { get; private set; } = new List<ModuleLessons>();
 
         public Course(string? languageName, string? code, string? icon)
         {

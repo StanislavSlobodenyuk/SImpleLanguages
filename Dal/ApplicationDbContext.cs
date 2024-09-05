@@ -17,11 +17,11 @@ namespace Dal
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
         // Metadata
-        public DbSet<Course> Courses { get; set; }
+        public DbSet<LanguageCourse> LanguageCourses { get; set; }
         
         // Main content
         // Lessons
-        public DbSet<ModuleOfLessons> ModuleOfLessons { get; set; }
+        public DbSet<ModuleLessons> ModuleLessons { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         // Questions
         public DbSet<TestQuestion> TestQuestions { get; set; }

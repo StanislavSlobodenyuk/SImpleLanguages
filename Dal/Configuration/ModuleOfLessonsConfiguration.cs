@@ -6,9 +6,9 @@ using Domain.Entity.Content;
 
 namespace Dal.Configuration
 {
-    public class ModuleOfLessonsConfiguration : IEntityTypeConfiguration<ModuleOfLessons>
+    public class ModuleOfLessonsConfiguration : IEntityTypeConfiguration<ModuleLessons>
     {
-        public void Configure(EntityTypeBuilder<ModuleOfLessons> builder)
+        public void Configure(EntityTypeBuilder<ModuleLessons> builder)
         {
             builder.ToTable("ModuleOfLessons"); // Указываем имя таблицы
 
@@ -38,8 +38,8 @@ namespace Dal.Configuration
                 .IsConcurrencyToken();
 
             builder.HasMany(e => e.Lessons)
-                .WithOne(e => e.ModuleOfLessons)
-                .HasForeignKey(e => e.ModuleOfLessonsId)
+                .WithOne(e => e.ModuleLessons)
+                .HasForeignKey(e => e.ModuleLessonsId)
                 .IsRequired()
                 .HasConstraintName("FK_ModulesLessons_Lesson_ModuleOfLessons")
                 .OnDelete(DeleteBehavior.Cascade);

@@ -1,5 +1,6 @@
 ﻿using Dal.Interfaces;
 using Dal.Repositories;
+using System.Linq.Expressions;
 
 namespace Application.InitRepositories
 {
@@ -7,8 +8,8 @@ namespace Application.InitRepositories
     {
         public static void RegisterRepositories(IServiceCollection services)
         {
-            services.AddScoped<ICourseRepository, CourseRepository>();
-            services.AddScoped<IModuleOfLessonsRepository, ModuleOfLessonsRepositories>();
+            services.AddScoped<ILanguageCourseRepository, LanguageCourseRepository >();
+            services.AddScoped<IModuleLessonsRepository, ModuleLessonsRepositories>();
             services.AddScoped<ILessonRepository, LessonRepository>();
             services.AddScoped<ITestQuestionRepository, TestQuestionRepository>();
         }

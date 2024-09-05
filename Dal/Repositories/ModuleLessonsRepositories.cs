@@ -20,7 +20,7 @@ namespace Dal.Repositories
 
             try
             {
-                await _context.ModuleOfLessons.AddAsync(entity);
+                await _context.ModuleLessons.AddAsync(entity);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -53,7 +53,7 @@ namespace Dal.Repositories
                 _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
-                return await _context.ModuleOfLessons.FindAsync(entity.Id);
+                return await _context.ModuleLessons.FindAsync(entity.Id);
             }
             catch (DbUpdateException)
             {
@@ -76,14 +76,14 @@ namespace Dal.Repositories
 
         public async Task<IEnumerable<ModuleLessons>> Select()
         {
-            return await _context.ModuleOfLessons.ToListAsync();
+            return await _context.ModuleLessons.ToListAsync();
         }
 
         public async Task<ModuleLessons?> GetById(int id)
         {
             try
             {
-                return await _context.ModuleOfLessons.FirstOrDefaultAsync(c => c.Id == id);
+                return await _context.ModuleLessons.FirstOrDefaultAsync(c => c.Id == id);
             }
             catch (DbException)
             {
@@ -110,7 +110,7 @@ namespace Dal.Repositories
         }
         public async Task<bool> AddLessonToModule(int moduleId, Lesson entity)
         {
-            ModuleLessons? module = await _context.ModuleOfLessons
+            ModuleLessons? module = await _context.ModuleLessons
                 .Include(c => c.Lessons)
                 .FirstOrDefaultAsync(e => e.Id == moduleId);
 
@@ -129,7 +129,7 @@ namespace Dal.Repositories
         }
         public async Task<bool> DeleteLessonFromModule(int moduleId, Lesson entity)
         {
-            ModuleLessons? module = await _context.ModuleOfLessons
+            ModuleLessons? module = await _context.ModuleLessons
                  .Include(c => c.Lessons)
                  .FirstOrDefaultAsync(e => e.Id == moduleId);
 
