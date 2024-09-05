@@ -114,14 +114,14 @@ namespace Dal.Repositories
         public async Task<bool> AddModuleToCourse(int courseId, ModuleLessons entity)
         {
             LanguageCourse? course = await _context.LanguageCourses
-               .Include(c => c.ModulesOfLessons)
+               .Include(c => c.ModulesLessons)
                .FirstOrDefaultAsync(e => e.Id == courseId);
 
             if (course == null || entity == null) return false;
 
             try
             {
-                course.ModulesOfLessons.Add(entity);
+                course.ModulesLessons.Add(entity);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -133,14 +133,14 @@ namespace Dal.Repositories
         public async Task<bool> DeleteModuleFromCourse(int courseId, ModuleLessons entity)
         {
             LanguageCourse? course = await _context.LanguageCourses
-               .Include(c => c.ModulesOfLessons)
+               .Include(c => c.ModulesLessons)
                .FirstOrDefaultAsync(e => e.Id == courseId);
 
             if (course == null || entity == null) return false;
 
             try
             {
-                course.ModulesOfLessons .Remove(entity);
+                course.ModulesLessons .Remove(entity);
                 await _context.SaveChangesAsync();
                 return true;
             }

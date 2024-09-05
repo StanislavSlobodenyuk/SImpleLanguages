@@ -10,7 +10,7 @@ namespace Domain.Entity.Content
         public string? Title { get; private set; }
 
         public int LanguageCourseId { get; private set; }
-        public Course? LanguageCourse { get; private set; }
+        public LanguageCourse? LanguageCourse { get; private set; }
 
         protected BaseContent(string title, int languageCourseId)
         {
