@@ -8,23 +8,21 @@ namespace Domain.Entity.Content.Lessons
     public class Lesson : BaseEntity 
     {
         public string Title { get; set; }
-        public LanguageLevel Difficulty { get; private set; }
-        public bool IsAvailable { get; set; }
+        public LanguageLevel Difficult { get; private set; }
+        public bool IsAvailable { get; set; } 
+        public string? IconPath { get; set; }
+
         public int ModuleLessonsId { get; set; }
         public ModuleLessons? ModuleLessons { get; set; }
 
-        public int ImageId { get; set; }
-        public MyImage? Image { get; set; }
-
         public ICollection<LessonQuestion> LessonQuestions { get; private set; } = new List<LessonQuestion>();
 
-        public Lesson(string title, bool isAvailable, LanguageLevel difficulty, int moduleLessonsId, int imageId)
+        public Lesson(string title, LanguageLevel difficult, bool isAvailable, string iconPath)
         {
             Title = title;
+            Difficult = difficult;
             IsAvailable = isAvailable;
-            ImageId = imageId;
-            Difficulty = difficulty;
-            ModuleLessonsId = moduleLessonsId;
+            IconPath = iconPath;
         }
     }
 }

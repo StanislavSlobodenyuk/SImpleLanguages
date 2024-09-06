@@ -77,6 +77,54 @@ namespace Dal.Repositories
                 return null;
             }
         }
+        public async Task<Lesson?> UpdateIcon(Lesson lesson, string iconPath)
+        {
+            try
+            {
+                lesson.IconPath  = iconPath;    
+                _context.Entry(lesson).Property(p => p.IconPath).IsModified = true;
+                
+                await _context.SaveChangesAsync();
+
+                return lesson;
+            }
+            catch (DbUpdateException)
+            {
+                return null;
+            }
+        }
+        public async Task<Lesson?> UpdateTitle(Lesson lesson, string title)
+        {
+            try
+            {
+                lesson.Title = title;
+                _context.Entry(lesson).Property(p => p.Title).IsModified = true;
+     
+                await _context.SaveChangesAsync();
+
+                return lesson;
+            }
+            catch (DbUpdateException)
+            {
+                return null;
+            }
+        }
+        public async Task<Lesson?> ChangeAvailableLesson(Lesson lesson, bool isAvailable)
+        {
+            try
+            {
+                lesson.IsAvailable = isAvailable;
+
+                _context.Entry(lesson).Property(p => p.IsAvailable).IsModified = true;
+                await _context.SaveChangesAsync();
+
+                return lesson;
+            }
+            catch (DbUpdateException)
+            {
+                return null;
+            }
+        }
 
         public async Task<Lesson?> GetById(int id)
         {
@@ -90,19 +138,26 @@ namespace Dal.Repositories
                 return null;
             }
         }
-        public async Task<bool> AddQuestionToLesson(int lessonId, BaseQuestion entity)
+        public async Task<Lesson?> GetLessonWithQuestion(int lessonId)
+        {
+            return await _context.Lessons
+                .Include(l => l.LessonQuestions)
+                .ThenInclude(lq => lq.Question)
+                .FirstOrDefaultAsync(l => l.Id == lessonId);
+        }
+
+        public async Task<BaseQuestion?> AddQuestionToLesson(int lessonId, BaseQuestion entity)
         {
            var lesson = await _context.Lessons
                 .Include(l => l.LessonQuestions)
                 .FirstOrDefaultAsync(l => l.Id == lessonId);
 
-            if (lesson == null) return false;
+            if (lesson == null) return null;
 
-            // перевірка чи наше питання вже пов'язане з уроком
             var existigLessonQuestion = await _context.LessonQuestions
                 .FirstOrDefaultAsync(lq => lq.LessonId == lessonId && lq.QuestionId == entity.Id);
 
-            if (existigLessonQuestion != null) return false;
+            if (existigLessonQuestion != null) return null ;
 
             var lessonQuestion = new LessonQuestion
             {
@@ -114,11 +169,12 @@ namespace Dal.Repositories
             {
                 await _context.LessonQuestions.AddAsync(lessonQuestion);
                 await _context.SaveChangesAsync();
-                return true;
+
+                return await _context.TestQuestions.FindAsync(entity.Id);
             }
             catch (DbUpdateException)
             {
-                return false;
+                return null;
             }
         }
         public async Task<bool> DeleteQuestionFromLesson(int lessonId, BaseQuestion entity)
@@ -143,7 +199,7 @@ namespace Dal.Repositories
 
         public async Task<IEnumerable<Lesson>> GetLessonByDifficult(LanguageLevel level)
         {
-            return await _context.Lessons.Where(c => c.Difficulty == level).ToListAsync();
+            return await _context.Lessons.Where(c => c.Difficult == level).ToListAsync();
         }
         public async Task<IEnumerable<Lesson>> Select()
         {
@@ -159,24 +215,6 @@ namespace Dal.Repositories
             if(lesson == null) return new List<BaseQuestion>();
 
             return lesson.LessonQuestions.Select(lq => lq.Question).ToList();
-        }
-
-        public async Task<bool> ChangeAvailableLesson(Lesson lesson, bool isAvailable)
-        {
-            if (lesson == null) return false;
-
-            lesson.IsAvailable = isAvailable;
-
-            try
-            {
-                _context.Entry(lesson).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
         }
     }
 }

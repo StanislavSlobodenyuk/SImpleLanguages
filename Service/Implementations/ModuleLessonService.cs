@@ -19,8 +19,6 @@ namespace Service.Implementations
 
         public async Task<BaseResponse<ModuleLessons>> CreateModule(string title, string description, bool isAvailable)
         {
-            var baseResponse = new BaseResponse<ModuleLessons>();
-
             if (string.IsNullOrEmpty(title)) 
             {
                 return new BaseResponse<ModuleLessons>()
@@ -53,8 +51,6 @@ namespace Service.Implementations
         }
         public async Task<BaseResponse<bool>> DeleteModule(int moduleId)
         {
-            var baseResponse = new BaseResponse<bool>();
-
             var existingModule = await _moduleLessonsRepository.GetById(moduleId);
 
             if (existingModule == null)
@@ -78,25 +74,6 @@ namespace Service.Implementations
             catch (Exception)
             {
                 return BaseResponseHelper.HandleInternalServerError<bool>("Error create new module");
-            }
-        }
-        public async Task<BaseResponse<ModuleLessons>> GetModule(int moduleId)
-        {
-            try
-            {
-                var module = await _moduleLessonsRepository.GetById(moduleId);
-                if (module == null)
-                    return BaseResponseHelper.HandleNotFound<ModuleLessons>("Module not found");
-
-                return new BaseResponse<ModuleLessons>
-                {
-                    Data = module,
-                    StatusCode = MyStatusCode.OK
-                };
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error fetching module");
             }
         }
         public async Task<BaseResponse<ModuleLessons>> ChangeAvailableModule(int moduleId, bool isAvailable)
@@ -124,11 +101,29 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error changing availability");
             }
         }
+        
+        public async Task<BaseResponse<ModuleLessons>> GetModule(int moduleId)
+        {
+            try
+            {
+                var module = await _moduleLessonsRepository.GetById(moduleId);
+                if (module == null)
+                    return BaseResponseHelper.HandleNotFound<ModuleLessons>("Module not found");
 
+                return new BaseResponse<ModuleLessons>
+                {
+                    Data = module,
+                    StatusCode = MyStatusCode.OK
+                };
+            }
+            catch (Exception)
+            {
+                return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error fetching module");
+            }
+        }
+       
         public async Task<BaseResponse<Lesson>> AddLesson(int moduleId, Lesson lesson)
         {
-           var baseResponse = new BaseResponse<Lesson>();
-
             if (lesson == null)
             {
                 return BaseResponseHelper.HandleBadRequest<Lesson>("Bad parameters in request");
@@ -161,8 +156,6 @@ namespace Service.Implementations
         }
         public async Task<BaseResponse<bool>> DeleteLesson(int moduleId, Lesson lesson)
         {
-            var baseResponse = new BaseResponse<bool>();
-
             if (lesson == null)
             {
                 return BaseResponseHelper.HandleBadRequest<bool>("Bad parameters in request");
@@ -195,15 +188,12 @@ namespace Service.Implementations
         public async Task<BaseResponse<bool>> DeleteAllLesson(int moduleId, List<Lesson> lessons) //TODO: реалізувати перевірки
         {
             if (lessons == null || lessons.Any(l => l == null))
-            {
                 return BaseResponseHelper.HandleBadRequest<bool>("Invalid lessons list");
-            }
 
             var currentModule = await _moduleLessonsRepository.GetById(moduleId);
+            
             if (currentModule == null)
-            {
                 return BaseResponseHelper.HandleNotFound<bool>("Module not found");
-            }
 
             try
             {
@@ -232,9 +222,7 @@ namespace Service.Implementations
                 var currentModule = await _moduleLessonsRepository.GetModuleByIdWithLessons(moduleId);
 
                 if (currentModule == null)
-                {
                     return BaseResponseHelper.HandleNotFound<IEnumerable<Lesson>>("Module not found");
-                }
 
                 return new BaseResponse<IEnumerable<Lesson>>
                 {

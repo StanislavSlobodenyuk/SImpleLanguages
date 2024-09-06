@@ -19,18 +19,11 @@ namespace Dal.Configuration
                 .IsConcurrencyToken();
             builder.Property(e => e.Title)
                 .HasMaxLength(100);
-            builder.Property(e => e.Difficulty)
+            builder.Property(e => e.Difficult)
                 .IsRequired();
             builder.Property(e => e.IsAvailable)
                 .HasDefaultValue(true)
                 .IsRequired();
-
-            builder.HasOne(e => e.Image)
-                .WithOne(e => e.Lesson)
-                .HasForeignKey<MyImage>(e => e.LessonId)
-                .IsRequired()
-                .HasConstraintName("FK_ImageLesson_Image_Lesson")
-                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

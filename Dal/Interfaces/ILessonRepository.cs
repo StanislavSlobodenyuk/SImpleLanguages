@@ -7,10 +7,15 @@ namespace Dal.Interfaces
 {
     public interface ILessonRepository : IBaseRepository<Lesson>
     {
-        Task<IEnumerable<Lesson>> GetLessonByDifficult(LanguageLevel level);
-        Task<bool> ChangeAvailableLesson(Lesson lesson, bool isAvailable);
+        Task<Lesson?> UpdateIcon(Lesson lesson, string iconPath);
+        Task<Lesson?> UpdateTitle(Lesson lesson, string title);
 
-        Task<bool> AddQuestionToLesson(int lessonId, BaseQuestion entity);
+        Task<Lesson?> GetLessonWithQuestion(int lessonId);
+
+        Task<IEnumerable<Lesson>> GetLessonByDifficult(LanguageLevel level);
+        Task<Lesson?> ChangeAvailableLesson(Lesson lesson, bool isAvailable);
+
+        Task<BaseQuestion?> AddQuestionToLesson(int lessonId, BaseQuestion entity);
         Task<bool> DeleteQuestionFromLesson(int lessonId, BaseQuestion entity);
 
         Task<IEnumerable<BaseQuestion?>> GetAllQuestions(int lessonId);
