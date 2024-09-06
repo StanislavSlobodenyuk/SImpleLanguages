@@ -27,7 +27,7 @@ namespace Service.Implementations
                 return new BaseResponse<LanguageCourse>()
                 {
                     Description = "Unable to create course, error when entering parameters",
-                    StatusCode = MyStatusCode.BadRequst
+                    StatusCode = MyStatusCode.BadRequest
                 };
             }
 
@@ -88,7 +88,7 @@ namespace Service.Implementations
                 return new BaseResponse<LanguageCourse>()
                 {
                     Description = "Unable change course, error when entering parameters",
-                    StatusCode = MyStatusCode.BadRequst,
+                    StatusCode = MyStatusCode.BadRequest,
                 };
             }
 

@@ -40,11 +40,11 @@ namespace Dal
             builder.Ignore<BaseQuestion>();
 
             // Metadata
-            builder.ApplyConfiguration(new CourseConfiguration());
+            builder.ApplyConfiguration(new LanguageCourseConfiguration());
 
             // Main content
             // Lessons
-            builder.ApplyConfiguration(new ModuleOfLessonsConfiguration());
+            builder.ApplyConfiguration(new ModuleLessonsConfiguration());
             builder.ApplyConfiguration(new LessonConfiguration());
             // Questions
             builder.ApplyConfiguration(new TestQuestionConfiguration());

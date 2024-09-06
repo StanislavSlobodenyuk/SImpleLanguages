@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dal.Configuration
 {
-    public class CourseConfiguration : IEntityTypeConfiguration<LanguageCourse>
+    public class LanguageCourseConfiguration : IEntityTypeConfiguration<LanguageCourse>
     {
         public void Configure(EntityTypeBuilder<LanguageCourse> builder)
         {
