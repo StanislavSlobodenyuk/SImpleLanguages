@@ -8,8 +8,9 @@ namespace Dal.Interfaces
     {
         Task<LanguageCourse?> GetCourseByLanguage(string language);
         Task<LanguageCourse?> GetCourseByCode(string code);
+        Task<LanguageCourse?> GetCourseByIdWithModule(int courseId);
 
-        Task<bool> AddModuleToCourse(int courseId, ModuleLessons entity);
+        Task<ModuleLessons?> AddModuleToCourse(int courseId, ModuleLessons entity);
         Task<bool> DeleteModuleFromCourse(int courseId, ModuleLessons entity);
     }
 }

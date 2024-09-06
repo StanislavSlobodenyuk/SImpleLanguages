@@ -7,6 +7,5 @@ namespace Dal.Interfaces
     {
         Task<bool> AddTestQuestion(TestQuestion testQuestion, IEnumerable<TestAnswerOption> answerOptions, TestRightAnswer rightAnswer);
         Task<bool> DeleteTestQuestion(TestQuestion testQuestion);
-        Task<bool> UpdateTestQuestion(TestQuestion testQuestion, IEnumerable<TestAnswerOption> answerOptions, TestRightAnswer rightAnswer);
     }
 }

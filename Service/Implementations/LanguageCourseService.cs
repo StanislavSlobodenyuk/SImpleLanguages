@@ -6,14 +6,15 @@ using Dal.Interfaces;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
 using Service.Interfaces;
+using System.Collections.Generic;
 
 namespace Service.Implementations
 {
-    public  class LanguageCourseServise : ILanguageCourseService
+    public  class LanguageCourseService : ILanguageCourseService
     {
         private readonly ILanguageCourseRepository _courseRepository;
 
-        public LanguageCourseServise(ILanguageCourseRepository courseRepository)
+        public LanguageCourseService(ILanguageCourseRepository courseRepository)
         {
             _courseRepository = courseRepository;
         }
@@ -46,12 +47,12 @@ namespace Service.Implementations
                 }
                 else
                 {
-                    return HandleError<LanguageCourse>("Unable create new course");
+                    return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Unable create new course");
                 }
             }
             catch (Exception)
             {
-                return HandleError<LanguageCourse>("Unable create new course");
+                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Unable create new course");
             }
         }
         public async Task<BaseResponse<bool>> DeleteCourse(int courseID)
@@ -71,12 +72,12 @@ namespace Service.Implementations
                 }
                 else
                 {
-                    return HandleError<bool>("Unable delete course");
+                    return BaseResponseHelper.HandleInternalServerError<bool>("Unable delete course");
                 }
             }
             catch (Exception)
             {
-                return HandleError<bool>("Unable delete course");
+                return BaseResponseHelper.HandleInternalServerError<bool>("Unable delete course");
             }
         }
         public async Task<BaseResponse<LanguageCourse>> Change(int courseId, UpdateCourseRequest updateCourseRequest)
@@ -115,14 +116,14 @@ namespace Service.Implementations
                 }
                 else
                 {
-                    return HandleError<LanguageCourse>("Unable to update course.");
+                    return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Unable to update course.");
                 }
 
                 return baseResponse;
             }
             catch (Exception)
             {
-                return HandleError<LanguageCourse>("Unable change course, database error");
+                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Unable change course, database error");
             }
         }
 
@@ -149,7 +150,7 @@ namespace Service.Implementations
             catch (Exception)
             {
 
-                return HandleError<LanguageCourse>("Course not Founde");
+                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Course not Founde");
             }
         }
         public async Task<BaseResponse<LanguageCourse>> GetCourseByCode(string code)
@@ -158,7 +159,7 @@ namespace Service.Implementations
 
             if (string.IsNullOrEmpty(code))
             {
-                return HandleError<LanguageCourse>("Code empty or equal zero");
+                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Code empty or equal zero");
             }
 
             try
@@ -179,7 +180,7 @@ namespace Service.Implementations
             }
             catch (Exception)
             {
-                return HandleError<LanguageCourse>("Course not Founde");
+                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Course not Founde");
             }
         }
         public async Task<BaseResponse<LanguageCourse>> GetCourseByName(string languageName)
@@ -188,7 +189,7 @@ namespace Service.Implementations
 
             if (string.IsNullOrEmpty(languageName))
             {
-                return HandleError<LanguageCourse>("Language name empty or equal zero");
+                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Language name empty or equal zero");
             }
 
             try
@@ -209,24 +210,33 @@ namespace Service.Implementations
             }
             catch (Exception)
             {
-                return HandleError<LanguageCourse>("Course not Founde");
+                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Course not Founde");
             }
         }
 
-        public async Task<BaseResponse<bool>> AddModule(int courseId, ModuleLessons moduleLessons)
+        public async Task<BaseResponse<ModuleLessons>> AddModule(int courseId, ModuleLessons moduleLessons)
         {
-            var baseResponse = new BaseResponse<bool>();
+            var baseResponse = new BaseResponse<ModuleLessons>();
 
             try
             {
-                baseResponse.Data = await _courseRepository.AddModuleToCourse(courseId, moduleLessons);
-                baseResponse.StatusCode=MyStatusCode.OK;
+                var newCourse = await _courseRepository.AddModuleToCourse(courseId, moduleLessons);
+                
+                if (newCourse != null)
+                {
+                    baseResponse.Data = newCourse;
+                    baseResponse.StatusCode = MyStatusCode.OK;
 
-                return baseResponse;
+                    return baseResponse;
+                }
+                else
+                {
+                    return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Server error");
+                }
             }
             catch (Exception)
             {
-                return HandleError<bool>("Unable remove module");
+                return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Server error");
             }
         }
         public async Task<BaseResponse<bool>> DeleteModule(int courseId, ModuleLessons moduleLessons)
@@ -242,7 +252,31 @@ namespace Service.Implementations
             }
             catch (Exception)
             {
-                return HandleError<bool>("Unable add new module to course");
+                return BaseResponseHelper.HandleInternalServerError<bool>("Unable add new module to course");
+            }
+        }
+        public async Task<BaseResponse<IEnumerable<ModuleLessons>>> GetAllModulesThisCourse(int courseId)
+        {
+            var baseResponse = new BaseResponse<IEnumerable<ModuleLessons>>();
+
+            var existingCourse = await _courseRepository.GetById(courseId);
+
+            if (existingCourse == null)
+            {
+                return BaseResponseHelper.HandleInternalServerError<IEnumerable<ModuleLessons>>("Course not found");
+            }
+
+            try
+            {
+                baseResponse.Data = existingCourse.ModulesLessons;
+                baseResponse.StatusCode = MyStatusCode.OK;
+
+                return baseResponse;
+            }
+            catch (Exception)
+            {
+
+                return BaseResponseHelper.HandleInternalServerError<IEnumerable<ModuleLessons>>("Database error");
             }
         }
 
@@ -259,17 +293,8 @@ namespace Service.Implementations
             }
             catch (Exception)
             {
-                return  HandleError<IEnumerable<LanguageCourse>>("Unable to display all course items");
+                return BaseResponseHelper.HandleInternalServerError<IEnumerable<LanguageCourse>>("Unable to display all course items");
             }
-        }
-
-        private BaseResponse<T> HandleError<T>(string description)
-        {
-            return new BaseResponse<T>()
-            {
-                StatusCode = MyStatusCode.InternalServerError,
-                Description = description,
-            };
         }
     }
 }

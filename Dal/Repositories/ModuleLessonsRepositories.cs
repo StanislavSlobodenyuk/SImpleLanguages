@@ -14,6 +14,26 @@ namespace Dal.Repositories
         {
             _context = context;
         }
+
+        public async Task<ModuleLessons?> GetById(int id)
+        {
+            try
+            {
+                return await _context.ModuleLessons.FirstOrDefaultAsync(c => c.Id == id);
+            }
+            catch (DbException)
+            {
+                // Логирование исключения
+                return null;
+            }
+        }
+        public async Task<ModuleLessons?> GetModuleByIdWithLessons(int moduleId)
+        {
+            return await _context.ModuleLessons
+                .Include(c => c.Lessons)
+                .FirstOrDefaultAsync(c => c.Id == moduleId);
+        }
+
         public async Task<bool> Create(ModuleLessons entity)
         {
             if (entity == null || entity.Id == 0) return false;
@@ -74,23 +94,6 @@ namespace Dal.Repositories
             }
         }
 
-        public async Task<IEnumerable<ModuleLessons>> Select()
-        {
-            return await _context.ModuleLessons.ToListAsync();
-        }
-
-        public async Task<ModuleLessons?> GetById(int id)
-        {
-            try
-            {
-                return await _context.ModuleLessons.FirstOrDefaultAsync(c => c.Id == id);
-            }
-            catch (DbException)
-            {
-                // Логирование исключения
-                return null;
-            }
-        }
         public async Task<bool> ChangeAvailableModule(ModuleLessons entity, bool isAvailable)
         {
             if (entity == null) return false;
@@ -108,23 +111,26 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> AddLessonToModule(int moduleId, Lesson entity)
+        public async Task<Lesson?> AddLessonToModule(int moduleId, Lesson entity)
         {
             ModuleLessons? module = await _context.ModuleLessons
                 .Include(c => c.Lessons)
                 .FirstOrDefaultAsync(e => e.Id == moduleId);
 
-            if (module == null || entity == null) return false;
+            if (module == null || entity == null) return null;
 
             try
             {
                 module.Lessons.Add(entity);
                 await _context.SaveChangesAsync();
-                return true;
+
+                var lesson = module.Lessons.FirstOrDefault(m => m == entity);
+
+                return lesson;
             }
             catch (DbUpdateException)
             {
-                return false;
+                return null;
             }
         }
         public async Task<bool> DeleteLessonFromModule(int moduleId, Lesson entity)
@@ -146,5 +152,11 @@ namespace Dal.Repositories
                 return false;
             }
         }
+
+        public async Task<IEnumerable<ModuleLessons>> Select()
+        {
+            return await _context.ModuleLessons.ToListAsync();
+        }
+
     }
 }

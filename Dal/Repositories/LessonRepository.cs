@@ -160,5 +160,23 @@ namespace Dal.Repositories
 
             return lesson.LessonQuestions.Select(lq => lq.Question).ToList();
         }
+
+        public async Task<bool> ChangeAvailableLesson(Lesson lesson, bool isAvailable)
+        {
+            if (lesson == null) return false;
+
+            lesson.IsAvailable = isAvailable;
+
+            try
+            {
+                _context.Entry(lesson).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+        }
     }
 }

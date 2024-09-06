@@ -16,8 +16,10 @@ namespace Service.Interfaces
         Task<BaseResponse<LanguageCourse>> GetCourseByCode(string code);
         Task<BaseResponse<LanguageCourse>> GetCourseById(int id);
 
-        Task<BaseResponse<bool>> AddModule(int courseId, ModuleLessons moduleOfLessons);
+        Task<BaseResponse<ModuleLessons>> AddModule(int courseId, ModuleLessons moduleOfLessons);
         Task<BaseResponse<bool>> DeleteModule(int courseId, ModuleLessons moduleOfLessons);
+        Task<BaseResponse<IEnumerable<ModuleLessons>>> GetAllModulesThisCourse(int courseId);
+
 
         Task<BaseResponse<IEnumerable<LanguageCourse>>> GetAllCourses();
 

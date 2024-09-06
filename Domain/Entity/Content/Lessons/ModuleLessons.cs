@@ -13,8 +13,8 @@ namespace Domain.Entity.Content.Lessons
 
         public ModuleLessons() { }
 
-        public ModuleLessons(string description, int languageId, bool isAvailable, string title, int languageCourseId)
-            : base(title, languageCourseId)
+        public ModuleLessons(string description, bool isAvailable, string title)
+            : base(title)
         {
             Description = description ?? throw new ArgumentNullException(nameof(description));
             IsAvailable = isAvailable;

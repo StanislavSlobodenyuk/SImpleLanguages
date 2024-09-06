@@ -17,7 +17,12 @@ namespace Dal.Configuration
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
+            builder.Property(e => e.Title)
+                .HasMaxLength(100);
             builder.Property(e => e.Difficulty)
+                .IsRequired();
+            builder.Property(e => e.IsAvailable)
+                .HasDefaultValue(true)
                 .IsRequired();
 
             builder.HasOne(e => e.Image)

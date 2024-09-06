@@ -12,9 +12,8 @@ namespace Domain.Entity.Content
         public int LanguageCourseId { get; private set; }
         public LanguageCourse? LanguageCourse { get; private set; }
 
-        protected BaseContent(string title, int languageCourseId)
+        protected BaseContent(string title)
         {
-            LanguageCourseId = languageCourseId;
             Title = title ?? throw new ArgumentNullException(nameof(title));
         }
         protected BaseContent() { }

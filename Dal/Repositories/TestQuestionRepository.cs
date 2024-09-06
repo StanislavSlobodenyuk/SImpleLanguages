@@ -113,29 +113,6 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> UpdateTestQuestion(TestQuestion testQuestion, IEnumerable<TestAnswerOption> answerOptions, TestRightAnswer rightAnswer)
-        {
-            if (testQuestion == null || answerOptions == null || rightAnswer == null) return false;
-
-            try
-            {
-                testQuestion.AnswerOptions.Clear();
-                foreach (var option in answerOptions)
-                {
-                    testQuestion.AnswerOptions.Add(option);
-                }
-
-                testQuestion.RightAnswer = rightAnswer;
-
-                _context.TestQuestions.Update(testQuestion);
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
         public async Task<TestQuestion?> GetById(int questionId)
         {
             var testQuestion = await _context.TestQuestions.FirstOrDefaultAsync(x => x.Id == questionId);
