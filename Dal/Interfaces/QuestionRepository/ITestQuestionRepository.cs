@@ -5,9 +5,9 @@ namespace Dal.Interfaces.QuestionRepository
 {
     public interface ITestQuestionRepository
     {
-        Task<TestQuestion?> CreateTestQuestion(TestQuestion testQuestion, IEnumerable<TestAnswerOption> answerOptions, TestRightAnswer rightAnswer);
+        Task<bool> CreateTestQuestion(TestQuestion testQuestion, IEnumerable<TestAnswerOption> answerOptions, TestRightAnswer rightAnswer);
 
-        Task<TestQuestion?> UpdateQuestion(int testQuestionId, string text);
+        Task<TestQuestion?> UpdateQuestionText(int testQuestionId, string text);
         Task<TestQuestion?> UpdateAnswerOptions(int testQuestionId, IEnumerable<TestAnswerOption> answerOptions);
         Task<TestQuestion?> UpdateRightAnswer(int testQuestionId, TestRightAnswer rightAnswer);
     }

@@ -9,9 +9,8 @@ namespace Domain.Entity.Content.Question
         public TestQuestion? TestQuestion {  get; private set; } 
         public int TestQuestionId { get; private set; }
 
-        public TestRightAnswer(int testQuestionId, string? rightAnswer)
+        public TestRightAnswer(string? rightAnswer)
         {
-            TestQuestionId = testQuestionId;
             RightAnswer = rightAnswer ?? throw new ArgumentNullException(nameof(rightAnswer));
         }
     }

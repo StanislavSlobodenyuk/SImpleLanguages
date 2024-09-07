@@ -14,10 +14,10 @@ namespace Dal.Repositories.QuestionRepository
             _context = context;
         }
 
-        public async Task<TestQuestion?> CreateTestQuestion(TestQuestion testQuestion, IEnumerable<TestAnswerOption> answerOptions, TestRightAnswer rightAnswer)
+        public async Task<bool> CreateTestQuestion(TestQuestion testQuestion, IEnumerable<TestAnswerOption> answerOptions, TestRightAnswer rightAnswer)
         {
             if (testQuestion == null || rightAnswer == null || answerOptions.Any(aq => aq == null))
-                return null;
+                return false;
             try
             {
                 var newQuestion = new TestQuestion(testQuestion.Text, testQuestion.Type);
@@ -28,11 +28,11 @@ namespace Dal.Repositories.QuestionRepository
                 await _context.TestQuestions.AddAsync(newQuestion);
                 await _context.SaveChangesAsync();
 
-                return newQuestion;
+                return true;
             }
             catch (DbUpdateException)
             {
-                return null;
+                return false;
             }
         }
         public async Task<TestQuestion?> UpdateAnswerOptions(int testQuestionId, IEnumerable<TestAnswerOption> answerOptions)
@@ -81,7 +81,7 @@ namespace Dal.Repositories.QuestionRepository
                 return null;
             }
         }
-        public async Task<TestQuestion?> UpdateQuestion(int testQuestionId, string text)
+        public async Task<TestQuestion?> UpdateQuestionText(int testQuestionId, string text)
         {
             if (string.IsNullOrEmpty(text))
                 return null;

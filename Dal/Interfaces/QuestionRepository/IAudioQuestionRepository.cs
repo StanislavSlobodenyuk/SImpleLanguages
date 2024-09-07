@@ -5,7 +5,7 @@ namespace Dal.Interfaces.QuestionRepository
 {
     public interface IAudioQuestionRepository
     {
-        Task<AudioQuestion?> CreateTestQuestion(AudioQuestion audioQuestion);
+        Task<bool?> CreateAudioQuestion(AudioQuestion audioQuestion);
 
         Task<AudioQuestion?> UpdateText(int audioQuestionId, string text);
         Task<AudioQuestion?> UpdateAudioURL(int audioQuestionId, string audioUrl);

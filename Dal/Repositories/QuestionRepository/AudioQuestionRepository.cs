@@ -12,10 +12,10 @@ namespace Dal.Repositories.QuestionRepository
         {
             _context = context;
         }
-        public async Task<AudioQuestion?> CreateTestQuestion(AudioQuestion audioQuestion)
+        public async Task<bool?> CreateAudioQuestion(AudioQuestion audioQuestion)
         {
             if (string.IsNullOrEmpty(audioQuestion.AudioUrl) || string.IsNullOrEmpty(audioQuestion.RightAnswer) || string.IsNullOrEmpty(audioQuestion.Text))
-                return null;
+                return false;
             try
             {
                 var newQuestion = new AudioQuestion(audioQuestion.Text, audioQuestion.RightAnswer, audioQuestion.AudioUrl, audioQuestion.Type);
@@ -23,11 +23,11 @@ namespace Dal.Repositories.QuestionRepository
                 await _context.AudioQuestions.AddAsync(newQuestion);
                 await _context.SaveChangesAsync();
 
-                return newQuestion;
+                return true;
             }
             catch (DbUpdateException)
             {
-                return null;
+                return false;
             }
         }
 
