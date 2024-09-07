@@ -33,17 +33,13 @@ namespace Service.Implementations
 
             try
             {
-                var question = new AudioQuestion(text, rightAnswer, audioUrl, type);
-                var result = await _audioQuestionRepository.CreateAudioQuestion(question);
+                var newQuestion = new AudioQuestion(text, rightAnswer, audioUrl, type);
+                var result = await _audioQuestionRepository.CreateAudioQuestion(newQuestion);
 
                 if (result == false)
                     return BaseResponseHelper.HandleInternalServerError<AudioQuestion>("Failed create new question");
 
-                return new BaseResponse<AudioQuestion>
-                {
-                    Data = question,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newQuestion);
             }
             catch (Exception)
             {
@@ -59,11 +55,7 @@ namespace Service.Implementations
                 if (updateQuestion == null)
                     return BaseResponseHelper.HandleNotFound<AudioQuestion>($"Audio question with id {audioQuestionId} not found");
 
-                return new BaseResponse<AudioQuestion>
-                {
-                    Data = updateQuestion,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(updateQuestion);
             }
             catch (Exception)
             {
@@ -79,11 +71,7 @@ namespace Service.Implementations
                 if (updateQuestion == null)
                     return BaseResponseHelper.HandleNotFound<AudioQuestion>($"Audio question with id {audioQuestionId} not found");
 
-                return new BaseResponse<AudioQuestion>
-                {
-                    Data = updateQuestion,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(updateQuestion);
             }
             catch (Exception)
             {
@@ -99,11 +87,7 @@ namespace Service.Implementations
                 if (updateQuestion == null)
                     return BaseResponseHelper.HandleNotFound<AudioQuestion>($"Audio question with id {audioQuestionId} not found");
 
-                return new BaseResponse<AudioQuestion>
-                {
-                    Data = updateQuestion,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(updateQuestion);
             }
             catch (Exception)
             {
@@ -131,11 +115,7 @@ namespace Service.Implementations
                 if (result == false)
                     return BaseResponseHelper.HandleInternalServerError<TestQuestion>("Failed create new test question");
 
-                return new BaseResponse<TestQuestion>
-                {
-                    Data = newQuestion,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newQuestion);
             }
             catch (Exception)
             {
@@ -155,11 +135,7 @@ namespace Service.Implementations
                 if (updateQuestion == null)
                     return BaseResponseHelper.HandleNotFound<TestQuestion>($"Test question with id {testQuestionId} not found");
 
-                return new BaseResponse<TestQuestion>
-                {
-                    Data = updateQuestion,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(updateQuestion);
             }
             catch (Exception)
             {
@@ -177,11 +153,7 @@ namespace Service.Implementations
                 if (updateQuestion == null)
                     return BaseResponseHelper.HandleNotFound<TestQuestion>($"Test question with id {testQuestionId} not found");
 
-                return new BaseResponse<TestQuestion>
-                {
-                    Data = updateQuestion,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(updateQuestion);
             }
             catch (Exception)
             {
@@ -198,11 +170,7 @@ namespace Service.Implementations
                 if (updateQuestion == null)
                     return BaseResponseHelper.HandleNotFound<TestQuestion>($"Test question with id {testQuestionId} not found");
 
-                return new BaseResponse<TestQuestion>
-                {
-                    Data = updateQuestion,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(updateQuestion);
             }
             catch (Exception)
             {
@@ -219,12 +187,7 @@ namespace Service.Implementations
                 if (result == false)
                     return BaseResponseHelper.HandleNotFound<bool>("Question not found");
 
-                return new BaseResponse<bool> 
-                {
-                    Data = result,
-                    StatusCode = MyStatusCode.OK
-                };
-
+                return BaseResponseHelper.HandleSuccessfulRequest(result);
             }
             catch (Exception)
             {
@@ -240,12 +203,7 @@ namespace Service.Implementations
                 if (result == null)
                     return BaseResponseHelper.HandleNotFound<BaseQuestion>("Question not found");
 
-                return new BaseResponse<BaseQuestion>
-                {
-                    Data = result,
-                    StatusCode = MyStatusCode.OK
-                };
-
+                return BaseResponseHelper.HandleSuccessfulRequest(result);
             }
             catch (Exception)
             {
@@ -261,12 +219,7 @@ namespace Service.Implementations
                 if (string.IsNullOrEmpty(result))
                     return BaseResponseHelper.HandleNotFound<string>("Question not found");
 
-                return new BaseResponse<string>
-                {
-                    Data = result,
-                    StatusCode = MyStatusCode.OK
-                };
-
+                return BaseResponseHelper.HandleSuccessfulRequest(result);
             }
             catch (Exception)
             {

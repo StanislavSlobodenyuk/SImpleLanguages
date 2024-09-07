@@ -38,11 +38,7 @@ namespace Service.Implementations
                 if (!result)
                     return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error creating new module");
 
-                return new BaseResponse<ModuleLessons>
-                {
-                    Data = newModule,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newModule);
             }
             catch (Exception)
             {
@@ -65,11 +61,7 @@ namespace Service.Implementations
                 if (!result)
                     return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting module");
 
-                return new BaseResponse<bool>
-                {
-                    Data = true,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(true);
             }
             catch (Exception)
             {
@@ -90,11 +82,7 @@ namespace Service.Implementations
                 if (!result)
                     return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error changing availability");
 
-                return new BaseResponse<ModuleLessons>
-                {
-                    Data = existingModule,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(existingModule);
             }
             catch (Exception)
             {
@@ -110,11 +98,7 @@ namespace Service.Implementations
                 if (module == null)
                     return BaseResponseHelper.HandleNotFound<ModuleLessons>("Module not found");
 
-                return new BaseResponse<ModuleLessons>
-                {
-                    Data = module,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(module);
             }
             catch (Exception)
             {
@@ -143,11 +127,7 @@ namespace Service.Implementations
                 if (newLesson == null)
                     return BaseResponseHelper.HandleInternalServerError<Lesson>("Error adding lesson");
 
-                return new BaseResponse<Lesson>
-                {
-                    Data = newLesson,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newLesson);
             }
             catch (Exception)
             {
@@ -174,11 +154,7 @@ namespace Service.Implementations
                 if (!result)
                     return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson");
 
-                return new BaseResponse<bool>
-                {
-                    Data = true,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(true);
             }
             catch (Exception)
             {
@@ -202,11 +178,7 @@ namespace Service.Implementations
                     await _moduleLessonsRepository.DeleteLessonFromModule(moduleId, lesson);
                 }
 
-                return new BaseResponse<bool>
-                {
-                    Data = true,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(true);
             }
             catch (Exception)
             {

@@ -31,5 +31,13 @@ namespace Common.Response
                 Description = description
             };
         }
+        public static BaseResponse<T> HandleSuccessfulRequest<T>(T data)
+        {
+            return new BaseResponse<T>()
+            {
+                Data = data,
+                StatusCode = MyStatusCode.OK,
+            };
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Service.Interfaces
 
         Task<BaseResponse<BaseQuestion>> AddQuestion(int lessonId, BaseQuestion question);
         Task<BaseResponse<bool>> DeleteQuestion(int lessonId, BaseQuestion question);
-        Task<BaseResponse<bool>> DeleteAllQuestion(int lessonId, List<BaseQuestion> questions); 
+        Task<BaseResponse<List<bool>>> DeleteAllQuestion(int lessonId, List<BaseQuestion> questions); 
 
 
         Task<BaseResponse<IEnumerable<BaseQuestion>>> GetAllQuestionForThisLesson(int lessonId);

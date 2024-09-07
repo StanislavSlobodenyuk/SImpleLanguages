@@ -10,7 +10,7 @@ namespace Service.Interfaces
     {
         Task<BaseResponse<LanguageCourse>> CreateCourse(string languageName, string code, string IconPath);
         Task<BaseResponse<bool>> DeleteCourse(int courseID);
-        Task<BaseResponse<LanguageCourse>> Change(int courseId, UpdateCourseRequest updateCourseRequest);
+        //Task<BaseResponse<LanguageCourse>> Change(int courseId, UpdateCourseRequest updateCourseRequest);
 
         Task<BaseResponse<LanguageCourse>> GetCourseByName(string languageName);
         Task<BaseResponse<LanguageCourse>> GetCourseByCode(string code);

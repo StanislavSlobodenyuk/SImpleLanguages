@@ -33,11 +33,7 @@ namespace Service.Implementations
                 if (!result)
                     return BaseResponseHelper.HandleInternalServerError<Lesson>("Failed to create instance");
 
-                return new BaseResponse<Lesson>()
-                {
-                    Data = newLesson,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newLesson);
             }
             catch (Exception)
             {
@@ -58,11 +54,7 @@ namespace Service.Implementations
                 if (!result)
                     return BaseResponseHelper.HandleInternalServerError<bool>("Failed to delete instance");
 
-                return new BaseResponse<bool>()
-                {
-                    Data = result,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(result);
             }
             catch (Exception)
             {
@@ -83,11 +75,7 @@ namespace Service.Implementations
                 if (newLesson == null)
                     return BaseResponseHelper.HandleInternalServerError<Lesson>("Failed update lesson icon");
 
-                return new BaseResponse<Lesson>()
-                {
-                    Data = newLesson,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newLesson);
             }
             catch (Exception)
             {
@@ -108,11 +96,7 @@ namespace Service.Implementations
                 if (newLesson == null)
                     return BaseResponseHelper.HandleInternalServerError<Lesson>("Failed update lesson icon");
 
-                return new BaseResponse<Lesson>()
-                {
-                    Data = newLesson,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newLesson);
             }
             catch (Exception)
             {
@@ -133,11 +117,7 @@ namespace Service.Implementations
                 if (newLesson == null)
                     return BaseResponseHelper.HandleInternalServerError<Lesson>("Failed update available");
 
-                return new BaseResponse<Lesson>()
-                {
-                    Data = newLesson,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newLesson); ;
             }
             catch (Exception)
             {
@@ -154,11 +134,7 @@ namespace Service.Implementations
                 if (currentLesson == null)
                     return BaseResponseHelper.HandleNotFound<Lesson>($"Lesson with id {lessonId} not found");
 
-                return new BaseResponse<Lesson>()
-                {
-                    Data = currentLesson,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(currentLesson);
             }
             catch (Exception)
             {
@@ -183,11 +159,7 @@ namespace Service.Implementations
                 if (newQuestion == null)
                     return BaseResponseHelper.HandleInternalServerError<BaseQuestion>("Error adding lesson");
 
-                return new BaseResponse<BaseQuestion>
-                {
-                    Data = newQuestion,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(newQuestion);
             }
             catch (Exception)
             {
@@ -210,43 +182,36 @@ namespace Service.Implementations
                 if (!result)
                     return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson");
 
-                return new BaseResponse<bool>
-                {
-                    Data = true,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(result);
             }
             catch (Exception)
             {
                 return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson");
             }
         }
-        public async Task<BaseResponse<bool>> DeleteAllQuestion(int lessonId, List<BaseQuestion> questions)
+        public async Task<BaseResponse<List<bool>>> DeleteAllQuestion(int lessonId, List<BaseQuestion> questions)
         {
             if (questions == null || questions.Any(l => l == null))
-                return BaseResponseHelper.HandleBadRequest<bool>("Invalid questions list");
+                return BaseResponseHelper.HandleBadRequest<List<bool>>("Invalid questions list");
 
             var currentModule = await _lessonRepository.GetById(lessonId);
 
             if (currentModule == null)
-                return BaseResponseHelper.HandleNotFound<bool>("Lesson not found");
+                return BaseResponseHelper.HandleNotFound<List<bool>>("Lesson not found");
 
             try
             {
+                List<bool> results = new List<bool>();
                 foreach (var question in questions)
                 {
-                    await _lessonRepository.DeleteQuestionFromLesson(lessonId, question);
+                    results.Add(await _lessonRepository.DeleteQuestionFromLesson(lessonId, question));
                 }
 
-                return new BaseResponse<bool>
-                {
-                    Data = true,
-                    StatusCode = MyStatusCode.OK
-                };
+                return BaseResponseHelper.HandleSuccessfulRequest(results);
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting questions");
+                return BaseResponseHelper.HandleInternalServerError<List<bool>>("Error deleting questions");
             }
         }
 
