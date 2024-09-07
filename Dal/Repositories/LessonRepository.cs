@@ -1,12 +1,9 @@
-﻿
-using Dal.Interfaces;
+﻿using Dal.Interfaces;
 using Domain.Entity.Content.Lessons;
-using Domain.Entity.Content.Metadata.Course;
 using Domain.Entity.Content.Question;
 using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
-using System.Reflection;
 
 namespace Dal.Repositories
 {
@@ -208,13 +205,25 @@ namespace Dal.Repositories
         public async Task<IEnumerable<BaseQuestion?>> GetAllQuestions(int lessonId)
         {
             var lesson = await _context.Lessons
-                .Include(l => l.LessonQuestions)
-                .ThenInclude(lq => lq.Question)
-                .FirstOrDefaultAsync(l => l.Id == lessonId);
+        .Include(l => l.LessonQuestions)
+            .ThenInclude(lq => lq.Question)
+        .FirstOrDefaultAsync(l => l.Id == lessonId);
 
-            if(lesson == null) return new List<BaseQuestion>();
+            if (lesson == null) return new List<BaseQuestion>();
 
-            return lesson.LessonQuestions.Select(lq => lq.Question).ToList();
+            foreach (var lessonQuestion in lesson.LessonQuestions)
+            {
+                if (lessonQuestion.Question is TestQuestion testQuestion)
+                {
+                    await _context.Entry(testQuestion)
+                        .Collection(tq => tq.AnswerOptions)
+                        .LoadAsync();
+                }
+            }
+
+            return lesson.LessonQuestions
+                .Select(lq => lq.Question)
+                .ToList();
         }
     }
 }

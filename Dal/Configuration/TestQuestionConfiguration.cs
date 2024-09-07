@@ -19,7 +19,7 @@ namespace Dal.Configuration
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
-            builder.Property(e => e.TextQuestion)
+            builder.Property(e => e.Text)
                 .IsRequired()
                 .HasColumnName("Question")
                 .HasMaxLength(500);

@@ -22,6 +22,10 @@ namespace Dal.Configuration
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
+            builder.Property(e => e.Text)
+                .IsRequired()
+                .HasColumnName("Text")
+                .HasMaxLength(400);
             builder.Property(e => e.AudioUrl)
                 .HasMaxLength(300)
                 .IsRequired();

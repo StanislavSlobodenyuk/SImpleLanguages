@@ -1,6 +1,8 @@
 ﻿using Dal.Interfaces;
+using Dal.Interfaces.QuestionRepository;
 using Dal.Repositories;
-using System.Linq.Expressions;
+using Dal.Repositories.QuestionRepository;
+
 
 namespace Application.InitRepositories
 {
@@ -12,6 +14,8 @@ namespace Application.InitRepositories
             services.AddScoped<IModuleLessonsRepository, ModuleLessonsRepositories>();
             services.AddScoped<ILessonRepository, LessonRepository>();
             services.AddScoped<ITestQuestionRepository, TestQuestionRepository>();
+            services.AddScoped<IAudioQuestionRepository, AudioQuestionRepository>();
+            services.AddScoped<IBaseQuestionRepository, BaseQuestionRepository>();
         }
     }
 }
