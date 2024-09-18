@@ -14,16 +14,30 @@ namespace Dal.Configuration
             builder.Property(x => x.Id)
                .ValueGeneratedOnAdd()
                .HasColumnName("Id");
+            
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
+
             builder.Property(e => e.Title)
-                .HasMaxLength(100);
-            builder.Property(e => e.Difficult)
-                .IsRequired();
+                .IsRequired()
+                .HasColumnName("Title")
+                .HasMaxLength(200);
+
             builder.Property(e => e.IsAvailable)
                 .HasDefaultValue(true)
+                .HasColumnName("Is_Available")
                 .IsRequired();
+
+            builder.Property(e => e.IconPath)
+                .HasColumnName("Icon_Path")
+                .IsRequired();
+
+            builder.HasMany(e => e.LectureBlocks)
+                .WithOne(e => e.lesson)
+                .HasForeignKey(e => e.LessonId)
+                .HasConstraintName("FK_LessonLectureBlock_Lesson_LectureBlock")
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

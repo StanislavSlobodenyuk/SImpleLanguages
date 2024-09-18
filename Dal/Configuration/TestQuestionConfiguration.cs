@@ -11,20 +11,23 @@ namespace Dal.Configuration
     {
         public void Configure(EntityTypeBuilder<TestQuestion> builder)
         {
-            builder.ToTable("TestQuestion", "dbo");
+            builder.ToTable("Test_Question", "dbo");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
                .ValueGeneratedOnAdd()
                .HasColumnName("Id");
+            
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
-            builder.Property(e => e.Text)
+
+            builder.Property(e => e.QuestionText)
                 .IsRequired()
-                .HasColumnName("Question")
-                .HasMaxLength(500);
+                .HasColumnName("Question_Text")
+                .HasMaxLength(400);
+
             builder.Property(e => e.Type)
-               .IsRequired();
+                .IsRequired();
         }
     }
 }

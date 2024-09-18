@@ -1,18 +1,17 @@
 ﻿
 using Common.Response;
-using Common.Response.UpdateResponse;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
+using Domain.Enum;
 
 namespace Service.Interfaces
 {
     public interface ILanguageCourseService
     {
-        Task<BaseResponse<LanguageCourse>> CreateCourse(string languageName, string code, string IconPath);
+        Task<BaseResponse<LanguageCourse>> CreateCourse(string name, string description, LanguageName languageName, LanguageLevel difficult, string iconPath);
         Task<BaseResponse<bool>> DeleteCourse(int courseID);
 
-        Task<BaseResponse<LanguageCourse>> GetCourseByName(string languageName);
-        Task<BaseResponse<LanguageCourse>> GetCourseByCode(string code);
+        Task<BaseResponse<LanguageCourse>> GetCourseByName(LanguageName languageName);
         Task<BaseResponse<LanguageCourse>> GetCourseById(int id);
 
         Task<BaseResponse<ModuleLessons>> AddModule(int courseId, ModuleLessons moduleOfLessons);

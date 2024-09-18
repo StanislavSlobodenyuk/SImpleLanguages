@@ -20,7 +20,7 @@ namespace Dal.Repositories.QuestionRepository
                 return false;
             try
             {
-                var newQuestion = new TestQuestion(testQuestion.Text, testQuestion.Type);
+                var newQuestion = new TestQuestion(testQuestion.QuestionText, testQuestion.Type);
                 
                 newQuestion.AnswerOptions = new List<TestAnswerOption>(answerOptions);
                 newQuestion.RightAnswer = rightAnswer;
@@ -92,9 +92,9 @@ namespace Dal.Repositories.QuestionRepository
                 if (question == null)
                     return null;
 
-                question.Text = text;
+                question.QuestionText = text;
 
-                _context.Entry(question).Property(q => q.Text).IsModified = true;
+                _context.Entry(question).Property(q => q.QuestionText).IsModified = true;
                 await _context.SaveChangesAsync();
 
                 return question;

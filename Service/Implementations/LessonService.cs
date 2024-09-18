@@ -19,14 +19,14 @@ namespace Service.Implementations
             _lessonRepository = lessonRepository;
         }
 
-        public async Task<BaseResponse<Lesson>> Create(string title, LanguageLevel difficult, bool isavailable, string iconpath)
+        public async Task<BaseResponse<Lesson>> Create(string title, bool isavailable, string iconpath)
         {
-            if (string.IsNullOrEmpty(title) || !Enum.IsDefined(typeof(LanguageLevel), difficult))
+            if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(title))
                 return BaseResponseHelper.HandleBadRequest<Lesson>("Invalid input parameters");
 
             try
             {
-                var newLesson = new Lesson(title, difficult, isavailable, iconpath);
+                var newLesson = new Lesson(title, isavailable, iconpath);
 
                 var result = await _lessonRepository.Create(newLesson);
 

@@ -8,17 +8,19 @@ namespace Dal.Configuration
     {
         public void Configure(EntityTypeBuilder<TestAnswerOption> builder)
         {
-            builder.ToTable("TestAnswerOption", "dbo");
+            builder.ToTable("Test_Answer_Option", "dbo");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
                .ValueGeneratedOnAdd()
                .HasColumnName("Id");
+            
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
-            builder.Property(e => e.Text)
+            
+            builder.Property(e => e.OptionText)
                 .IsRequired()
-                .HasColumnName("AnswerOption")
+                .HasColumnName("Answer_Option")
                 .HasMaxLength(500);
 
             builder

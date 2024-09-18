@@ -13,18 +13,34 @@ namespace Dal.Configuration
             builder.Property(x => x.Id)
                .ValueGeneratedOnAdd()
                .HasColumnName("Id");
+
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
-            builder.Property(e => e.LanguageName)
+
+            builder.Property(e => e.Name)
                 .IsRequired()
-                .HasColumnName("LanguageName");
-            builder.Property(e => e.Code)
-                .IsRequired()
-                .HasColumnName("Code");
+                .HasColumnName("Name");
+
+            builder.Property(e => e.Description)
+                .HasDefaultValue("Опис ще не написаний")
+                .HasColumnName("Description");
+
+            builder.Property(e => e.Language)
+                .HasColumnName("Language")
+                .IsRequired();
+
+            builder.Property(e => e.Difficult)
+                .HasColumnName("Difficult")
+                .IsRequired();   
+            
             builder.Property(e => e.IconPath)
                 .IsRequired()
-                .HasColumnName("IconPath");
+                .HasColumnName("Icon_Path");
+
+            builder.Property(e => e.Progres)
+                .HasColumnName("Last_Save_Result")
+                .HasDefaultValue(0);
 
             builder.HasMany(e => e.ModulesLessons)
                 .WithOne(e=> e.LanguageCourse)

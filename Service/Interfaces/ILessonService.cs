@@ -8,7 +8,7 @@ namespace Service.Interfaces
 {
     public interface ILessonService
     {
-        Task<BaseResponse<Lesson>> Create(string Title, LanguageLevel difficult, bool isavailable, string iconpath);
+        Task<BaseResponse<Lesson>> Create(string Title, bool isavailable, string iconpath);
         Task<BaseResponse<bool>> Delete(int lessonId);
         Task<BaseResponse<Lesson>> UpdateIcon(int lessonId, string iconpath);
         Task<BaseResponse<Lesson>> UpdateTitle(int lessonId, string title);

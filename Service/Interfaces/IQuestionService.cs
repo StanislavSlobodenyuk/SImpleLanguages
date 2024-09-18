@@ -13,7 +13,6 @@ namespace Service.Interfaces
         Task<BaseResponse<TestQuestion>?> UpdateRightAnswer(int testQuestionId, string answer);
 
         Task<BaseResponse<AudioQuestion>> CreateAudioQuestion(string text, string rightAnswer, string audioUrl, QuestionType type);
-        Task<BaseResponse<AudioQuestion>> UpdateAudioQuestionText(int audioQuestionId, string newText);
         Task<BaseResponse<AudioQuestion>> UpdateAudioQuestionAudioUrl(int audioQuestionId, string newText);
         Task<BaseResponse<AudioQuestion>> UpdateAudioQuestionRightAnswer(int audioQuestionId, string newText);
 

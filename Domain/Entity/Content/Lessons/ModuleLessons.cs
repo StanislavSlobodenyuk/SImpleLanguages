@@ -6,18 +6,19 @@ namespace Domain.Entity.Content.Lessons
 {
     public class ModuleLessons : BaseContent
     {
-        public string? Description { get; private set; }
+        public string? Title { get; private set; }
         public bool? IsAvailable { get; set; } = false;
+        public string? PathToMap { get; private set; }
 
         public ICollection<Lesson> Lessons { get; private set; } = new List<Lesson>();
 
         public ModuleLessons() { }
 
-        public ModuleLessons(string description, bool isAvailable, string title)
-            : base(title)
+        public ModuleLessons(string title, bool isAvailable, string pathToMap)
         {
-            Description = description ?? throw new ArgumentNullException(nameof(description));
+            Title = title ?? throw new ArgumentNullException(nameof(title));
             IsAvailable = isAvailable;
+            PathToMap = pathToMap ?? throw new ArgumentNullException(nameof(pathToMap));
         }
     }
 }

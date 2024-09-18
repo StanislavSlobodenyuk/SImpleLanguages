@@ -1,6 +1,5 @@
 ﻿using Domain.Entity.Base;
 using Domain.Entity.Content.Lessons;
-using Domain.Entity.Content.Question;
 
 namespace Domain.Entity.Content.Image
 {
@@ -8,10 +7,9 @@ namespace Domain.Entity.Content.Image
     {
         public string? ImagePath { get; set; }
 
-        public int LessonId { get; set; }
-        public Lesson? Lesson { get; set; }
-
         public ICollection<QuestionImage> QuestionImages { get; private set; } = new List<QuestionImage>();
+        public ICollection<LectureImage> LectureImages { get; private set; } = new List<LectureImage>();
+
 
         public MyImage(string imagePath)
         {

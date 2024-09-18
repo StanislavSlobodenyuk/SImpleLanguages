@@ -1,12 +1,10 @@
-﻿
-using Common.Enum;
+﻿using Common.Enum;
 using Common.Response;
-using Common.Response.UpdateResponse;
 using Dal.Interfaces;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
+using Domain.Enum;
 using Service.Interfaces;
-using System.Collections.Generic;
 
 namespace Service.Implementations
 {
@@ -19,14 +17,16 @@ namespace Service.Implementations
             _courseRepository = courseRepository;
         }
 
-        public async Task<BaseResponse<LanguageCourse>> CreateCourse(string languageName, string code, string iconPath)
+        public async Task<BaseResponse<LanguageCourse>> CreateCourse(string name, string description, LanguageName languageName, LanguageLevel difficult, string iconPath)
         {
-            if (string.IsNullOrEmpty(languageName) || string.IsNullOrEmpty(code) || string.IsNullOrEmpty(iconPath))
+            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(iconPath) || 
+                !Enum.IsDefined(typeof(LanguageLevel), languageName) || 
+                !Enum.IsDefined(typeof(LanguageLevel), difficult))
                 return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Invalid parameters");
 
             try
             {
-                var newCourse = new LanguageCourse(languageName, code, iconPath);
+                var newCourse = new LanguageCourse(name, description, languageName, difficult , iconPath);
 
                 bool result = await _courseRepository.Create(newCourse);
 
@@ -78,30 +78,8 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Course not Founde");
             }
         }
-        public async Task<BaseResponse<LanguageCourse>> GetCourseByCode(string code)
+        public async Task<BaseResponse<LanguageCourse>> GetCourseByName(LanguageName languageName)
         {
-            if (string.IsNullOrEmpty(code))
-                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Code empty or equal zero");
-
-            try
-            {
-                var course = await _courseRepository.GetCourseByCode(code);
-
-                if (course == null)
-                    return BaseResponseHelper.HandleNotFound<LanguageCourse>($"Course with code {code} not found");
-
-                return BaseResponseHelper.HandleSuccessfulRequest(course);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Course not Founde");
-            }
-        }
-        public async Task<BaseResponse<LanguageCourse>> GetCourseByName(string languageName)
-        {
-            if (string.IsNullOrEmpty(languageName))
-                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Code empty or equal zero");
-
             try
             {
                 var course = await _courseRepository.GetCourseByLanguage(languageName);

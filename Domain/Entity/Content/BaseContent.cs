@@ -7,15 +7,9 @@ namespace Domain.Entity.Content
 {
     public abstract class BaseContent : BaseEntity
     {
-        public string? Title { get; private set; }
-
         public int LanguageCourseId { get; private set; }
         public LanguageCourse? LanguageCourse { get; private set; }
 
-        protected BaseContent(string title)
-        {
-            Title = title ?? throw new ArgumentNullException(nameof(title));
-        }
         protected BaseContent() { }
     }
 }

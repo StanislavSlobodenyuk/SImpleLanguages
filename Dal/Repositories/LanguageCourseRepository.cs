@@ -1,6 +1,7 @@
 ﻿using Dal.Interfaces;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
+using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
@@ -18,7 +19,6 @@ namespace Dal.Repositories
         public async Task<bool> Create(LanguageCourse entity)
         {
             if (entity == null || entity.Id == 0) return false;
-            if (await _context.LanguageCourses.AnyAsync(c => c.Code == entity.Code) == true) return false;
 
             try
             {
@@ -94,23 +94,11 @@ namespace Dal.Repositories
                 .FirstOrDefaultAsync (c => c.Id == courseId);
         }
 
-        public async Task<LanguageCourse?> GetCourseByLanguage(string language)
+        public async Task<LanguageCourse?> GetCourseByLanguage(LanguageName language)
         {
             try
             {
-                return await _context.LanguageCourses.FirstOrDefaultAsync(e => e.LanguageName == language);
-            }
-            catch (Exception)
-            {
-                // Логирование исключения
-                return null;
-            }
-        }
-        public async Task<LanguageCourse?> GetCourseByCode(string code)
-        {
-            try
-            {
-                return await _context.LanguageCourses.FirstOrDefaultAsync(e => e.Code == code);
+                return await _context.LanguageCourses.FirstOrDefaultAsync(e => e.Language == language);
             }
             catch (Exception)
             {

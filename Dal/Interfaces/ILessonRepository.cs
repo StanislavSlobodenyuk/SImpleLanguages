@@ -11,8 +11,6 @@ namespace Dal.Interfaces
         Task<Lesson?> UpdateTitle(Lesson lesson, string title);
 
         Task<Lesson?> GetLessonWithQuestion(int lessonId);
-
-        Task<IEnumerable<Lesson>> GetLessonByDifficult(LanguageLevel level);
         Task<Lesson?> ChangeAvailableLesson(Lesson lesson, bool isAvailable);
 
         Task<BaseQuestion?> AddQuestionToLesson(int lessonId, BaseQuestion entity);

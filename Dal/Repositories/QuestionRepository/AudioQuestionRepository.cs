@@ -14,11 +14,11 @@ namespace Dal.Repositories.QuestionRepository
         }
         public async Task<bool?> CreateAudioQuestion(AudioQuestion audioQuestion)
         {
-            if (string.IsNullOrEmpty(audioQuestion.AudioUrl) || string.IsNullOrEmpty(audioQuestion.RightAnswer) || string.IsNullOrEmpty(audioQuestion.Text))
+            if (string.IsNullOrEmpty(audioQuestion.AudioUrl) || string.IsNullOrEmpty(audioQuestion.RightAnswer) || string.IsNullOrEmpty(audioQuestion.QuestionText))
                 return false;
             try
             {
-                var newQuestion = new AudioQuestion(audioQuestion.Text, audioQuestion.RightAnswer, audioQuestion.AudioUrl, audioQuestion.Type);
+                var newQuestion = new AudioQuestion(audioQuestion.QuestionText, audioQuestion.RightAnswer, audioQuestion.AudioUrl, audioQuestion.Type);
 
                 await _context.AudioQuestions.AddAsync(newQuestion);
                 await _context.SaveChangesAsync();
@@ -31,29 +31,6 @@ namespace Dal.Repositories.QuestionRepository
             }
         }
 
-        public async Task<AudioQuestion?> UpdateText(int audioQuestionId, string text)
-        {
-            if (string.IsNullOrEmpty(text))
-                return null;
-            try
-            {
-                var question = await _context.AudioQuestions.FirstOrDefaultAsync(q => q.Id == audioQuestionId);
-
-                if (question == null)
-                    return null;
-
-                question.UpdateText(text);
-
-                _context.Entry(question).Property(q => q.Text).IsModified = true;
-                await _context.SaveChangesAsync();
-
-                return question;
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
         public async Task<AudioQuestion?> UpdateAudioURL(int audioQuestionId, string audioUrl)
         {
             if (string.IsNullOrEmpty(audioUrl))

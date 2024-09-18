@@ -8,11 +8,12 @@ namespace Dal.Configuration
     {
         public void Configure(EntityTypeBuilder<QuestionImage> builder)
         {
-            builder.ToTable("QuestionImage", "dbo");
+            builder.ToTable("Question_Image", "dbo");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
                .ValueGeneratedOnAdd()
                .HasColumnName("Id");
+            
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();

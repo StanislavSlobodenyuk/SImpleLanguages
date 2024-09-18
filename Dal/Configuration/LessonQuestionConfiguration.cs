@@ -10,11 +10,12 @@ namespace Dal.Configuration
     {
         public void Configure(EntityTypeBuilder<LessonQuestion> builder)
         {
-            builder.ToTable("LessonQuestion", "dbo");
+            builder.ToTable("Lesson_Question", "dbo");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
                .ValueGeneratedOnAdd()
                .HasColumnName("Id");
+            
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();

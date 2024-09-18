@@ -78,22 +78,6 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<AudioQuestion>($"Failed to update right answer for question with id {audioQuestionId}");
             }
         }
-        public async Task<BaseResponse<AudioQuestion>> UpdateAudioQuestionText(int audioQuestionId, string newText)
-        {
-            try
-            {
-                var updateQuestion = await _audioQuestionRepository.UpdateText(audioQuestionId, newText);
-
-                if (updateQuestion == null)
-                    return BaseResponseHelper.HandleNotFound<AudioQuestion>($"Audio question with id {audioQuestionId} not found");
-
-                return BaseResponseHelper.HandleSuccessfulRequest(updateQuestion);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<AudioQuestion>($"Failed to update text for question with id {audioQuestionId}");
-            }
-        }
 
         public async Task<BaseResponse<TestQuestion>> CreateTestQuestion(string text, QuestionType type, List<string> answerOptions, string answer)
         {

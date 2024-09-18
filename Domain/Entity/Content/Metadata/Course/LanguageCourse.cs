@@ -1,33 +1,35 @@
 ﻿using Domain.Entity.Base;
 using Domain.Entity.Content;
 using Domain.Entity.Content.Lessons;
+using Domain.Enum;
 
 namespace Domain.Entity.Content.Metadata.Course
 {
     public class LanguageCourse : BaseEntity
     {
-        public string? LanguageName { get; private set; }
-        public string? Code { get; private set; }
-        public string? IconPath { get; private set; }
+        public string? Name { get; set; }
+        public string? Description { get; set; }
+        public LanguageName Language {  get; private set; }
+        public LanguageLevel Difficult {  get; private set; }
+        public string? IconPath { get; set; }
+        public float Progres {  get; private set; } = 0f;
 
         public ICollection<ModuleLessons> ModulesLessons { get; private set; } = new List<ModuleLessons>();
 
-        public LanguageCourse(string? languageName, string? code, string? icon)
+        public LanguageCourse(string? name, string? description, LanguageName language, LanguageLevel difficult, string? iconPath)
         {
-            LanguageName = languageName ?? throw new ArgumentNullException(nameof(languageName));
-            Code = code ?? throw new ArgumentNullException(nameof(code));
-            IconPath = icon ?? throw new ArgumentNullException(nameof(icon));
+            Name = name;
+            Description = description;
+            Language = language;
+            Difficult = difficult;
+            IconPath = iconPath;
         }
-        public void Update(string? languageName, string? code, string? iconPath)
-        {
-            if (!string.IsNullOrEmpty(languageName))
-            {
-                LanguageName = languageName;
-            }
 
-            if (!string.IsNullOrEmpty(code))
+        public void Update(string? name, string? iconPath)
+        {
+            if (!string.IsNullOrEmpty(name))
             {
-                Code = code;
+                Name = name;
             }
 
             if (!string.IsNullOrEmpty(iconPath))

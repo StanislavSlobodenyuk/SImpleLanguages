@@ -11,7 +11,7 @@ namespace Domain.Entity.Content.Question
         public IEnumerable<TestAnswerOption> AnswerOptions { get; set; } = new List<TestAnswerOption>();
 
         protected TestQuestion() { }
-        public TestQuestion(string? text, QuestionType type) : base(text, type)
+        public TestQuestion(string? questionText, QuestionType type) : base(questionText, type)
         {
         }
     }

@@ -9,8 +9,9 @@ namespace Domain.Entity.Content.Question
         public string? RightAnswer { get; private set; }
         public string? AudioUrl { get; private set; }
 
-        public AudioQuestion(string rightAnswer, string audioUrl, string text, QuestionType type) : base(text, type)
+        public AudioQuestion(string rightAnswer, string audioUrl, string questionText, QuestionType type) : base(questionText, type)
         {
+            QuestionText = questionText;
             RightAnswer = rightAnswer;
             AudioUrl = audioUrl;
         }
@@ -20,13 +21,6 @@ namespace Domain.Entity.Content.Question
             if (!string.IsNullOrEmpty(rightAnswer))
             {
                 RightAnswer = rightAnswer;
-            }
-        }
-        public void UpdateText(string? text)
-        {
-            if (!string.IsNullOrEmpty(text))
-            {
-                Text = text;
             }
         }
         public void UpdateAudioUrl(string? audioUrl)

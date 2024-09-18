@@ -14,11 +14,14 @@ namespace Dal.Configuration
             builder.Property(x => x.Id)
                .ValueGeneratedOnAdd()
                .HasColumnName("Id");
+            
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
+            
             builder.Property(e => e.ImagePath)
                 .HasMaxLength(200)
+                .HasColumnName("Image_Path")
                 .IsRequired();
         }
     }

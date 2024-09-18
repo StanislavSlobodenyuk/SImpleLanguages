@@ -194,10 +194,6 @@ namespace Dal.Repositories
             }
         }
 
-        public async Task<IEnumerable<Lesson>> GetLessonByDifficult(LanguageLevel level)
-        {
-            return await _context.Lessons.Where(c => c.Difficult == level).ToListAsync();
-        }
         public async Task<IEnumerable<Lesson>> Select()
         {
             return await _context.Lessons.ToListAsync();
