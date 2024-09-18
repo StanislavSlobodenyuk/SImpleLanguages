@@ -8,7 +8,7 @@ using System.Reflection;
 
 namespace Service.Implementations
 {
-    public class ModuleLessonService : IModuleLessonsService
+    public class ModuleLessonService : IModuleLessonService
     {
         private readonly IModuleLessonsRepository _moduleLessonsRepository;
 

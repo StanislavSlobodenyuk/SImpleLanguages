@@ -2,6 +2,8 @@
 using Dal.Interfaces.QuestionRepository;
 using Dal.Repositories;
 using Dal.Repositories.QuestionRepository;
+using Service.Implementations;
+using Service.Interfaces;
 
 
 namespace Application.InitRepositories
@@ -16,6 +18,14 @@ namespace Application.InitRepositories
             services.AddScoped<ITestQuestionRepository, TestQuestionRepository>();
             services.AddScoped<IAudioQuestionRepository, AudioQuestionRepository>();
             services.AddScoped<IBaseQuestionRepository, BaseQuestionRepository>();
+        }
+
+        public static void RegisterServices(IServiceCollection services)
+        {
+            services.AddScoped<ILanguageCourseService, LanguageCourseService>();
+            services.AddScoped<IModuleLessonService, ModuleLessonService>();
+            services.AddScoped<ILessonService, LessonService>();
+            services.AddScoped<IQuestionService, QuestionService>();
         }
     }
 }

@@ -24,6 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
 DependencyInjectionSetup.RegisterRepositories(builder.Services);
+DependencyInjectionSetup.RegisterServices(builder.Services);
 
 var app = builder.Build();
 

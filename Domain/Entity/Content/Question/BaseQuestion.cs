@@ -22,3 +22,4 @@ namespace Domain.Entity.Content.Question
 }
 
 // Базовий клас для усіх видів уроків 
+

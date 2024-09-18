@@ -61,50 +61,6 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<bool>("Unable delete course");
             }
         }
-        //public async Task<BaseResponse<LanguageCourse>> Change(int courseId, UpdateCourseRequest updateCourseRequest)
-        //{
-        //    if (updateCourseRequest == null)
-        //    {
-        //        return new BaseResponse<LanguageCourse>()
-        //        {
-        //            Description = "Unable change course, error when entering parameters",
-        //            StatusCode = MyStatusCode.BadRequest,
-        //        };
-        //    }
-
-        //    try
-        //    {
-        //        var existingCourse = await _courseRepository.GetById(courseId);
-
-        //        if (existingCourse == null)
-        //        {
-        //            baseResponse.StatusCode = MyStatusCode.NotFound;
-        //            baseResponse.Description = $"Course with ID {courseId} not found.";
-
-        //            return baseResponse;
-        //        }
-
-        //        existingCourse.Update(updateCourseRequest.LanguageName, updateCourseRequest.Code, updateCourseRequest.IconPath);
-
-        //        var updatedCourse = await _courseRepository.Update(existingCourse);
-
-        //        if (updatedCourse != null)
-        //        {
-        //            baseResponse.Data = updatedCourse;
-        //            baseResponse.StatusCode = MyStatusCode.OK;
-        //        }
-        //        else
-        //        {
-        //            return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Unable to update course.");
-        //        }
-
-        //        return baseResponse;
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Unable change course, database error");
-        //    }
-        //}
 
         public async Task<BaseResponse<LanguageCourse>> GetCourseById(int courseId)
         {

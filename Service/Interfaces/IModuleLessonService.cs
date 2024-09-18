@@ -5,7 +5,7 @@ using Domain.Entity.Content.Lessons;
 
 namespace Service.Interfaces
 {
-    public interface IModuleLessonsService 
+    public interface IModuleLessonService 
     {
         Task<BaseResponse<ModuleLessons>> CreateModule(string title, string description, bool isAvailable);
         Task<BaseResponse<bool>> DeleteModule(int moduleId);
