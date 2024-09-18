@@ -1,5 +1,4 @@
-﻿
-using Dal.Interfaces;
+﻿using Dal.Interfaces.LessonRepository;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
 using Microsoft.EntityFrameworkCore;

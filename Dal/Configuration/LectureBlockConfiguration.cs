@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Dal.Configuration
 {
-    public class LectureBlockConfiguration : IEntityTypeConfiguration<Lecture>
+    public class LectureBlockConfiguration : IEntityTypeConfiguration<LectureBlock>
     {
-        public void Configure(EntityTypeBuilder<Lecture> builder)
+        public void Configure(EntityTypeBuilder<LectureBlock> builder)
         {
             builder.ToTable("Lecture", "dbo");
             builder.HasKey(x => x.Id);

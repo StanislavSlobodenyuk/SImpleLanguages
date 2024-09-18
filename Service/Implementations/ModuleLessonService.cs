@@ -1,7 +1,7 @@
 ﻿
 using Common.Enum;
 using Common.Response;
-using Dal.Interfaces;
+using Dal.Interfaces.LessonRepository;
 using Domain.Entity.Content.Lessons;
 using Service.Interfaces;
 using System.Reflection;

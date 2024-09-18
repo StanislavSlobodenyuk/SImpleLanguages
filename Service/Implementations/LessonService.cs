@@ -1,12 +1,10 @@
 ﻿
 using Common.Enum;
 using Common.Response;
-using Dal.Interfaces;
+using Dal.Interfaces.LessonRepository;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question;
-using Domain.Enum;
 using Service.Interfaces;
-using System.Reflection;
 
 namespace Service.Implementations
 {
@@ -142,76 +140,97 @@ namespace Service.Implementations
             }
         }
 
-        public async Task<BaseResponse<BaseQuestion>> AddQuestion(int lessonId, BaseQuestion question)
+        public async Task<BaseResponse<Lesson>> AddQuestion(int lessonId, BaseQuestion question)
         {
             if (question == null)
-                return BaseResponseHelper.HandleBadRequest<BaseQuestion>("Bad parameters in request");
+                return BaseResponseHelper.HandleBadRequest<Lesson>("Bad parameters in request");
 
-            var currentModule = await _lessonRepository.GetById(lessonId);
+            var currentLesson = await _lessonRepository.GetById(lessonId);
 
-            if (currentModule == null)
-                return BaseResponseHelper.HandleNotFound<BaseQuestion>("The specified module was not found");
+            if (currentLesson == null)
+                return BaseResponseHelper.HandleNotFound<Lesson>("The specified lesson was not found");
 
             try
             {
                 var newQuestion = await _lessonRepository.AddQuestionToLesson(lessonId, question);
 
                 if (newQuestion == null)
-                    return BaseResponseHelper.HandleInternalServerError<BaseQuestion>("Error adding lesson");
+                    return BaseResponseHelper.HandleInternalServerError<Lesson>("Error adding lesson");
 
-                return BaseResponseHelper.HandleSuccessfulRequest(newQuestion);
+                Lesson? updateLesson = await _lessonRepository.GetById(lessonId);
+
+                if (updateLesson == null)
+                    return BaseResponseHelper.HandleNotFound<Lesson>("The specified lesson was not found");
+
+                return BaseResponseHelper.HandleSuccessfulRequest(updateLesson);
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<BaseQuestion>("Server error");
+                return BaseResponseHelper.HandleInternalServerError<Lesson>("Server error");
             }
         }
-        public async Task<BaseResponse<bool>> DeleteQuestion(int lessonId, BaseQuestion question)
+        public async Task<BaseResponse<Lesson>> DeleteQuestion(int lessonId, BaseQuestion question)
         {
             if (question == null)
-                return BaseResponseHelper.HandleBadRequest<bool>("Bad parameters in request");
+                return BaseResponseHelper.HandleBadRequest<Lesson>("Bad parameters in request");
 
             var currentLessone = await _lessonRepository.GetById(lessonId);
 
             if (currentLessone == null)
-                return BaseResponseHelper.HandleNotFound<bool>("The specified module was not found");
+                return BaseResponseHelper.HandleNotFound<Lesson>("The specified module was not found");
 
             try
             {
-                bool result = await _lessonRepository.DeleteQuestionFromLesson(lessonId, question);
-                if (!result)
-                    return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson");
+                var result = await _lessonRepository.DeleteQuestionFromLesson(lessonId, question);
+                if (result == false)
+                    return BaseResponseHelper.HandleInternalServerError<Lesson>("Error deleting lesson");
 
-                return BaseResponseHelper.HandleSuccessfulRequest(result);
+                Lesson? updateLesson = await _lessonRepository.GetById(lessonId);
+
+                if (updateLesson == null)
+                    return BaseResponseHelper.HandleNotFound<Lesson>("The specified lesson was not found");
+
+                return BaseResponseHelper.HandleSuccessfulRequest(updateLesson);
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson");
+                return BaseResponseHelper.HandleInternalServerError<Lesson>("Error deleting lesson");
             }
         }
-        public async Task<BaseResponse<List<bool>>> DeleteAllQuestion(int lessonId, List<BaseQuestion> questions)
+        public async Task<BaseResponse<Lesson>> DeleteAllQuestion(int lessonId, List<BaseQuestion> questions)
         {
             if (questions == null || questions.Any(l => l == null))
-                return BaseResponseHelper.HandleBadRequest<List<bool>>("Invalid questions list");
+                return BaseResponseHelper.HandleBadRequest<Lesson>("Invalid questions list");
 
             var currentModule = await _lessonRepository.GetById(lessonId);
 
             if (currentModule == null)
-                return BaseResponseHelper.HandleNotFound<List<bool>>("Lesson not found");
+                return BaseResponseHelper.HandleNotFound<Lesson>("Lesson not found");
 
             try
             {
-                List<bool> results = new List<bool>();
+                List<bool?> results = new List<bool?>();
                 foreach (var question in questions)
                 {
                     results.Add(await _lessonRepository.DeleteQuestionFromLesson(lessonId, question));
                 }
 
-                return BaseResponseHelper.HandleSuccessfulRequest(results);
+                foreach(var res in results)
+                {
+                    if (res == false)
+                        return BaseResponseHelper.HandleNotFound<Lesson>("Error deleting questions");
+                }
+
+                Lesson? updateLesson = await _lessonRepository.GetById(lessonId);
+
+                if (updateLesson == null)
+                    return BaseResponseHelper.HandleNotFound<Lesson>("Error deleting questions");
+
+                return BaseResponseHelper.HandleSuccessfulRequest(updateLesson);
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<List<bool>>("Error deleting questions");
+                return BaseResponseHelper.HandleInternalServerError<Lesson>("Error deleting questions");
             }
         }
 
@@ -219,7 +238,7 @@ namespace Service.Implementations
         {
             try
             {
-                var currentLesson = await _lessonRepository.GetLessonWithQuestion(lessonId);
+                var currentLesson = await _lessonRepository.GetById(lessonId);
 
                 if (currentLesson == null)
                     return BaseResponseHelper.HandleNotFound<IEnumerable<BaseQuestion>>("Lesson not found");
@@ -238,6 +257,62 @@ namespace Service.Implementations
             catch (Exception)
             {
                 return BaseResponseHelper.HandleInternalServerError<IEnumerable<BaseQuestion>>("Server error");
+            }
+        }
+
+        public async Task<BaseResponse<Lesson>> AddLecture(LectureBlock lecture, int lessonId)
+        {
+            if (lecture == null)
+                return BaseResponseHelper.HandleNotFound<Lesson>("Lecture not found");
+
+            try
+            {
+                Lesson? currentLesson = await _lessonRepository.GetById(lessonId);
+
+                if (currentLesson == null)
+                    return BaseResponseHelper.HandleNotFound<Lesson>($"Lesson with id {lessonId} not found");
+
+                Lesson? updateLesson = await _lessonRepository.AddLecture(lessonId, lecture);
+                
+                if (updateLesson == null)
+                    return BaseResponseHelper.HandleInternalServerError<Lesson>("Error adding lecture to lesson");
+
+                return BaseResponseHelper.HandleSuccessfulRequest<Lesson>(updateLesson);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+        public async Task<BaseResponse<Lesson>> DeleteLecture(LectureBlock lecture, int lessonId)
+        {
+            if (lecture == null)
+                return BaseResponseHelper.HandleNotFound<Lesson>("Lecture not found");
+
+            try
+            {
+                Lesson? currentLesson = await _lessonRepository.GetById(lessonId);
+
+                if (currentLesson == null)
+                    return BaseResponseHelper.HandleNotFound<Lesson>($"Lesson with id {lessonId} not found");
+
+                var result = await _lessonRepository.DeleteLecture(lessonId, lecture);
+
+                if (result == false)
+                    return BaseResponseHelper.HandleInternalServerError<Lesson>("Error delete lecture from lesson");
+
+                Lesson? updateLesson = await _lessonRepository.GetById(lessonId);
+
+                if (updateLesson == null)
+                    return BaseResponseHelper.HandleInternalServerError<Lesson>("Lesson not found");
+
+                return BaseResponseHelper.HandleSuccessfulRequest<Lesson>(updateLesson);
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

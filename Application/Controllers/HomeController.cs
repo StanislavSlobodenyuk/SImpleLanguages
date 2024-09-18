@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
 using Microsoft.AspNetCore.Mvc;
 
-namespace Application.Controller
+namespace Application.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class HomeController : ControllerBase
+    public class HomeController : Controller
     {
         [HttpGet]
         public IActionResult CheckApi()

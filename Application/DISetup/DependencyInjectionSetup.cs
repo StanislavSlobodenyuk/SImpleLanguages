@@ -1,4 +1,5 @@
 ﻿using Dal.Interfaces;
+using Dal.Interfaces.LessonRepository;
 using Dal.Interfaces.QuestionRepository;
 using Dal.Repositories;
 using Dal.Repositories.QuestionRepository;
@@ -12,6 +13,7 @@ namespace Application.InitRepositories
     {
         public static void RegisterRepositories(IServiceCollection services)
         {
+            services.AddScoped<IlectureRepository, LectureRepository>();
             services.AddScoped<ILanguageCourseRepository, LanguageCourseRepository >();
             services.AddScoped<IModuleLessonsRepository, ModuleLessonsRepositories>();
             services.AddScoped<ILessonRepository, LessonRepository>();
