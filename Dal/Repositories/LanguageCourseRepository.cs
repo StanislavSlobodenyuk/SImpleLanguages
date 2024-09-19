@@ -46,18 +46,6 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> Save()
-        {
-            try
-            {
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
         public async Task<LanguageCourse?> Update(LanguageCourse entity)
         {
             if (entity == null) return null;
@@ -74,12 +62,13 @@ namespace Dal.Repositories
                 return null;
             }
         }
-
-        public async Task<LanguageCourse?> GetById(int id)
+        public async Task<LanguageCourse?> GetById(int courseId)
         {
             try
             {
-                return await _context.LanguageCourses.FirstOrDefaultAsync(c => c.Id == id);
+                return await _context.LanguageCourses
+                 .Include(c => c.ModulesLessons)
+                 .FirstOrDefaultAsync(c => c.Id == courseId);
             }
             catch (DbException)
             {
@@ -87,25 +76,7 @@ namespace Dal.Repositories
                 return null;
             }
         }
-        public async Task<LanguageCourse?> GetCourseByIdWithModule(int courseId)
-        {
-            return await _context.LanguageCourses
-                .Include (c => c.ModulesLessons)
-                .FirstOrDefaultAsync (c => c.Id == courseId);
-        }
 
-        public async Task<LanguageCourse?> GetCourseByLanguage(LanguageName language)
-        {
-            try
-            {
-                return await _context.LanguageCourses.FirstOrDefaultAsync(e => e.Language == language);
-            }
-            catch (Exception)
-            {
-                // Логирование исключения
-                return null;
-            }
-        }
         public async Task<ModuleLessons?> AddModuleToCourse(int courseId, ModuleLessons entity)
         {
             LanguageCourse? course = await _context.LanguageCourses
@@ -148,11 +119,34 @@ namespace Dal.Repositories
             }
         }
 
-        public async Task<IEnumerable<LanguageCourse>> Select()
+        public async Task<IEnumerable<LanguageCourse>> GetCourses(string? name = null, LanguageName? language = null, LanguageLevel? difficulty = null)
         {
-            return await _context.LanguageCourses.ToListAsync();
-        }
+            try
+            {
+                IQueryable<LanguageCourse> query = _context.LanguageCourses
+                    .Include(c => c.ModulesLessons);
 
-        
+                if (!string.IsNullOrEmpty(name))
+                {
+                    query = query.Where(c => c.Name != null && c.Name.Contains(name, StringComparison.OrdinalIgnoreCase));
+                }
+
+                if (language.HasValue)
+                {
+                    query = query.Where(c => c.Language == language.Value);
+                }
+
+                if (difficulty.HasValue)
+                {
+                    query = query.Where(c => c.Difficult == difficulty.Value);
+                }
+
+                return await query.ToListAsync();
+            }
+            catch (Exception)
+            {
+                return Enumerable.Empty<LanguageCourse>();
+            }
+        }
     }
 }

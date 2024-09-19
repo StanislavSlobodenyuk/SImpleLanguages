@@ -46,18 +46,6 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> Save()
-        {
-            try
-            {
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
         public async Task<Lesson?> Update(Lesson entity)
         {
             if (entity == null) return null;
@@ -237,14 +225,6 @@ namespace Dal.Repositories
             }
         }
 
-        public async Task<IEnumerable<Lesson>> Select()
-        {
-            return await _context.Lessons
-                .Include(l => l.LectureBlocks) 
-                .Include(l => l.LessonQuestions)
-                    .ThenInclude(lq => lq.Question) 
-                .ToListAsync();
-        }
         public async Task<IEnumerable<BaseQuestion?>> GetAllQuestions(int lessonId)
         {
             var lesson = await _context.Lessons

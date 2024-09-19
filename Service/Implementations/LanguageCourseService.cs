@@ -4,7 +4,9 @@ using Dal.Interfaces;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
 using Domain.Enum;
+using Dto;
 using Service.Interfaces;
+using System.Collections.Generic;
 
 namespace Service.Implementations
 {
@@ -78,87 +80,75 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Course not Founde");
             }
         }
-        public async Task<BaseResponse<LanguageCourse>> GetCourseByName(LanguageName languageName)
+
+        //public async Task<BaseResponse<ModuleLessons>> AddModule(int courseId, ModuleLessons moduleLessons)
+        //{
+        //    try
+        //    {
+        //        var newCourse = await _courseRepository.AddModuleToCourse(courseId, moduleLessons);
+
+        //        if (newCourse == null)
+        //            return BaseResponseHelper.HandleInternalServerError<ModuleLessons>($"Failed add module to course");
+
+        //        return BaseResponseHelper.HandleSuccessfulRequest(newCourse);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Server error");
+        //    }
+        //}
+        //public async Task<BaseResponse<bool>> DeleteModule(int courseId, ModuleLessons moduleLessons)
+        //{
+        //    try
+        //    {
+        //        var result =  await _courseRepository.DeleteModuleFromCourse(courseId, moduleLessons);
+
+        //        if (result == false)
+        //            return BaseResponseHelper.HandleInternalServerError<bool>("Failed delete module from course");
+
+        //        return BaseResponseHelper.HandleSuccessfulRequest(result);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BaseResponseHelper.HandleInternalServerError<bool>("Unable add new module to course");
+        //    }
+        //}
+
+        //public async Task<BaseResponse<IEnumerable<ModuleLessons>>> GetAllModulesThisCourse(int courseId)
+        //{
+
+        //    var existingCourse = await _courseRepository.GetById(courseId);
+
+        //    if (existingCourse == null)
+        //        return BaseResponseHelper.HandleInternalServerError<IEnumerable<ModuleLessons>>("Course not found");
+
+        //    try
+        //    {
+        //        return new BaseResponse<IEnumerable<ModuleLessons>>
+        //        {
+        //            Data = existingCourse.ModulesLessons,
+        //            StatusCode = MyStatusCode.OK
+        //        };
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BaseResponseHelper.HandleInternalServerError<IEnumerable<ModuleLessons>>("Database error");
+        //    }
+        //}
+        public async Task<BaseResponse<IEnumerable<LanguageCourse>>> GetFillterCourses(CourseFilterDto courseFilter)
         {
+            if (string.IsNullOrEmpty(courseFilter.SearchName)
+                && Enum.IsDefined(typeof(LanguageName), courseFilter.Language)
+                && Enum.IsDefined(typeof(LanguageLevel), courseFilter.Difficult))
+                return BaseResponseHelper.HandleBadRequest<IEnumerable<LanguageCourse>>("Bad parameters");
             try
             {
-                var course = await _courseRepository.GetCourseByLanguage(languageName);
+                IEnumerable<LanguageCourse> filterCourses = await _courseRepository.GetCourses();
 
-                if (course == null)
-                    return BaseResponseHelper.HandleNotFound<LanguageCourse>($"Course with language {languageName} not found");
+                if (filterCourses == null || !filterCourses.Any())
+                    return BaseResponseHelper.HandleNotFound<IEnumerable<LanguageCourse>>("Courses by fillter not found");
 
-                return BaseResponseHelper.HandleSuccessfulRequest(course);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Course not Founde");
-            }
-        }
-
-        public async Task<BaseResponse<ModuleLessons>> AddModule(int courseId, ModuleLessons moduleLessons)
-        {
-            try
-            {
-                var newCourse = await _courseRepository.AddModuleToCourse(courseId, moduleLessons);
-
-                if (newCourse == null)
-                    return BaseResponseHelper.HandleInternalServerError<ModuleLessons>($"Failed add module to course");
-
-                return BaseResponseHelper.HandleSuccessfulRequest(newCourse);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Server error");
-            }
-        }
-        public async Task<BaseResponse<bool>> DeleteModule(int courseId, ModuleLessons moduleLessons)
-        {
-            try
-            {
-                var result =  await _courseRepository.DeleteModuleFromCourse(courseId, moduleLessons);
-
-                if (result == false)
-                    return BaseResponseHelper.HandleInternalServerError<bool>("Failed delete module from course");
-
-                return BaseResponseHelper.HandleSuccessfulRequest(result);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<bool>("Unable add new module to course");
-            }
-        }
-
-        public async Task<BaseResponse<IEnumerable<ModuleLessons>>> GetAllModulesThisCourse(int courseId)
-        {
-
-            var existingCourse = await _courseRepository.GetById(courseId);
-
-            if (existingCourse == null)
-                return BaseResponseHelper.HandleInternalServerError<IEnumerable<ModuleLessons>>("Course not found");
-
-            try
-            {
-                return new BaseResponse<IEnumerable<ModuleLessons>>
-                {
-                    Data = existingCourse.ModulesLessons,
-                    StatusCode = MyStatusCode.OK
-                };
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<IEnumerable<ModuleLessons>>("Database error");
-            }
-        }
-        public async Task<BaseResponse<IEnumerable<LanguageCourse>>> GetAllCourses()
-        {
-            var baseResponse = new BaseResponse<IEnumerable<LanguageCourse>>();
-
-            try
-            {
-                baseResponse.Data = await _courseRepository.Select();
-                baseResponse.StatusCode=MyStatusCode.OK;
-
-                return baseResponse;
+                return BaseResponseHelper.HandleSuccessfulRequest(filterCourses);
             }
             catch (Exception)
             {

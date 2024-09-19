@@ -66,19 +66,6 @@ namespace Dal.Repositories
             }
         }
 
-        public async Task<bool> Save()
-        {
-            try
-            {
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
-
         public async Task<LectureBlock?> GetById(int id)
         {
             try
@@ -128,11 +115,6 @@ namespace Dal.Repositories
         {
             throw new NotImplementedException();
             // TODO: Доробити  UpdateImage
-        }
-
-        public async Task<IEnumerable<LectureBlock>> Select()
-        {
-            return await _context.Lectures.ToListAsync();
         }
     }
 }

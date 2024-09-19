@@ -7,10 +7,9 @@ namespace Dal.Interfaces
 {
     public  interface ILanguageCourseRepository : IBaseRepository<LanguageCourse>
     {
-        Task<LanguageCourse?> GetCourseByLanguage(LanguageName language);
-        Task<LanguageCourse?> GetCourseByIdWithModule(int courseId);
-
         Task<ModuleLessons?> AddModuleToCourse(int courseId, ModuleLessons entity);
         Task<bool> DeleteModuleFromCourse(int courseId, ModuleLessons entity);
+
+        Task<IEnumerable<LanguageCourse>> GetCourses(string? name = null, LanguageName? language = null, LanguageLevel? difficulty = null);
     }
 }

@@ -80,18 +80,6 @@ namespace Dal.Repositories
             }
 
         }
-        public async Task<bool> Save()
-        {
-            try
-            {
-                await _context.SaveChangesAsync();
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
 
         public async Task<bool> ChangeAvailableModule(ModuleLessons entity, bool isAvailable)
         {
@@ -151,11 +139,5 @@ namespace Dal.Repositories
                 return false;
             }
         }
-
-        public async Task<IEnumerable<ModuleLessons>> Select()
-        {
-            return await _context.ModuleLessons.ToListAsync();
-        }
-
     }
 }
