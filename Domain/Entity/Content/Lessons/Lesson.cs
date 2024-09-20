@@ -12,7 +12,7 @@ namespace Domain.Entity.Content.Lessons
 
         // Communication is established by configuration ModuleLessonConfiguration
         public int ModuleLessonsId { get; set; }
-        public ModuleLessons? ModuleLessons { get; set; }
+        public CourseModule? CourseModules { get; set; }
 
         public ICollection<LectureBlock> LectureBlocks {  get; private set; }  = new List<LectureBlock>();
         public ICollection<LessonQuestion> LessonQuestions { get; private set; } = new List<LessonQuestion>();

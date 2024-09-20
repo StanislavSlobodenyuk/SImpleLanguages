@@ -1,4 +1,5 @@
-﻿using Dal.Interfaces.LessonRepository;
+﻿using Dal.Interfaces;
+using Dal.Interfaces.LessonRepository;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question;
 using Microsoft.EntityFrameworkCore;
@@ -115,6 +116,11 @@ namespace Dal.Repositories
         {
             throw new NotImplementedException();
             // TODO: Доробити  UpdateImage
+        }
+
+        Task<bool> IBaseRepository<LectureBlock>.Update(LectureBlock entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

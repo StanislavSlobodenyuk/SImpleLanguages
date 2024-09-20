@@ -18,6 +18,6 @@ namespace Service.Interfaces
 
         Task<BaseResponse<bool>> DeleteQuestion(int questionId, QuestionType type);
         Task<BaseResponse<BaseQuestion>?> GetQuestion(int questionId, QuestionType type);
-        Task<BaseResponse<string>?> GetRigthAnswer(int questionId, QuestionType type);
+        //Task<BaseResponse<string>?> GetRigthAnswer(int questionId, QuestionType type);
     }
 }

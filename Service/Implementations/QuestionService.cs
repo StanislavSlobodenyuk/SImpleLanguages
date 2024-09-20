@@ -194,21 +194,21 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<BaseQuestion>($"Failed to found question");
             }
         }
-        public async Task<BaseResponse<string>?> GetRigthAnswer(int questionId, QuestionType type)
-        {
-            try
-            {
-                var result = await _baseQuestionRepository.GetRigthAnswer(questionId, type);
+        //public async Task<BaseResponse<string>?> GetRigthAnswer(int questionId, QuestionType type)
+        //{
+        //    try
+        //    {
+        //        var result = await _baseQuestionRepository.GetRigthAnswer(questionId, type);
 
-                if (string.IsNullOrEmpty(result))
-                    return BaseResponseHelper.HandleNotFound<string>("Question not found");
+        //        if (string.IsNullOrEmpty(result))
+        //            return BaseResponseHelper.HandleNotFound<string>("Question not found");
 
-                return BaseResponseHelper.HandleSuccessfulRequest(result);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<string>($"Failed to found question");
-            }
-        }
+        //        return BaseResponseHelper.HandleSuccessfulRequest(result);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BaseResponseHelper.HandleInternalServerError<string>($"Failed to found question");
+        //    }
+        //}
     }
 }

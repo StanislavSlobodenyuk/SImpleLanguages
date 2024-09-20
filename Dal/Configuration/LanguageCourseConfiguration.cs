@@ -42,7 +42,7 @@ namespace Dal.Configuration
                 .HasColumnName("Last_Save_Result")
                 .HasDefaultValue(0);
 
-            builder.HasMany(e => e.ModulesLessons)
+            builder.HasMany(e => e.CourseModules)
                 .WithOne(e=> e.LanguageCourse)
                 .HasForeignKey(e => e.LanguageCourseId)
                 .IsRequired()

@@ -14,7 +14,7 @@ namespace Domain.Entity.Content.Metadata.Course
         public string? IconPath { get; set; }
         public float Progres {  get; private set; } = 0f;
 
-        public ICollection<ModuleLessons> ModulesLessons { get; private set; } = new List<ModuleLessons>();
+        public ICollection<CourseModule> CourseModules { get; private set; } = new List<CourseModule>();
 
         public LanguageCourse(string? name, string? description, LanguageName language, LanguageLevel difficult, string? iconPath)
         {

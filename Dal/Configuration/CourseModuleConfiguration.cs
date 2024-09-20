@@ -5,11 +5,11 @@ using Domain.Entity.Content.Lessons;
 
 namespace Dal.Configuration
 {
-    public class ModuleLessonsConfiguration : IEntityTypeConfiguration<ModuleLessons>
+    public class CourseModuleConfiguration : IEntityTypeConfiguration<CourseModule>
     {
-        public void Configure(EntityTypeBuilder<ModuleLessons> builder)
+        public void Configure(EntityTypeBuilder<CourseModule> builder)
         {
-            builder.ToTable("ModuleOfLessons");
+            builder.ToTable("Course_Module");
 
             builder.HasKey(x => x.Id);
 
@@ -34,7 +34,7 @@ namespace Dal.Configuration
                 .HasColumnName("Path_To_Map");
 
             builder.HasMany(e => e.Lessons)
-                .WithOne(e => e.ModuleLessons)
+                .WithOne(e => e.CourseModules)
                 .HasForeignKey(e => e.ModuleLessonsId)
                 .IsRequired()
                 .HasConstraintName("FK_ModulesLessons_Lesson_ModuleOfLessons")

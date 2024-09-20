@@ -1,4 +1,5 @@
-﻿using Dal.Interfaces.LessonRepository;
+﻿using Dal.Interfaces;
+using Dal.Interfaces.LessonRepository;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
 using Microsoft.EntityFrameworkCore;
@@ -14,11 +15,11 @@ namespace Dal.Repositories
             _context = context;
         }
 
-        public async Task<ModuleLessons?> GetById(int id)
+        public async Task<CourseModule?> GetById(int id)
         {
             try
             {
-                return await _context.ModuleLessons.FirstOrDefaultAsync(c => c.Id == id);
+                return await _context.CourseModules.FirstOrDefaultAsync(c => c.Id == id);
             }
             catch (DbException)
             {
@@ -26,20 +27,20 @@ namespace Dal.Repositories
                 return null;
             }
         }
-        public async Task<ModuleLessons?> GetModuleByIdWithLessons(int moduleId)
+        public async Task<CourseModule?> GetModuleByIdWithLessons(int moduleId)
         {
-            return await _context.ModuleLessons
+            return await _context.CourseModules
                 .Include(c => c.Lessons)
                 .FirstOrDefaultAsync(c => c.Id == moduleId);
         }
 
-        public async Task<bool> Create(ModuleLessons entity)
+        public async Task<bool> Create(CourseModule entity)
         {
             if (entity == null || entity.Id == 0) return false;
 
             try
             {
-                await _context.ModuleLessons.AddAsync(entity);
+                await _context.CourseModules.AddAsync(entity);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -48,7 +49,7 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> Delete(ModuleLessons entity)
+        public async Task<bool> Delete(CourseModule entity)
         {
             if (entity == null || entity.Id == 0) return false;
 
@@ -63,7 +64,7 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<ModuleLessons?> Update(ModuleLessons entity)
+        public async Task<CourseModule?> Update(CourseModule entity)
         {
             if (entity == null) return null;
 
@@ -72,7 +73,7 @@ namespace Dal.Repositories
                 _context.Entry(entity).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
-                return await _context.ModuleLessons.FindAsync(entity.Id);
+                return await _context.CourseModules.FindAsync(entity.Id);
             }
             catch (DbUpdateException)
             {
@@ -81,7 +82,7 @@ namespace Dal.Repositories
 
         }
 
-        public async Task<bool> ChangeAvailableModule(ModuleLessons entity, bool isAvailable)
+        public async Task<bool> ChangeAvailableModule(CourseModule entity, bool isAvailable)
         {
             if (entity == null) return false;
 
@@ -100,7 +101,7 @@ namespace Dal.Repositories
         }
         public async Task<Lesson?> AddLessonToModule(int moduleId, Lesson entity)
         {
-            ModuleLessons? module = await _context.ModuleLessons
+            CourseModule? module = await _context.CourseModules
                 .Include(c => c.Lessons)
                 .FirstOrDefaultAsync(e => e.Id == moduleId);
 
@@ -122,7 +123,7 @@ namespace Dal.Repositories
         }
         public async Task<bool> DeleteLessonFromModule(int moduleId, Lesson entity)
         {
-            ModuleLessons? module = await _context.ModuleLessons
+            CourseModule? module = await _context.CourseModules
                  .Include(c => c.Lessons)
                  .FirstOrDefaultAsync(e => e.Id == moduleId);
 
@@ -138,6 +139,11 @@ namespace Dal.Repositories
             {
                 return false;
             }
+        }
+
+        Task<bool> IBaseRepository<CourseModule>.Update(CourseModule entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -21,7 +21,7 @@ namespace Dal
         
         // Main content
         // Lessons
-        public DbSet<ModuleLessons> ModuleLessons { get; set; }
+        public DbSet<CourseModule> CourseModules { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<LectureBlock> Lectures { get; set; }
         // Questions
@@ -47,7 +47,7 @@ namespace Dal
 
             // Main content
             // Lessons
-            builder.ApplyConfiguration(new ModuleLessonsConfiguration());
+            builder.ApplyConfiguration(new CourseModuleConfiguration());
             builder.ApplyConfiguration(new LessonConfiguration());
             builder.ApplyConfiguration(new LectureBlockConfiguration());
             // Questions

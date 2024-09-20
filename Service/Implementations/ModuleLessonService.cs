@@ -17,11 +17,11 @@ namespace Service.Implementations
             _moduleLessonsRepository = moduleLessonsRepository;
         }
 
-        public async Task<BaseResponse<ModuleLessons>> CreateModule(string title, string description, bool isAvailable)
+        public async Task<BaseResponse<CourseModule>> CreateModule(string title, string description, bool isAvailable)
         {
             if (string.IsNullOrEmpty(title)) 
             {
-                return new BaseResponse<ModuleLessons>()
+                return new BaseResponse<CourseModule>()
                 {
                     Description = "Unable to create course, error when entering parameters",
                     StatusCode = MyStatusCode.BadRequest
@@ -31,18 +31,18 @@ namespace Service.Implementations
 
             try
             {
-                var newModule = new ModuleLessons(title, isAvailable, description);
+                var newModule = new CourseModule(title, isAvailable, description);
 
                 bool result = await _moduleLessonsRepository.Create(newModule);
 
                 if (!result)
-                    return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error creating new module");
+                    return BaseResponseHelper.HandleInternalServerError<CourseModule>("Error creating new module");
 
                 return BaseResponseHelper.HandleSuccessfulRequest(newModule);
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error create new module");
+                return BaseResponseHelper.HandleInternalServerError<CourseModule>("Error create new module");
             }
         }
         public async Task<BaseResponse<bool>> DeleteModule(int moduleId)
@@ -68,41 +68,41 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<bool>("Error create new module");
             }
         }
-        public async Task<BaseResponse<ModuleLessons>> ChangeAvailableModule(int moduleId, bool isAvailable)
+        public async Task<BaseResponse<CourseModule>> ChangeAvailableModule(int moduleId, bool isAvailable)
         {
             var existingModule = await _moduleLessonsRepository.GetById(moduleId);
             if (existingModule == null)
             {
-                return BaseResponseHelper.HandleNotFound<ModuleLessons>("Module not found");
+                return BaseResponseHelper.HandleNotFound<CourseModule>("Module not found");
             }
 
             try
             {
                 bool result = await _moduleLessonsRepository.ChangeAvailableModule(existingModule, isAvailable);
                 if (!result)
-                    return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error changing availability");
+                    return BaseResponseHelper.HandleInternalServerError<CourseModule>("Error changing availability");
 
                 return BaseResponseHelper.HandleSuccessfulRequest(existingModule);
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error changing availability");
+                return BaseResponseHelper.HandleInternalServerError<CourseModule>("Error changing availability");
             }
         }
         
-        public async Task<BaseResponse<ModuleLessons>> GetModule(int moduleId)
+        public async Task<BaseResponse<CourseModule>> GetModule(int moduleId)
         {
             try
             {
                 var module = await _moduleLessonsRepository.GetById(moduleId);
                 if (module == null)
-                    return BaseResponseHelper.HandleNotFound<ModuleLessons>("Module not found");
+                    return BaseResponseHelper.HandleNotFound<CourseModule>("Module not found");
 
                 return BaseResponseHelper.HandleSuccessfulRequest(module);
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Error fetching module");
+                return BaseResponseHelper.HandleInternalServerError<CourseModule>("Error fetching module");
             }
         }
        

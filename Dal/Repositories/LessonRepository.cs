@@ -1,4 +1,5 @@
-﻿using Dal.Interfaces.LessonRepository;
+﻿using Dal.Interfaces;
+using Dal.Interfaces.LessonRepository;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question;
 using Domain.Enum;
@@ -247,6 +248,11 @@ namespace Dal.Repositories
             return lesson.LessonQuestions
                 .Select(lq => lq.Question)
                 .ToList();
+        }
+
+        Task<bool> IBaseRepository<Lesson>.Update(Lesson entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

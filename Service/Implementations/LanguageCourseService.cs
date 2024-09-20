@@ -19,16 +19,16 @@ namespace Service.Implementations
             _courseRepository = courseRepository;
         }
 
-        public async Task<BaseResponse<LanguageCourse>> CreateCourse(string name, string description, LanguageName languageName, LanguageLevel difficult, string iconPath)
+        public async Task<BaseResponse<LanguageCourse>> CreateCourse(LanguageCourse course)
         {
-            if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(iconPath) || 
-                !Enum.IsDefined(typeof(LanguageLevel), languageName) || 
-                !Enum.IsDefined(typeof(LanguageLevel), difficult))
+            if (string.IsNullOrEmpty(course.Name) || string.IsNullOrEmpty(course.IconPath) || 
+                !Enum.IsDefined(typeof(LanguageLevel), course.Language) || 
+                !Enum.IsDefined(typeof(LanguageLevel), course.Difficult))
                 return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Invalid parameters");
 
             try
             {
-                var newCourse = new LanguageCourse(name, description, languageName, difficult , iconPath);
+                var newCourse = new LanguageCourse(course.Name, course.Description, course.Language, course.Difficult, course.IconPath);
 
                 bool result = await _courseRepository.Create(newCourse);
 
@@ -63,6 +63,34 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<bool>("Unable delete course");
             }
         }
+        public async Task<BaseResponse<LanguageCourse>> UpdateCourse(UpdateCourseDto course, int courseId) 
+        {
+            if (course == null)
+                return BaseResponseHelper.HandleBadRequest<LanguageCourse>("Parameters is bad");
+
+            LanguageCourse? currentCourse = await _courseRepository.GetById(courseId);
+
+            if (currentCourse == null)
+                return BaseResponseHelper.HandleNotFound<LanguageCourse>($"Course with id {courseId} not found");
+
+            try
+            {
+                currentCourse.Name = course.Name;
+                currentCourse.Description = course.Description;
+                currentCourse.IconPath = course.IconPath;
+
+                bool result = await _courseRepository.Update(currentCourse);
+                if (result == false)
+                    return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("Failed update course");
+
+                return BaseResponseHelper.HandleSuccessfulRequest(currentCourse);
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
 
         public async Task<BaseResponse<LanguageCourse>> GetCourseById(int courseId)
         {
@@ -81,60 +109,53 @@ namespace Service.Implementations
             }
         }
 
-        //public async Task<BaseResponse<ModuleLessons>> AddModule(int courseId, ModuleLessons moduleLessons)
-        //{
-        //    try
-        //    {
-        //        var newCourse = await _courseRepository.AddModuleToCourse(courseId, moduleLessons);
+        public async Task<BaseResponse<CourseModule>> AddModule(CourseModule moduleLessons, int courseId)
+        {
+            if (moduleLessons == null)
+                return BaseResponseHelper.HandleBadRequest<CourseModule>("Parameter is bad");
 
-        //        if (newCourse == null)
-        //            return BaseResponseHelper.HandleInternalServerError<ModuleLessons>($"Failed add module to course");
+            try
+            {
+                var currentCourse = await _courseRepository.GetById(courseId);
 
-        //        return BaseResponseHelper.HandleSuccessfulRequest(newCourse);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BaseResponseHelper.HandleInternalServerError<ModuleLessons>("Server error");
-        //    }
-        //}
-        //public async Task<BaseResponse<bool>> DeleteModule(int courseId, ModuleLessons moduleLessons)
-        //{
-        //    try
-        //    {
-        //        var result =  await _courseRepository.DeleteModuleFromCourse(courseId, moduleLessons);
+                if (currentCourse == null)
+                    return BaseResponseHelper.HandleInternalServerError<CourseModule>($"Course with id {courseId} not found");
 
-        //        if (result == false)
-        //            return BaseResponseHelper.HandleInternalServerError<bool>("Failed delete module from course");
+                CourseModule? newModule = await _courseRepository.AddModuleToCourse(courseId, moduleLessons);
 
-        //        return BaseResponseHelper.HandleSuccessfulRequest(result);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BaseResponseHelper.HandleInternalServerError<bool>("Unable add new module to course");
-        //    }
-        //}
+                if (newModule == null)
+                    return BaseResponseHelper.HandleInternalServerError<CourseModule>("An unexpected error occurred.");
 
-        //public async Task<BaseResponse<IEnumerable<ModuleLessons>>> GetAllModulesThisCourse(int courseId)
-        //{
+                return BaseResponseHelper.HandleSuccessfulRequest(newModule);
+            }
+            catch (Exception)
+            {
+                return BaseResponseHelper.HandleInternalServerError<CourseModule>("An unexpected error occurred.");
+            }
+        }
+        public async Task<BaseResponse<bool>> DeleteModule(int courseId, int moduleId)
+        {
+            LanguageCourse? currentCourse = await _courseRepository.GetById(courseId);
 
-        //    var existingCourse = await _courseRepository.GetById(courseId);
+            if (currentCourse == null)
+                return BaseResponseHelper.HandleNotFound<bool>($"Course with id {courseId} not found");
+            
 
-        //    if (existingCourse == null)
-        //        return BaseResponseHelper.HandleInternalServerError<IEnumerable<ModuleLessons>>("Course not found");
+            try
+            {
+                var result = await _courseRepository.DeleteModuleFromCourse(courseId, moduleId);
 
-        //    try
-        //    {
-        //        return new BaseResponse<IEnumerable<ModuleLessons>>
-        //        {
-        //            Data = existingCourse.ModulesLessons,
-        //            StatusCode = MyStatusCode.OK
-        //        };
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BaseResponseHelper.HandleInternalServerError<IEnumerable<ModuleLessons>>("Database error");
-        //    }
-        //}
+                if (result == false)
+                    return BaseResponseHelper.HandleInternalServerError<bool>("Failed delete module from course");
+
+                return BaseResponseHelper.HandleSuccessfulRequest(result);
+            }
+            catch (Exception)
+            {
+                return BaseResponseHelper.HandleInternalServerError<bool>("Unable add new module to course");
+            }
+        }
+
         public async Task<BaseResponse<IEnumerable<LanguageCourse>>> GetFillterCourses(CourseFilterDto courseFilter)
         {
             if (string.IsNullOrEmpty(courseFilter.SearchName)
