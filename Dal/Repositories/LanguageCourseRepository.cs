@@ -87,6 +87,9 @@ namespace Dal.Repositories
 
             try
             {
+                _context.CourseModules.Add(module);
+                await _context.SaveChangesAsync();
+
                 course.CourseModules.Add(module);
                 await _context.SaveChangesAsync();
                 
@@ -97,22 +100,16 @@ namespace Dal.Repositories
                 return null;
             }
         }
-        public async Task<bool> DeleteModuleFromCourse(int courseId, int moduleId)
+        public async Task<bool> DeleteModuleFromCourse(LanguageCourse course, CourseModule module)
         {
-            bool isModuleLinked = await _context.CourseModules
-                .AnyAsync(m => m.Id == moduleId && m.LanguageCourseId == courseId);
-
-            if (!isModuleLinked)
-                return false;
+            if (course == null || module == null) return false;
 
             try
             {
-                CourseModule? currentModule = await _context.CourseModules.FirstOrDefaultAsync(m => m.Id == moduleId);
-                
-                if (currentModule == null) 
-                    return false;
+                course.CourseModules.Remove(module);
+                await _context.SaveChangesAsync();
 
-                _context.CourseModules.Remove(currentModule);
+                _context.CourseModules.Remove(module);
                 await _context.SaveChangesAsync();
 
                 return true;

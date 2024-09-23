@@ -152,7 +152,7 @@ namespace Application.Controllers
                     return BadRequest(new { message = "Parameter is not correct" });
 
                 case MyStatusCode.OK:
-                    return Ok(true);
+                    return Ok(response.Data);
 
                 default:
                     return StatusCode(500, new { message = "An unexpected error occurred." });
@@ -168,7 +168,7 @@ namespace Application.Controllers
             switch (response.StatusCode)
             {
                 case MyStatusCode.NotFound:
-                    return NotFound(new { message = $"Not found course wirh id {courseId}" });
+                    return NotFound(new { message = $"Not found course with id {courseId}" });
                 case MyStatusCode.BadRequest:
                     return NotFound(new { message = "Parameter is bad" });
                 case MyStatusCode.InternalServerError:

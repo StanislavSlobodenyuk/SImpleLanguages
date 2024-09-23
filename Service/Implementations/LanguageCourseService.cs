@@ -109,28 +109,28 @@ namespace Service.Implementations
             }
         }
 
-        public async Task<BaseResponse<CourseModule>> AddModule(CourseModule moduleLessons, int courseId)
+        public async Task<BaseResponse<LanguageCourse>> AddModule(CourseModule moduleLessons, int courseId)
         {
             if (moduleLessons == null)
-                return BaseResponseHelper.HandleBadRequest<CourseModule>("Parameter is bad");
+                return BaseResponseHelper.HandleBadRequest<LanguageCourse>("Parameter is bad");
 
             try
             {
                 var currentCourse = await _courseRepository.GetById(courseId);
 
                 if (currentCourse == null)
-                    return BaseResponseHelper.HandleInternalServerError<CourseModule>($"Course with id {courseId} not found");
+                    return BaseResponseHelper.HandleInternalServerError<LanguageCourse>($"Course with id {courseId} not found");
 
                 CourseModule? newModule = await _courseRepository.AddModuleToCourse(courseId, moduleLessons);
 
                 if (newModule == null)
-                    return BaseResponseHelper.HandleInternalServerError<CourseModule>("An unexpected error occurred.");
+                    return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("An unexpected error occurred.");
 
-                return BaseResponseHelper.HandleSuccessfulRequest(newModule);
+                return BaseResponseHelper.HandleSuccessfulRequest(currentCourse);
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<CourseModule>("An unexpected error occurred.");
+                return BaseResponseHelper.HandleInternalServerError<LanguageCourse>("An unexpected error occurred.");
             }
         }
         public async Task<BaseResponse<bool>> DeleteModule(int courseId, int moduleId)
@@ -139,11 +139,15 @@ namespace Service.Implementations
 
             if (currentCourse == null)
                 return BaseResponseHelper.HandleNotFound<bool>($"Course with id {courseId} not found");
-            
+
+            CourseModule? currentModule =  currentCourse.CourseModules.FirstOrDefault(m => m.Id == moduleId);
+
+            if (currentModule == null)
+                return BaseResponseHelper.HandleNotFound<bool>($"Module with id {moduleId} not found");
 
             try
             {
-                var result = await _courseRepository.DeleteModuleFromCourse(courseId, moduleId);
+                var result = await _courseRepository.DeleteModuleFromCourse(currentCourse, currentModule);
 
                 if (result == false)
                     return BaseResponseHelper.HandleInternalServerError<bool>("Failed delete module from course");

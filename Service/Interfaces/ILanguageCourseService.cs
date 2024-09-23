@@ -14,7 +14,7 @@ namespace Service.Interfaces
 
         Task<BaseResponse<LanguageCourse>> GetCourseById(int id);
 
-        Task<BaseResponse<CourseModule>> AddModule(CourseModule moduleOfLessons, int courseId);
+        Task<BaseResponse<LanguageCourse>> AddModule(CourseModule moduleOfLessons, int courseId);
         Task<BaseResponse<bool>> DeleteModule(int courseId, int moduleId);
         Task<BaseResponse<IEnumerable<LanguageCourse>>> GetFillterCourses(CourseFilterDto courseFilter);
 

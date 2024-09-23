@@ -15,7 +15,7 @@ namespace Application.InitRepositories
         {
             services.AddScoped<IlectureRepository, LectureRepository>();
             services.AddScoped<ILanguageCourseRepository, LanguageCourseRepository >();
-            services.AddScoped<IModuleLessonsRepository, ModuleLessonsRepositories>();
+            services.AddScoped<ICourseModuleRepository, CourseModuleRepositories>();
             services.AddScoped<ILessonRepository, LessonRepository>();
             services.AddScoped<ITestQuestionRepository, TestQuestionRepository>();
             services.AddScoped<IAudioQuestionRepository, AudioQuestionRepository>();
@@ -25,7 +25,7 @@ namespace Application.InitRepositories
         public static void RegisterServices(IServiceCollection services)
         {
             services.AddScoped<ILanguageCourseService, LanguageCourseService>();
-            services.AddScoped<IModuleLessonService, ModuleLessonService>();
+            services.AddScoped<ICourseModuleService, CourseModuleService>();
             services.AddScoped<ILessonService, LessonService>();
             services.AddScoped<IQuestionService, QuestionService>();
         }
