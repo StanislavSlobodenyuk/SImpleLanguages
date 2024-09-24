@@ -8,7 +8,7 @@ namespace Service.Interfaces
 {
     public interface ICourseModuleService 
     {
-        Task<BaseResponse<CourseModule>> UpdateModule(CourseModuleUpdateDto updateDto ,int moduleId);
+        Task<BaseResponse<CourseModule>> UpdateModule(UpdateCourseModuleDto updateDto ,int moduleId);
         Task<BaseResponse<CourseModule>> GetModule(int moduleId);
         Task<BaseResponse<CourseModule>> ChangeAvailableModule(int moduleId);
 

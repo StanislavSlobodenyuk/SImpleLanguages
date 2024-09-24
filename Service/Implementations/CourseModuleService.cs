@@ -1,11 +1,8 @@
-﻿
-using Common.Enum;
-using Common.Response;
+﻿using Common.Response;
 using Dal.Interfaces.LessonRepository;
 using Domain.Entity.Content.Lessons;
 using Dto;
 using Service.Interfaces;
-using System.Reflection;
 
 namespace Service.Implementations
 {
@@ -18,7 +15,7 @@ namespace Service.Implementations
             _moduleLessonsRepository = moduleLessonsRepository;
         }
 
-        public async Task<BaseResponse<CourseModule>> UpdateModule(CourseModuleUpdateDto updateDto, int courseId)
+        public async Task<BaseResponse<CourseModule>> UpdateModule(UpdateCourseModuleDto updateDto, int courseId)
         {
             if (string.IsNullOrEmpty(updateDto.Title) && string.IsNullOrEmpty(updateDto.PathToMap))
                 return BaseResponseHelper.HandleBadRequest<CourseModule>("Parameters are empty.");

@@ -17,6 +17,7 @@ namespace Domain.Entity.Content.Lessons
         public ICollection<LectureBlock> LectureBlocks {  get; private set; }  = new List<LectureBlock>();
         public ICollection<LessonQuestion> LessonQuestions { get; private set; } = new List<LessonQuestion>();
 
+        public Lesson() { } 
         public Lesson(string title, bool isAvailable, string iconPath)
         {
             Title = title;
