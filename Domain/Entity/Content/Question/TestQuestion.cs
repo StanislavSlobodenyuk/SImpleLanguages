@@ -1,5 +1,6 @@
 ﻿
 using Domain.Enum;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity.Content.Question
 {
@@ -11,7 +12,7 @@ namespace Domain.Entity.Content.Question
         public IEnumerable<TestAnswerOption> AnswerOptions { get; set; } = new List<TestAnswerOption>();
 
         protected TestQuestion() { }
-        public TestQuestion(string? questionText, QuestionType type) : base(questionText, type)
+        public TestQuestion(string? questionText) : base(questionText)
         {
         }
     }

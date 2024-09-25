@@ -6,7 +6,7 @@ namespace Domain.Entity.Content.Lessons
 {
     public class Lesson : BaseEntity 
     {
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public bool IsAvailable { get; set; } 
         public string? IconPath { get; set; }
 

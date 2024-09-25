@@ -25,9 +25,6 @@ namespace Dal.Configuration
                 .IsRequired()
                 .HasColumnName("Question_Text")
                 .HasMaxLength(400);
-
-            builder.Property(e => e.Type)
-                .IsRequired();
         }
     }
 }

@@ -6,7 +6,7 @@ namespace Dal.Interfaces.QuestionRepository
 {
     public interface IBaseQuestionRepository
     {
-        Task<bool> DeleteQuestion(int questionId, QuestionType type);
-        Task<BaseQuestion?> GetQuestion(int questionId, QuestionType type);
+        Task<bool> DeleteQuestion(int questionId, TypeQuestion type);
+        Task<BaseQuestion?> GetQuestion(int questionId, TypeQuestion type);
     }
 }

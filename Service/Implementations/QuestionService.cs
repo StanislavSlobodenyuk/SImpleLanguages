@@ -26,14 +26,14 @@ namespace Service.Implementations
         }
 
 
-        public async Task<BaseResponse<AudioQuestion>> CreateAudioQuestion(string text, string rightAnswer, string audioUrl, QuestionType type)
+        public async Task<BaseResponse<AudioQuestion>> CreateAudioQuestion(string text, string rightAnswer, string audioUrl, TypeQuestion type)
         {
             if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(rightAnswer) || string.IsNullOrEmpty(audioUrl))
                 return BaseResponseHelper.HandleBadRequest<AudioQuestion>("Invalid parameters");
 
             try
             {
-                var newQuestion = new AudioQuestion(text, rightAnswer, audioUrl, type);
+                var newQuestion = new AudioQuestion(text, rightAnswer, audioUrl);
                 var result = await _audioQuestionRepository.CreateAudioQuestion(newQuestion);
 
                 if (result == false)
@@ -79,14 +79,14 @@ namespace Service.Implementations
             }
         }
 
-        public async Task<BaseResponse<TestQuestion>> CreateTestQuestion(string text, QuestionType type, List<string> answerOptions, string answer)
+        public async Task<BaseResponse<TestQuestion>> CreateTestQuestion(string text, TypeQuestion type, List<string> answerOptions, string answer)
         {
             if (string.IsNullOrEmpty(text) || string.IsNullOrEmpty(answer) || answerOptions.Any(l => l == null))
                 return BaseResponseHelper.HandleBadRequest<TestQuestion>("Invalid parameters");
 
             try
             {
-                var newQuestion = new TestQuestion(text, type);
+                var newQuestion = new TestQuestion(text);
 
                 var newAnswerOptions = answerOptions
                      .Select(optionText => new TestAnswerOption(optionText))
@@ -162,7 +162,7 @@ namespace Service.Implementations
             };
         }
 
-        public async Task<BaseResponse<bool>> DeleteQuestion(int questionId, QuestionType type)
+        public async Task<BaseResponse<bool>> DeleteQuestion(int questionId, TypeQuestion type)
         {
             try
             {
@@ -178,7 +178,7 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<bool>($"Failed to delete question");
             }
         }
-        public async Task<BaseResponse<BaseQuestion>?> GetQuestion(int questionId, QuestionType type)
+        public async Task<BaseResponse<BaseQuestion>?> GetQuestion(int questionId, TypeQuestion type)
         {
             try
             {

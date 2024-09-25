@@ -1,11 +1,6 @@
-﻿using Domain.Entity.Content.Image;
+﻿
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Domain.Entity.Content.Question;
 
 namespace Dal.Configuration
@@ -37,9 +32,6 @@ namespace Dal.Configuration
                 .IsRequired()
                 .HasColumnName("Question_text")
                 .HasMaxLength(400);
-
-            builder.Property(e => e.Type)
-                .IsRequired();
         }
     }
 }

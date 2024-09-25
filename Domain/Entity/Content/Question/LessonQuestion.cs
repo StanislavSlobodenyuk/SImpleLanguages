@@ -1,6 +1,7 @@
 ﻿
 using Domain.Entity.Base;
 using Domain.Entity.Content.Lessons;
+using Domain.Enum;
 
 namespace Domain.Entity.Content.Question
 {
@@ -11,5 +12,7 @@ namespace Domain.Entity.Content.Question
 
         public int QuestionId { get; set; }
         public TestQuestion? Question { get; set; }
+
+        public TypeQuestion TypeQuestion { get; set; }
     }
 }

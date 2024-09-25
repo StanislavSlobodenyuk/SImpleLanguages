@@ -15,14 +15,14 @@ namespace Dal.Repositories.QuestionRepository
             _context = context;
         }
 
-        public async Task<bool> DeleteQuestion(int questionId, QuestionType type) 
+        public async Task<bool> DeleteQuestion(int questionId, TypeQuestion type) 
         {
             try
             {
                 object? question = type switch
                 {
-                    QuestionType.TestQuestion => await _context.TestQuestions.FindAsync(questionId),
-                    QuestionType.AudioQuestion => await _context.AudioQuestions.FindAsync(questionId),
+                    TypeQuestion.TestQuestion => await _context.TestQuestions.FindAsync(questionId),
+                    TypeQuestion.AudioQuestion => await _context.AudioQuestions.FindAsync(questionId),
                     _ => null
                 };
 
@@ -38,14 +38,14 @@ namespace Dal.Repositories.QuestionRepository
                 return false;
             }
         }
-        public async Task<BaseQuestion?> GetQuestion(int questionId, QuestionType type)
+        public async Task<BaseQuestion?> GetQuestion(int questionId, TypeQuestion type)
         {
             try
             {
                 object? question = type switch
                 {
-                    QuestionType.TestQuestion => await _context.TestQuestions.FindAsync(questionId),
-                    QuestionType.AudioQuestion => await _context.AudioQuestions.FindAsync(questionId),
+                    TypeQuestion.TestQuestion => await _context.TestQuestions.FindAsync(questionId),
+                    TypeQuestion.AudioQuestion => await _context.AudioQuestions.FindAsync(questionId),
 
                     _ => null
                 };
@@ -62,16 +62,16 @@ namespace Dal.Repositories.QuestionRepository
                 return null;
             }
         }
-        public async Task<string?> GetRigthAnswer(int questionId, QuestionType type)
+        public async Task<string?> GetRigthAnswer(int questionId, TypeQuestion type)
         {
             try
             {
                 object? question = type switch
                 {
-                    QuestionType.TestQuestion => await _context.TestQuestions
+                    TypeQuestion.TestQuestion => await _context.TestQuestions
                         .Include(q => q.RightAnswer) 
                         .FirstOrDefaultAsync(q => q.Id == questionId),
-                    QuestionType.AudioQuestion => await _context.AudioQuestions
+                    TypeQuestion.AudioQuestion => await _context.AudioQuestions
                         .FirstOrDefaultAsync(q => q.Id == questionId),
 
                     _ => null
@@ -79,8 +79,8 @@ namespace Dal.Repositories.QuestionRepository
 
                 return type switch
                 {
-                    QuestionType.TestQuestion => (question as TestQuestion)?.RightAnswer?.RightAnswer,
-                    QuestionType.AudioQuestion => (question as AudioQuestion)?.RightAnswer,
+                    TypeQuestion.TestQuestion => (question as TestQuestion)?.RightAnswer?.RightAnswer,
+                    TypeQuestion.AudioQuestion => (question as AudioQuestion)?.RightAnswer,
 
 
                     _ => null

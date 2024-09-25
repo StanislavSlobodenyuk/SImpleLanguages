@@ -18,7 +18,7 @@ namespace Dal.Repositories.QuestionRepository
                 return false;
             try
             {
-                var newQuestion = new AudioQuestion(audioQuestion.QuestionText, audioQuestion.RightAnswer, audioQuestion.AudioUrl, audioQuestion.Type);
+                var newQuestion = new AudioQuestion(audioQuestion.QuestionText, audioQuestion.RightAnswer, audioQuestion.AudioUrl);
 
                 await _context.AudioQuestions.AddAsync(newQuestion);
                 await _context.SaveChangesAsync();

@@ -1,10 +1,10 @@
 ﻿using Dal.Interfaces;
-using Dal.Interfaces.LessonRepository;
+using Dal.Interfaces.LessonRepositories;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dal.Repositories
+namespace Dal.Repositories.LessonRepositories
 {
     public class LectureRepository : IlectureRepository
     {
@@ -18,13 +18,13 @@ namespace Dal.Repositories
         public async Task<bool> Create(LectureBlock entity)
         {
             if (entity == null)
-                return false;  
+                return false;
 
             try
             {
-                _context.LectureBlocks.Add(entity);  
+                _context.LectureBlocks.Add(entity);
                 await _context.SaveChangesAsync();
-                
+
                 return true;
             }
             catch (DbUpdateException)

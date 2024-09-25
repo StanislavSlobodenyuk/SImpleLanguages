@@ -20,7 +20,7 @@ namespace Dal.Repositories.QuestionRepository
                 return false;
             try
             {
-                var newQuestion = new TestQuestion(testQuestion.QuestionText, testQuestion.Type);
+                var newQuestion = new TestQuestion(testQuestion.QuestionText);
                 
                 newQuestion.AnswerOptions = new List<TestAnswerOption>(answerOptions);
                 newQuestion.RightAnswer = rightAnswer;

@@ -23,7 +23,7 @@ namespace Dal
         // Lessons
         public DbSet<CourseModule> CourseModules { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
-        public DbSet<LectureBlock> Lectures { get; set; }
+        public DbSet<LectureBlock> LectureBlocks { get; set; }
         // Questions
         public DbSet<TestQuestion> TestQuestions { get; set; }
         public DbSet<TestAnswerOption> TestQuestionAnswerOptions { get; set; }

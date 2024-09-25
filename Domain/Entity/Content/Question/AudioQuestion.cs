@@ -9,7 +9,7 @@ namespace Domain.Entity.Content.Question
         public string? RightAnswer { get; private set; }
         public string? AudioUrl { get; private set; }
 
-        public AudioQuestion(string rightAnswer, string audioUrl, string questionText, QuestionType type) : base(questionText, type)
+        public AudioQuestion(string rightAnswer, string audioUrl, string questionText) : base(questionText)
         {
             QuestionText = questionText;
             RightAnswer = rightAnswer;

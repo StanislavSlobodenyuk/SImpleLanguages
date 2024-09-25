@@ -17,7 +17,7 @@ namespace Application.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.7")
+                .HasAnnotation("ProductVersion", "8.0.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -115,7 +115,47 @@ namespace Application.Migrations
                     b.ToTable("Question_Image", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.Lecture", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<bool?>("IsAvailable")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false)
+                        .HasColumnName("Is_Available");
+
+                    b.Property<int>("LanguageCourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PathToMap")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Path_To_Map");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LanguageCourseId");
+
+                    b.ToTable("Course_Module", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.LectureBlock", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -191,46 +231,6 @@ namespace Application.Migrations
                     b.ToTable("Lesson", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.ModuleLessons", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<bool?>("IsAvailable")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bit")
-                        .HasDefaultValue(false)
-                        .HasColumnName("Is_Available");
-
-                    b.Property<int>("LanguageCourseId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("PathToMap")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Path_To_Map");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LanguageCourseId");
-
-                    b.ToTable("ModuleOfLessons", (string)null);
-                });
-
             modelBuilder.Entity("Domain.Entity.Content.Metadata.Course.LanguageCourse", b =>
                 {
                     b.Property<int>("Id")
@@ -295,9 +295,6 @@ namespace Application.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasColumnName("Audio_url");
 
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
                     b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasMaxLength(400)
@@ -314,12 +311,7 @@ namespace Application.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
 
                     b.ToTable(" Audio_Question", "dbo");
                 });
@@ -340,7 +332,8 @@ namespace Application.Migrations
                         .HasColumnType("int");
 
                     b.Property<int>("QuestionId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("TestQuestionId");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
@@ -349,6 +342,10 @@ namespace Application.Migrations
 
                     b.Property<int?>("TranslateQuestionId")
                         .HasColumnType("int");
+
+                    b.Property<int>("TypeQuestion")
+                        .HasColumnType("int")
+                        .HasColumnName("QuestionType");
 
                     b.HasKey("Id");
 
@@ -402,9 +399,6 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
                     b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasMaxLength(400)
@@ -419,12 +413,7 @@ namespace Application.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
 
                     b.ToTable("Test_Question", "dbo");
                 });
@@ -469,9 +458,6 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
                     b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasMaxLength(400)
@@ -493,12 +479,7 @@ namespace Application.Migrations
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
 
                     b.ToTable("Translate_Question", "dbo");
                 });
@@ -710,7 +691,7 @@ namespace Application.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_LecturesImages_ImageId");
 
-                    b.HasOne("Domain.Entity.Content.Lessons.Lecture", "Lecture")
+                    b.HasOne("Domain.Entity.Content.Lessons.LectureBlock", "Lecture")
                         .WithMany("LectureImages")
                         .HasForeignKey("LectureId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -751,7 +732,19 @@ namespace Application.Migrations
                     b.Navigation("Question");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.Lecture", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.Metadata.Course.LanguageCourse", "LanguageCourse")
+                        .WithMany("CourseModules")
+                        .HasForeignKey("LanguageCourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired()
+                        .HasConstraintName("FK_CourseModules_Course_ModuleOfLessons");
+
+                    b.Navigation("LanguageCourse");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.LectureBlock", b =>
                 {
                     b.HasOne("Domain.Entity.Content.Lessons.Lesson", "lesson")
                         .WithMany("LectureBlocks")
@@ -765,37 +758,14 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Domain.Entity.Content.Lessons.Lesson", b =>
                 {
-                    b.HasOne("Domain.Entity.Content.Lessons.ModuleLessons", "ModuleLessons")
+                    b.HasOne("Domain.Entity.Content.Lessons.CourseModule", "CourseModules")
                         .WithMany("Lessons")
                         .HasForeignKey("ModuleLessonsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_ModulesLessons_Lesson_ModuleOfLessons");
 
-                    b.Navigation("ModuleLessons");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.ModuleLessons", b =>
-                {
-                    b.HasOne("Domain.Entity.Content.Metadata.Course.LanguageCourse", "LanguageCourse")
-                        .WithMany("ModulesLessons")
-                        .HasForeignKey("LanguageCourseId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired()
-                        .HasConstraintName("FK_CourseModules_Course_ModuleOfLessons");
-
-                    b.Navigation("LanguageCourse");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Content.Question.AudioQuestion", b =>
-                {
-                    b.HasOne("Domain.Entity.Content.Lessons.Lesson", "Lesson")
-                        .WithMany()
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
+                    b.Navigation("CourseModules");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.LessonQuestion", b =>
@@ -839,17 +809,6 @@ namespace Application.Migrations
                     b.Navigation("TestQuestion");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.TestQuestion", b =>
-                {
-                    b.HasOne("Domain.Entity.Content.Lessons.Lesson", "Lesson")
-                        .WithMany()
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
-                });
-
             modelBuilder.Entity("Domain.Entity.Content.Question.TestRightAnswer", b =>
                 {
                     b.HasOne("Domain.Entity.Content.Question.TestQuestion", "TestQuestion")
@@ -860,17 +819,6 @@ namespace Application.Migrations
                         .HasConstraintName("FK_TestQuestionRigthAnswer_TestQuestionId");
 
                     b.Navigation("TestQuestion");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Content.Question.TranslateQuestion", b =>
-                {
-                    b.HasOne("Domain.Entity.Content.Lessons.Lesson", "Lesson")
-                        .WithMany()
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Lesson");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -931,7 +879,12 @@ namespace Application.Migrations
                     b.Navigation("QuestionImages");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.Lecture", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
+                {
+                    b.Navigation("Lessons");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.LectureBlock", b =>
                 {
                     b.Navigation("LectureImages");
                 });
@@ -943,14 +896,9 @@ namespace Application.Migrations
                     b.Navigation("LessonQuestions");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.ModuleLessons", b =>
-                {
-                    b.Navigation("Lessons");
-                });
-
             modelBuilder.Entity("Domain.Entity.Content.Metadata.Course.LanguageCourse", b =>
                 {
-                    b.Navigation("ModulesLessons");
+                    b.Navigation("CourseModules");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.AudioQuestion", b =>

@@ -6,13 +6,30 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Application.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class InitM3 : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.EnsureSchema(
                 name: "dbo");
+
+            migrationBuilder.CreateTable(
+                name: " Audio_Question",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RightAnswer = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    Audio_url = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
+                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    Question_text = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ Audio_Question", x => x.Id);
+                });
 
             migrationBuilder.CreateTable(
                 name: "AspNetRoles",
@@ -86,6 +103,39 @@ namespace Application.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_MyImage", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Test_Question",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RightAnswerId = table.Column<int>(type: "int", nullable: false),
+                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    Question_Text = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Test_Question", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Translate_Question",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Sentense = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Sentense_Translate = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
+                    Question_Text = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Translate_Question", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -195,7 +245,7 @@ namespace Application.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ModuleOfLessons",
+                name: "Course_Module",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -208,7 +258,7 @@ namespace Application.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ModuleOfLessons", x => x.Id);
+                    table.PrimaryKey("PK_Course_Module", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CourseModules_Course_ModuleOfLessons",
                         column: x => x.LanguageCourseId,
@@ -216,161 +266,6 @@ namespace Application.Migrations
                         principalTable: "Course",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Lesson",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Is_Available = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    Icon_Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ModuleLessonsId = table.Column<int>(type: "int", nullable: false),
-                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Lesson", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ModulesLessons_Lesson_ModuleOfLessons",
-                        column: x => x.ModuleLessonsId,
-                        principalTable: "ModuleOfLessons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: " Audio_Question",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RightAnswer = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    Audio_url = table.Column<string>(type: "nvarchar(300)", maxLength: 300, nullable: false),
-                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
-                    Question_text = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    LessonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ Audio_Question", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ Audio_Question_Lesson_LessonId",
-                        column: x => x.LessonId,
-                        principalSchema: "dbo",
-                        principalTable: "Lesson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Lecture",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
-                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LessonId = table.Column<int>(type: "int", nullable: false),
-                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Lecture", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LessonLectureBlock_Lesson_LectureBlock",
-                        column: x => x.LessonId,
-                        principalSchema: "dbo",
-                        principalTable: "Lesson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Test_Question",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    RightAnswerId = table.Column<int>(type: "int", nullable: false),
-                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
-                    Question_Text = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    LessonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Test_Question", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Test_Question_Lesson_LessonId",
-                        column: x => x.LessonId,
-                        principalSchema: "dbo",
-                        principalTable: "Lesson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Translate_Question",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Sentense = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sentense_Translate = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
-                    Question_Text = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
-                    Type = table.Column<int>(type: "int", nullable: false),
-                    LessonId = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Translate_Question", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Translate_Question_Lesson_LessonId",
-                        column: x => x.LessonId,
-                        principalSchema: "dbo",
-                        principalTable: "Lesson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Lecture_Image",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LectureId = table.Column<int>(type: "int", nullable: false),
-                    ImageId = table.Column<int>(type: "int", nullable: false),
-                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Lecture_Image", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LecturesImages_ImageId",
-                        column: x => x.ImageId,
-                        principalSchema: "dbo",
-                        principalTable: "MyImage",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_LecturesImages_LectureId",
-                        column: x => x.LectureId,
-                        principalSchema: "dbo",
-                        principalTable: "Lecture",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -420,50 +315,6 @@ namespace Application.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Lesson_Question",
-                schema: "dbo",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    LessonId = table.Column<int>(type: "int", nullable: false),
-                    QuestionId = table.Column<int>(type: "int", nullable: false),
-                    AudioQuestionId = table.Column<int>(type: "int", nullable: true),
-                    TranslateQuestionId = table.Column<int>(type: "int", nullable: true),
-                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Lesson_Question", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_LessonQuestions_LessonId",
-                        column: x => x.LessonId,
-                        principalSchema: "dbo",
-                        principalTable: "Lesson",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_LessonQuestions_QuestionId",
-                        column: x => x.QuestionId,
-                        principalSchema: "dbo",
-                        principalTable: "Test_Question",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Lesson_Question_ Audio_Question_AudioQuestionId",
-                        column: x => x.AudioQuestionId,
-                        principalSchema: "dbo",
-                        principalTable: " Audio_Question",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Lesson_Question_Translate_Question_TranslateQuestionId",
-                        column: x => x.TranslateQuestionId,
-                        principalSchema: "dbo",
-                        principalTable: "Translate_Question",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Question_Image",
                 schema: "dbo",
                 columns: table => new
@@ -507,11 +358,128 @@ namespace Application.Migrations
                         principalColumn: "Id");
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_ Audio_Question_LessonId",
+            migrationBuilder.CreateTable(
+                name: "Lesson",
                 schema: "dbo",
-                table: " Audio_Question",
-                column: "LessonId");
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Is_Available = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
+                    Icon_Path = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ModuleLessonsId = table.Column<int>(type: "int", nullable: false),
+                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lesson", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ModulesLessons_Lesson_ModuleOfLessons",
+                        column: x => x.ModuleLessonsId,
+                        principalTable: "Course_Module",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lecture",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lecture", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LessonLectureBlock_Lesson_LectureBlock",
+                        column: x => x.LessonId,
+                        principalSchema: "dbo",
+                        principalTable: "Lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lesson_Question",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LessonId = table.Column<int>(type: "int", nullable: false),
+                    TestQuestionId = table.Column<int>(type: "int", nullable: false),
+                    QuestionType = table.Column<int>(type: "int", nullable: false),
+                    AudioQuestionId = table.Column<int>(type: "int", nullable: true),
+                    TranslateQuestionId = table.Column<int>(type: "int", nullable: true),
+                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lesson_Question", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LessonQuestions_LessonId",
+                        column: x => x.LessonId,
+                        principalSchema: "dbo",
+                        principalTable: "Lesson",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LessonQuestions_QuestionId",
+                        column: x => x.TestQuestionId,
+                        principalSchema: "dbo",
+                        principalTable: "Test_Question",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Lesson_Question_ Audio_Question_AudioQuestionId",
+                        column: x => x.AudioQuestionId,
+                        principalSchema: "dbo",
+                        principalTable: " Audio_Question",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Lesson_Question_Translate_Question_TranslateQuestionId",
+                        column: x => x.TranslateQuestionId,
+                        principalSchema: "dbo",
+                        principalTable: "Translate_Question",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Lecture_Image",
+                schema: "dbo",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    LectureId = table.Column<int>(type: "int", nullable: false),
+                    ImageId = table.Column<int>(type: "int", nullable: false),
+                    TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Lecture_Image", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LecturesImages_ImageId",
+                        column: x => x.ImageId,
+                        principalSchema: "dbo",
+                        principalTable: "MyImage",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_LecturesImages_LectureId",
+                        column: x => x.LectureId,
+                        principalSchema: "dbo",
+                        principalTable: "Lecture",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -553,6 +521,11 @@ namespace Application.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Course_Module_LanguageCourseId",
+                table: "Course_Module",
+                column: "LanguageCourseId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Lecture_LessonId",
                 schema: "dbo",
                 table: "Lecture",
@@ -589,21 +562,16 @@ namespace Application.Migrations
                 column: "LessonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lesson_Question_QuestionId",
+                name: "IX_Lesson_Question_TestQuestionId",
                 schema: "dbo",
                 table: "Lesson_Question",
-                column: "QuestionId");
+                column: "TestQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lesson_Question_TranslateQuestionId",
                 schema: "dbo",
                 table: "Lesson_Question",
                 column: "TranslateQuestionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ModuleOfLessons_LanguageCourseId",
-                table: "ModuleOfLessons",
-                column: "LanguageCourseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Question_Image_AudioQuestionId",
@@ -636,23 +604,11 @@ namespace Application.Migrations
                 column: "TestQuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Test_Question_LessonId",
-                schema: "dbo",
-                table: "Test_Question",
-                column: "LessonId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Test_Righ_Anwser_TestQuestionId",
                 schema: "dbo",
                 table: "Test_Righ_Anwser",
                 column: "TestQuestionId",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Translate_Question_LessonId",
-                schema: "dbo",
-                table: "Translate_Question",
-                column: "LessonId");
         }
 
         /// <inheritdoc />
@@ -724,7 +680,7 @@ namespace Application.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "ModuleOfLessons");
+                name: "Course_Module");
 
             migrationBuilder.DropTable(
                 name: "Course",

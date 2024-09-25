@@ -20,6 +20,14 @@ namespace Dal.Configuration
                 .IsRowVersion()
                 .IsConcurrencyToken();
 
+            builder.Property(e => e.QuestionId)
+                .HasColumnName("TestQuestionId")
+                .IsRequired();
+
+            builder.Property(e => e.TypeQuestion)
+                .HasColumnName("QuestionType")
+                .IsRequired();
+
             builder
                .HasOne(e => e.Question)
                .WithMany(e => e.LessonQuestions)
