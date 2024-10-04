@@ -20,21 +20,27 @@ namespace Dal.Configuration
                 .IsRowVersion()
                 .IsConcurrencyToken();
 
-            builder.Property(e => e.QuestionId)
-                .HasColumnName("TestQuestionId")
-                .IsRequired();
-
-            builder.Property(e => e.TypeQuestion)
-                .HasColumnName("QuestionType")
-                .IsRequired();
+            builder
+                .HasOne(lq => lq.TestQuestion)
+                .WithMany(e => e.LessonQuestions) 
+                .HasForeignKey(lq => lq.TestQuestionId)
+                .HasConstraintName("FK_LessonTestQuestions_LessonQuestions")
+                .OnDelete(DeleteBehavior.Restrict);
 
             builder
-               .HasOne(e => e.Question)
+                .HasOne(lq => lq.AudioQuestion)
+                .WithMany(e => e.LessonQuestions) 
+                .HasForeignKey(lq => lq.AudioQuestionId)
+                .HasConstraintName("FK_LessonAudioQuestions_LessonQuestions")
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder
+               .HasOne(lq => lq.TranslateQuestion)
                .WithMany(e => e.LessonQuestions)
-               .HasForeignKey(e => e.QuestionId)
-               .HasConstraintName("FK_LessonQuestions_QuestionId")
-               .OnDelete(DeleteBehavior.Restrict);  
-            
+               .HasForeignKey(lq => lq.TestQuestionId)
+               .HasConstraintName("FK_TranslateQuestion_LessonQuestions")
+               .OnDelete(DeleteBehavior.Restrict);
+
             builder
                 .HasOne(e => e.Lesson)
                 .WithMany(e => e.LessonQuestions)

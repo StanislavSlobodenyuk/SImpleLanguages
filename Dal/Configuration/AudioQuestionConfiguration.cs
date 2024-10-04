@@ -28,7 +28,7 @@ namespace Dal.Configuration
                 .HasMaxLength(300)
                 .IsRequired();
             
-            builder.Property(e => e.QuestionText)
+            builder.Property(e => e.Text)
                 .IsRequired()
                 .HasColumnName("Question_text")
                 .HasMaxLength(400);

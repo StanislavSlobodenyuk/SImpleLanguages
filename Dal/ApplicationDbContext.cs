@@ -7,8 +7,7 @@ using Domain.Entity.Content.Question;
 using Domain.Entity.Content.Image;
 using Dal.Configuration;
 using Domain.Entity.Content;
-using System.Reflection.Emit;
-using Domain.Entity.Base;
+
 
 namespace Dal
 {

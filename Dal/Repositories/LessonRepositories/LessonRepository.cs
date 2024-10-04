@@ -23,7 +23,6 @@ namespace Dal.Repositories.LessonRepositories
                 return await _context.Lessons
                 .Include(l => l.LectureBlocks)
                 .Include(l => l.LessonQuestions)
-                    .ThenInclude(q => q.Question)
                 .FirstOrDefaultAsync(l => l.Id == lessonId);
             }
             catch (DbException)
@@ -42,7 +41,6 @@ namespace Dal.Repositories.LessonRepositories
         {
             return await _context.Lessons
                 .Include(l => l.LessonQuestions)
-                    .ThenInclude(q => q.Question)
                 .FirstOrDefaultAsync(l => l.Id == lessonId);
         }
 

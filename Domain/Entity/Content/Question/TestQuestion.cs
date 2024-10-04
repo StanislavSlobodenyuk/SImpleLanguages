@@ -10,9 +10,7 @@ namespace Domain.Entity.Content.Question
         public int RightAnswerId { get; set; }
 
         public IEnumerable<TestAnswerOption> AnswerOptions { get; set; } = new List<TestAnswerOption>();
-
-        protected TestQuestion() { }
-        public TestQuestion(string? questionText) : base(questionText)
+        public TestQuestion(string? text) : base(text)
         {
         }
     }

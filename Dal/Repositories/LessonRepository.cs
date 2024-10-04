@@ -67,9 +67,9 @@ namespace Dal.Repositories
         {
             try
             {
-                lesson.IconPath  = iconPath;    
+                lesson.IconPath = iconPath;
                 _context.Entry(lesson).Property(p => p.IconPath).IsModified = true;
-                
+
                 await _context.SaveChangesAsync();
 
                 return lesson;
@@ -85,7 +85,7 @@ namespace Dal.Repositories
             {
                 lesson.Title = title;
                 _context.Entry(lesson).Property(p => p.Title).IsModified = true;
-     
+
                 await _context.SaveChangesAsync();
 
                 return lesson;
@@ -119,12 +119,11 @@ namespace Dal.Repositories
                 return await _context.Lessons
                 .Include(l => l.LectureBlocks)
                 .Include(l => l.LessonQuestions)
-                    .ThenInclude(lq => lq.Question)
+
                 .FirstOrDefaultAsync(l => l.Id == lessonId);
             }
             catch (DbException)
             {
-                // Логирование исключения
                 return null;
             }
         }
@@ -136,14 +135,14 @@ namespace Dal.Repositories
             if (lesson == null) return null;
 
             var existigLessonQuestion = await _context.LessonQuestions
-                .FirstOrDefaultAsync(lq => lq.LessonId == lessonId && lq.QuestionId == entity.Id);
+                .FirstOrDefaultAsync(lq => lq.LessonId == lessonId && lq.TestQuestionId == entity.Id);
 
-            if (existigLessonQuestion != null) return null ;
+            if (existigLessonQuestion != null) return null;
 
             var lessonQuestion = new LessonQuestion
             {
                 LessonId = lessonId,
-                QuestionId = entity.Id
+                TestQuestionId = entity.Id
             };
 
             try
@@ -164,7 +163,7 @@ namespace Dal.Repositories
         {
             // перевірка чи наше питання вже пов'язане з уроком
             var lessonQuestion = await _context.LessonQuestions
-                .FirstOrDefaultAsync(lq => lq.LessonId == lessonId && lq.QuestionId == entity.Id);
+                .FirstOrDefaultAsync(lq => lq.LessonId == lessonId && lq.TestQuestionId == entity.Id);
 
             if (lessonQuestion == null) return false;
 
@@ -184,7 +183,7 @@ namespace Dal.Repositories
         {
             Lesson? lesson = await GetById(lessonId);
 
-            if (lesson == null)  
+            if (lesson == null)
                 return null;
 
             if (lecture.LessonId == lesson.Id) return null;
@@ -197,7 +196,6 @@ namespace Dal.Repositories
                 return await _context.Lessons
                 .Include(l => l.LectureBlocks)
                 .Include(l => l.LessonQuestions)
-                    .ThenInclude(lq => lq.Question)
                 .FirstOrDefaultAsync(l => l.Id == lessonId);
             }
             catch (DbUpdateException)
@@ -230,14 +228,13 @@ namespace Dal.Repositories
         {
             var lesson = await _context.Lessons
         .Include(l => l.LessonQuestions)
-            .ThenInclude(lq => lq.Question)
         .FirstOrDefaultAsync(l => l.Id == lessonId);
 
             if (lesson == null) return new List<BaseQuestion>();
 
             foreach (var lessonQuestion in lesson.LessonQuestions)
             {
-                if (lessonQuestion.Question is TestQuestion testQuestion)
+                if (lessonQuestion.TestQuestion is TestQuestion testQuestion)
                 {
                     await _context.Entry(testQuestion)
                         .Collection(tq => tq.AnswerOptions)
@@ -246,7 +243,7 @@ namespace Dal.Repositories
             }
 
             return lesson.LessonQuestions
-                .Select(lq => lq.Question)
+                .Select(lq => lq.TestQuestion)
                 .ToList();
         }
 

@@ -244,7 +244,7 @@ namespace Service.Implementations
                     return BaseResponseHelper.HandleNotFound<IEnumerable<BaseQuestion>>("Lesson not found");
 
                 var question = currentLesson.LessonQuestions
-                    .Select(lq => lq.Question)
+                    .Select(lq => lq.TestQuestion)
                     .OfType<BaseQuestion>()
                     .ToList();
 

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Application.Migrations
 {
     /// <inheritdoc />
-    public partial class InitM3 : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -415,14 +415,20 @@ namespace Application.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LessonId = table.Column<int>(type: "int", nullable: false),
                     TestQuestionId = table.Column<int>(type: "int", nullable: false),
-                    QuestionType = table.Column<int>(type: "int", nullable: false),
-                    AudioQuestionId = table.Column<int>(type: "int", nullable: true),
-                    TranslateQuestionId = table.Column<int>(type: "int", nullable: true),
+                    AudioQuestionId = table.Column<int>(type: "int", nullable: false),
+                    TranslateQuestionId = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Lesson_Question", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_LessonAudioQuestions_LessonQuestions",
+                        column: x => x.AudioQuestionId,
+                        principalSchema: "dbo",
+                        principalTable: " Audio_Question",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_LessonQuestions_LessonId",
                         column: x => x.LessonId,
@@ -431,24 +437,19 @@ namespace Application.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_LessonQuestions_QuestionId",
+                        name: "FK_LessonTestQuestions_LessonQuestions",
                         column: x => x.TestQuestionId,
                         principalSchema: "dbo",
                         principalTable: "Test_Question",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Lesson_Question_ Audio_Question_AudioQuestionId",
-                        column: x => x.AudioQuestionId,
-                        principalSchema: "dbo",
-                        principalTable: " Audio_Question",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Lesson_Question_Translate_Question_TranslateQuestionId",
-                        column: x => x.TranslateQuestionId,
+                        name: "FK_TranslateQuestion_LessonQuestions",
+                        column: x => x.TestQuestionId,
                         principalSchema: "dbo",
                         principalTable: "Translate_Question",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -566,12 +567,6 @@ namespace Application.Migrations
                 schema: "dbo",
                 table: "Lesson_Question",
                 column: "TestQuestionId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Lesson_Question_TranslateQuestionId",
-                schema: "dbo",
-                table: "Lesson_Question",
-                column: "TranslateQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Question_Image_AudioQuestionId",

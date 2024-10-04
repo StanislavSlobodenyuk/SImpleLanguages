@@ -295,16 +295,16 @@ namespace Application.Migrations
                         .HasColumnType("nvarchar(300)")
                         .HasColumnName("Audio_url");
 
-                    b.Property<string>("QuestionText")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasColumnName("Question_text");
-
                     b.Property<string>("RightAnswer")
                         .IsRequired()
                         .HasMaxLength(300)
                         .HasColumnType("nvarchar(300)");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
+                        .HasColumnName("Question_text");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
@@ -325,27 +325,22 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int?>("AudioQuestionId")
+                    b.Property<int>("AudioQuestionId")
                         .HasColumnType("int");
 
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
-                    b.Property<int>("QuestionId")
-                        .HasColumnType("int")
-                        .HasColumnName("TestQuestionId");
+                    b.Property<int>("TestQuestionId")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int?>("TranslateQuestionId")
+                    b.Property<int>("TranslateQuestionId")
                         .HasColumnType("int");
-
-                    b.Property<int>("TypeQuestion")
-                        .HasColumnType("int")
-                        .HasColumnName("QuestionType");
 
                     b.HasKey("Id");
 
@@ -353,9 +348,7 @@ namespace Application.Migrations
 
                     b.HasIndex("LessonId");
 
-                    b.HasIndex("QuestionId");
-
-                    b.HasIndex("TranslateQuestionId");
+                    b.HasIndex("TestQuestionId");
 
                     b.ToTable("Lesson_Question", "dbo");
                 });
@@ -399,14 +392,14 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("QuestionText")
+                    b.Property<int>("RightAnswerId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Text")
                         .IsRequired()
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)")
                         .HasColumnName("Question_Text");
-
-                    b.Property<int>("RightAnswerId")
-                        .HasColumnType("int");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
@@ -458,12 +451,6 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("QuestionText")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasColumnName("Question_Text");
-
                     b.Property<string>("Sentence")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
@@ -473,6 +460,12 @@ namespace Application.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("Sentense_Translate");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
+                        .HasColumnName("Question_Text");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
@@ -770,9 +763,12 @@ namespace Application.Migrations
 
             modelBuilder.Entity("Domain.Entity.Content.Question.LessonQuestion", b =>
                 {
-                    b.HasOne("Domain.Entity.Content.Question.AudioQuestion", null)
+                    b.HasOne("Domain.Entity.Content.Question.AudioQuestion", "AudioQuestion")
                         .WithMany("LessonQuestions")
-                        .HasForeignKey("AudioQuestionId");
+                        .HasForeignKey("AudioQuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_LessonAudioQuestions_LessonQuestions");
 
                     b.HasOne("Domain.Entity.Content.Lessons.Lesson", "Lesson")
                         .WithMany("LessonQuestions")
@@ -781,20 +777,27 @@ namespace Application.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_LessonQuestions_LessonId");
 
-                    b.HasOne("Domain.Entity.Content.Question.TestQuestion", "Question")
+                    b.HasOne("Domain.Entity.Content.Question.TestQuestion", "TestQuestion")
                         .WithMany("LessonQuestions")
-                        .HasForeignKey("QuestionId")
+                        .HasForeignKey("TestQuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired()
-                        .HasConstraintName("FK_LessonQuestions_QuestionId");
+                        .HasConstraintName("FK_LessonTestQuestions_LessonQuestions");
 
-                    b.HasOne("Domain.Entity.Content.Question.TranslateQuestion", null)
+                    b.HasOne("Domain.Entity.Content.Question.TranslateQuestion", "TranslateQuestion")
                         .WithMany("LessonQuestions")
-                        .HasForeignKey("TranslateQuestionId");
+                        .HasForeignKey("TestQuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_TranslateQuestion_LessonQuestions");
+
+                    b.Navigation("AudioQuestion");
 
                     b.Navigation("Lesson");
 
-                    b.Navigation("Question");
+                    b.Navigation("TestQuestion");
+
+                    b.Navigation("TranslateQuestion");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.TestAnswerOption", b =>

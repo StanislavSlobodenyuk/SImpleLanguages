@@ -7,17 +7,15 @@ namespace Domain.Entity.Content.Question
 {
     public abstract class BaseQuestion : BaseEntity
     {
-        public string? QuestionText { get; set; }
+        public string? Text { get; set; }
+
         public ICollection<LessonQuestion> LessonQuestions { get; private set; } = new List<LessonQuestion>();
         public ICollection<QuestionImage> QuestionImages { get; private set; } = new List<QuestionImage>();
 
-        protected BaseQuestion() {}
-        protected BaseQuestion(string? questionText)
+        protected BaseQuestion(string? text)
         {
-            QuestionText = questionText;
+            Text = text;
         }
     }
 }
-
-// Базовий клас для усіх видів уроків 
 

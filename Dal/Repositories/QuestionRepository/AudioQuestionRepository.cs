@@ -14,11 +14,11 @@ namespace Dal.Repositories.QuestionRepository
         }
         public async Task<bool?> CreateAudioQuestion(AudioQuestion audioQuestion)
         {
-            if (string.IsNullOrEmpty(audioQuestion.AudioUrl) || string.IsNullOrEmpty(audioQuestion.RightAnswer) || string.IsNullOrEmpty(audioQuestion.QuestionText))
+            if (string.IsNullOrEmpty(audioQuestion.AudioUrl) || string.IsNullOrEmpty(audioQuestion.RightAnswer) || string.IsNullOrEmpty(audioQuestion.Text))
                 return false;
             try
             {
-                var newQuestion = new AudioQuestion(audioQuestion.QuestionText, audioQuestion.RightAnswer, audioQuestion.AudioUrl);
+                var newQuestion = new AudioQuestion(audioQuestion.RightAnswer, audioQuestion.AudioUrl, audioQuestion.Text);
 
                 await _context.AudioQuestions.AddAsync(newQuestion);
                 await _context.SaveChangesAsync();
