@@ -54,7 +54,7 @@ namespace Test.ModuleTests.LessonTest
                 () => _controller.GetModule(moduleId),
                 () => _controller.UpdateModule(_updateDto, moduleId),
                 () => _controller.ChangeAccess(moduleId),
-                () => _controller.AddLesson(new Lesson("lesson1", true, "iconPath"), moduleId),
+                () => _controller.AddLesson(new Lesson("lesson1", true, "iconPath", 2), moduleId),
                 () => _controller.DeleteLesson(moduleId, lessonid),
             };
 
@@ -95,7 +95,7 @@ namespace Test.ModuleTests.LessonTest
         private void SetupMockServiceMethod(int expectedStatusCode, string methodName, string message = "TestMessage")
         {
             CourseModule courseModule = new CourseModule("module1", true, "iconPath");
-            Lesson lesson = new Lesson("lesson1", true, "iconPath");
+            Lesson lesson = new Lesson("lesson1", true, "iconPath", 2);
             switch (methodName)
             {
                 case "GetModule":

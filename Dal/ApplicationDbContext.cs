@@ -7,6 +7,9 @@ using Domain.Entity.Content.Question;
 using Domain.Entity.Content.Image;
 using Dal.Configuration;
 using Domain.Entity.Content;
+using Dal.Configuration.Questions;
+using Dal.Configuration.ImageConfiguration;
+using Dal.Configuration.Lessonsconfiguration;
 
 
 namespace Dal
@@ -26,7 +29,6 @@ namespace Dal
         // Questions
         public DbSet<TestQuestion> TestQuestions { get; set; }
         public DbSet<TestAnswerOption> TestQuestionAnswerOptions { get; set; }
-        public DbSet<TestRightAnswer> TestQuestionRightAnswers { get; set; }
         public DbSet<AudioQuestion> AudioQuestions { get; set; } 
         public DbSet<TranslateQuestion> TranslateQuestions { get; set; }
         public DbSet<LessonQuestion> LessonQuestions { get; set; }
@@ -49,13 +51,12 @@ namespace Dal
             builder.ApplyConfiguration(new CourseModuleConfiguration());
             builder.ApplyConfiguration(new LessonConfiguration());
             builder.ApplyConfiguration(new LectureBlockConfiguration());
+            builder.ApplyConfiguration(new TranslateQuestionConfiguration());
+            builder.ApplyConfiguration(new LessonQuestionConfiguration());
             // Questions
             builder.ApplyConfiguration(new TestQuestionConfiguration());
             builder.ApplyConfiguration(new TestAnswerOptionConfiguration());
-            builder.ApplyConfiguration(new TestRightAnswerConfiguration());
             builder.ApplyConfiguration(new AudioQuestionConfiguration());
-            builder.ApplyConfiguration(new TranslateQuestionConfiguration());
-            builder.ApplyConfiguration(new LessonQuestionConfiguration());  
             // Image 
             builder.ApplyConfiguration(new MyImageConfiguration());
             builder.ApplyConfiguration(new QuestionImageConfiguration());

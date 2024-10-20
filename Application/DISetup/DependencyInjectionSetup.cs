@@ -1,7 +1,8 @@
 ﻿using Dal.Interfaces;
-using Dal.Interfaces.LessonRepository;
+using Dal.Interfaces.LessonRepositories;
 using Dal.Interfaces.QuestionRepository;
 using Dal.Repositories;
+using Dal.Repositories.LessonRepositories;
 using Dal.Repositories.QuestionRepository;
 using Service.Implementations;
 using Service.Interfaces;
@@ -27,7 +28,6 @@ namespace Application.InitRepositories
             services.AddScoped<ILanguageCourseService, LanguageCourseService>();
             services.AddScoped<ICourseModuleService, CourseModuleService>();
             services.AddScoped<ILessonService, LessonService>();
-            services.AddScoped<IQuestionService, QuestionService>();
         }
     }
 }

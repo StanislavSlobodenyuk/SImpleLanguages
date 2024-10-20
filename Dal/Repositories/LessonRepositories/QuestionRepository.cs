@@ -1,5 +1,4 @@
-﻿
-using Dal.Interfaces.LessonRepositories;
+﻿using Dal.Interfaces.QuestionRepository;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question;
 using Domain.Enum;

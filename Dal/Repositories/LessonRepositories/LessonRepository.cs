@@ -1,8 +1,6 @@
-﻿using Dal.Interfaces;
-using Dal.Interfaces.LessonRepositories;
+﻿using Dal.Interfaces.LessonRepositories;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question;
-using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
@@ -20,10 +18,7 @@ namespace Dal.Repositories.LessonRepositories
         {
             try
             {
-                return await _context.Lessons
-                .Include(l => l.LectureBlocks)
-                .Include(l => l.LessonQuestions)
-                .FirstOrDefaultAsync(l => l.Id == lessonId);
+                return await _context.Lessons.FirstOrDefaultAsync(l => l.Id == lessonId);
             }
             catch (DbException)
             {
@@ -41,6 +36,11 @@ namespace Dal.Repositories.LessonRepositories
         {
             return await _context.Lessons
                 .Include(l => l.LessonQuestions)
+                    .ThenInclude(q => q.TestQuestion)
+                .Include(l => l.LessonQuestions)
+                    .ThenInclude(q => q.AudioQuestion)
+                .Include(l => l.LessonQuestions)
+                    .ThenInclude(q => q.TranslateQuestion)
                 .FirstOrDefaultAsync(l => l.Id == lessonId);
         }
 
@@ -114,63 +114,6 @@ namespace Dal.Repositories.LessonRepositories
             {
                 return null;
             }
-        }
-
-        public async Task<bool> AddLecture(Lesson lesson, LectureBlock lecture)
-        {
-            if (lecture.LessonId != lesson.Id) return false;
-
-            try
-            {
-                _context.LectureBlocks.Add(lecture);
-
-                lesson.LectureBlocks.Add(lecture);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
-        public async Task<bool> DeleteLecture(Lesson lesson, LectureBlock lecture)
-        {
-            if (lecture.LessonId != lesson.Id) return false;
-
-            try
-            {
-                lesson.LectureBlocks.Remove(lecture);
-
-                _context.LectureBlocks.Remove(lecture);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
-
-        public Task<bool> AddQuestionToLesson(Lesson lesson, List<BaseQuestion> question)
-        {
-            throw new NotImplementedException();
-        }
-
-        public async Task<bool> DeleteQuestionFromLesson(Lesson lesson, BaseQuestion question)
-        {
-            //switch (question.Type) 
-            //{
-            //    case TypeQuestion.TestQuestion:
-            //        var testQuestions = question as TestQuestion;
-            //        if (testQuestions == null)
-            //            return false;
-            //        lesson.Questions.Remove(testQuestions);
-            //        _context.TestQuestions.Remove(testQuestions);
-            //        break;
-            //}
-            throw new NotImplementedException();
         }
     }
 }

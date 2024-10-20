@@ -1,5 +1,4 @@
 ﻿using Common.Enum;
-using Common.Response;
 using Common.Response.ErrorResponse;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
@@ -34,7 +33,7 @@ namespace Application.Controllers
                     return StatusCode(500, new BadResponse { Message = "An internal server error occurred. Please try again later." });
 
                 case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "The request was invalid or cannot be processed." });
+                    return BadRequest(new BadResponse { Message = "Parameter is not correct" });
 
                 case MyStatusCode.OK:
                     return Ok(response.Data); 
@@ -58,7 +57,7 @@ namespace Application.Controllers
                     return StatusCode(500, new BadResponse { Message = "An internal server error occurred. Please try again later." });
 
                 case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "The request was invalid or cannot be processed." });
+                    return BadRequest(new BadResponse { Message = "Parameter is not correct" });
 
                 case MyStatusCode.OK:
                     return Ok(response.Data);
@@ -79,7 +78,7 @@ namespace Application.Controllers
                     return StatusCode(500, new BadResponse { Message = "Failed to create course" });
 
                 case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "Parameters are not correct" });
+                    return BadRequest(new BadResponse { Message = "Parameter is not correct"});
 
                 case MyStatusCode.OK:
                     return Ok(response.Data);
@@ -127,7 +126,7 @@ namespace Application.Controllers
                     return StatusCode(500, new BadResponse { Message = "Parameter is bad" });
 
                 case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = $"Failed update course" });
+                    return BadRequest(new BadResponse { Message = "Parameter is not correct" });
 
                 case MyStatusCode.OK:
                     return Ok(response.Data);
@@ -168,7 +167,7 @@ namespace Application.Controllers
                     return NotFound(new BadResponse { Message = $"Not found course with id {courseId} or module with id {moduleId}" });
 
                 case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "Parameter is bad" });
+                    return BadRequest(new BadResponse { Message = "Parameter is not correct"});
 
                 case MyStatusCode.InternalServerError:
                     return StatusCode(500, new BadResponse { Message = $"Failed delete module {moduleId} from course {courseId}" });

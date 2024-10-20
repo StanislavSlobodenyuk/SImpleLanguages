@@ -71,7 +71,7 @@ namespace Test.XUnitTests.MetadataTests
                 () => _controller.CreateCourse(new LanguageCourse("Name", "description", languageName, languageLevel, "IconPath")),
                 () => _controller.DeleteCourse(courseId),
                 () => _controller.UpdateCourse(_updateCourseDto, courseId),
-                () => _controller.AddModule(new CourseModule(), courseId),
+                () => _controller.AddModule(new CourseModule("Name", true, "path"), courseId),
                 () => _controller.DeleteModule(courseId, moduleId),
                 () => _controller.ViewCourses(_filterDto)
             };

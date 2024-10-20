@@ -1,33 +1,15 @@
-﻿using Domain.Entity.Base;
-using Domain.Enum;
-using static System.Net.Mime.MediaTypeNames;
+﻿using Domain.Enum;
 
 namespace Domain.Entity.Content.Question
 {
     public class AudioQuestion : BaseQuestion
     {
-        public string? RightAnswer { get; private set; }
-        public string? AudioUrl { get; private set; }
+        public string AudioUrl { get; set; }
 
-        public AudioQuestion(string rightAnswer, string audioUrl, string text) : base(text)
+        public AudioQuestion(string audioUrl, string text, string rightAnswer, TypeQuestion type) 
+            : base(text, rightAnswer, type)
         {
-            RightAnswer = rightAnswer;
             AudioUrl = audioUrl;
-        }
-
-        public void UpdateRightAnswer(string? rightAnswer)
-        {
-            if (!string.IsNullOrEmpty(rightAnswer))
-            {
-                RightAnswer = rightAnswer;
-            }
-        }
-        public void UpdateAudioUrl(string? audioUrl)
-        {
-            if (!string.IsNullOrEmpty(audioUrl))
-            {
-                AudioUrl = audioUrl;
-            }
         }
     }
 }

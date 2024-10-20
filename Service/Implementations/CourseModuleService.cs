@@ -1,5 +1,5 @@
 ﻿using Common.Response;
-using Dal.Interfaces.LessonRepository;
+using Dal.Interfaces.LessonRepositories;
 using Domain.Entity.Content.Lessons;
 using Dto;
 using Service.Interfaces;

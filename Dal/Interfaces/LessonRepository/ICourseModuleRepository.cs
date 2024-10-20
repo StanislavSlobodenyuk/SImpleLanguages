@@ -1,7 +1,7 @@
 ﻿using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Metadata.Course;
 
-namespace Dal.Interfaces.LessonRepository
+namespace Dal.Interfaces.LessonRepositories
 {
     public interface ICourseModuleRepository : IBaseRepository<CourseModule>
     {

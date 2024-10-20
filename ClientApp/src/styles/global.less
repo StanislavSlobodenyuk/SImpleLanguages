@@ -1,0 +1,43 @@
+@import './variables.less';
+
+body {
+    height: 100%;
+    font-size: 18px;
+    line-height: 150%;
+    letter-spacing: 1px;
+}
+
+.content__container {
+    padding-left: 20%;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1 0 auto
+}
+
+footer {
+    flex-shrink: 0
+}
+
+.lightTheme {
+    background-color: @lightBackground;
+    color: @lightTextColor;
+}
+
+.darkTheme {
+    background-color: @darkBackground;
+    color: @darkTextColor;
+}
+
+.aside_light {
+    background-color: @darkAsideBackground;
+    color: @darkTextColor
+}
+
+.aside_dark {
+    background-color: @darkAsideBackground;
+    color: @darkTextColor
+}

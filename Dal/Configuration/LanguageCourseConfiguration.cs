@@ -20,33 +20,35 @@ namespace Dal.Configuration
 
             builder.Property(e => e.Name)
                 .IsRequired()
-                .HasColumnName("Name");
+                .HasColumnName("Name")
+                .HasMaxLength(255);
+
+            builder.Property(e => e.Difficult)
+               .IsRequired()
+               .HasColumnName("Difficult");
 
             builder.Property(e => e.Description)
                 .HasDefaultValue("Опис ще не написаний")
-                .HasColumnName("Description");
+                .HasColumnName("Description")
+                .HasMaxLength(1000);
 
             builder.Property(e => e.Language)
                 .HasColumnName("Language")
                 .IsRequired();
 
-            builder.Property(e => e.Difficult)
-                .HasColumnName("Difficult")
-                .IsRequired();   
-            
             builder.Property(e => e.IconPath)
                 .IsRequired()
-                .HasColumnName("Icon_Path");
+                .HasColumnName("Icon_path");
 
             builder.Property(e => e.Progres)
-                .HasColumnName("Last_Save_Result")
+                .HasColumnName("Last_save_result")
                 .HasDefaultValue(0);
 
             builder.HasMany(e => e.CourseModules)
-                .WithOne(e=> e.LanguageCourse)
+                .WithOne(e => e.LanguageCourse)
                 .HasForeignKey(e => e.LanguageCourseId)
                 .IsRequired()
-                .HasConstraintName("FK_CourseModules_Course_ModuleOfLessons")
+                .HasConstraintName("FK_LanguegeCourse_LanguageCourseId_CourseModules")
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

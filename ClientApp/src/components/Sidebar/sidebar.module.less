@@ -1,0 +1,128 @@
+@import './../../styles/variables.less';
+
+aside {
+    width: 20%;
+    height: 100%;
+    background-color: @darkAsideBackground;
+    color: @darkTextColor;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 1px 1px 0px black;
+
+    .sidebar__container {
+        display: flex;
+        flex-direction: column;
+        height: 95%;
+    }
+
+    .sidebar__menu {
+        padding: 30px;
+        flex: 1 1 auto;
+    }
+
+    .menu__links>li {
+        padding: 0px 0px 0px 40px;
+    }
+
+    .menu__links>* {
+        background-repeat: no-repeat;
+        background-position: 0 0;
+
+        &:not(:first-child) {
+            margin-top: 15px;
+        }
+
+        &:nth-child(1) {
+            background-image: url('../../img/general/user-light.svg');
+        }
+
+        &:nth-child(2) {
+            width: 55%;
+        }
+
+        &:nth-child(2)>li {
+            position: relative;
+            padding: 0px 0px 5px 40px;
+            background-repeat: no-repeat;
+            background-position: 0 0, 135px 14px;
+            background-image: url('../../img/general/book-light.svg');
+        }
+
+        &:nth-child(2)>li::after {
+            content: "";
+            position: absolute;
+            top: 35%;
+            right: -12px;
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            border-top: 8px solid #222222;
+        }
+
+        &:nth-child(3) {
+            margin-top: 0;
+        }
+
+        &:nth-child(4) {
+            background-image: url('../../img/general/shop-light.svg');
+        }
+
+        &:nth-child(5) {
+            background-image: url('../../img/general/friends-light.svg');
+        }
+
+        &:nth-child(6) {
+            background-image: url('../../img/general/about-us-light.svg');
+        }
+    }
+
+    .dropdownMenu {
+        display: none;
+        opacity: 0;
+        transform: translateY(-10px);
+        transition: display 3s ease, transform 3s ease;
+        padding-left: 40px;
+
+        .menu__additional_text {
+            font-size: 14px;
+            line-height: 100%;
+        }
+
+        .menu__change_course {
+            line-height: 100%;
+            font-size: 14px;
+            color: #4A90E2;
+            text-decoration: none;
+        }
+    }
+
+    .dropdownMenu.show {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .sidebar__sociables {
+        flex: 0 0 0;
+        display: flex;
+        gap: 20px;
+        padding: 0px 20px;
+        margin-bottom: 0px;
+
+        >a {
+            >img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+    }
+
+    .sidebar__privacy {
+        font-size: 14px;
+        padding: 0px 20px;
+    }
+}

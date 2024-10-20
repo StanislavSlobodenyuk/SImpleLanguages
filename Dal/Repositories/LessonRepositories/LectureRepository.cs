@@ -1,10 +1,9 @@
 ﻿using Dal.Interfaces;
 using Dal.Interfaces.LessonRepositories;
 using Domain.Entity.Content.Lessons;
-using Domain.Entity.Content.Question;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dal.Repositories.LessonRepositories
+namespace Dal.Repositories
 {
     public class LectureRepository : IlectureRepository
     {
@@ -14,59 +13,6 @@ namespace Dal.Repositories.LessonRepositories
         {
             _context = context;
         }
-
-        public async Task<bool> Create(LectureBlock entity)
-        {
-            if (entity == null)
-                return false;
-
-            try
-            {
-                _context.LectureBlocks.Add(entity);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
-        public async Task<bool> Delete(LectureBlock entity)
-        {
-            if (entity == null)
-                return false;
-
-            try
-            {
-                _context.LectureBlocks.Remove(entity);
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
-        public async Task<LectureBlock?> Update(LectureBlock entity)
-        {
-            if (entity == null)
-                return null;
-
-            try
-            {
-                _context.Entry(entity).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                return entity;
-            }
-            catch (DbUpdateException)
-            {
-                return null;
-            }
-        }
-
         public async Task<LectureBlock?> GetById(int id)
         {
             try
@@ -82,45 +28,57 @@ namespace Dal.Repositories.LessonRepositories
                 return null;
             }
         }
-        public async Task<LectureBlock?> UpdateContent(int lectureId, string content)
+
+        public async Task<bool> Create(LectureBlock lectureBlock)
         {
-            if (string.IsNullOrEmpty(content))
-                return null;
+            if (lectureBlock == null)
+                return false;  
 
             try
             {
-                LectureBlock? lecture = await _context.LectureBlocks.FirstOrDefaultAsync(x => x.Id == lectureId);
-
-                if (lecture == null)
-                    return null;
-
-                lecture.Content = content;
-
-                _context.Entry(lecture).Property(q => q.Content).IsModified = true;
+                _context.LectureBlocks.Add(lectureBlock);  
                 await _context.SaveChangesAsync();
-
-                return lecture;
+                
+                return true;
             }
             catch (DbUpdateException)
             {
-
-                throw;
+                return false;
             }
         }
-        public async Task<LectureBlock?> AddImage(int lectureId, int imageId)
+        public async Task<bool> Delete(LectureBlock lectureBlock)
         {
-            throw new NotImplementedException();
-            // TODO: Доробити  AddImage
-        }
-        public async Task<LectureBlock?> UpdateImage(int lectureId, string text)
-        {
-            throw new NotImplementedException();
-            // TODO: Доробити  UpdateImage
-        }
+            if (lectureBlock == null)
+                return false;
 
-        Task<bool> IBaseRepository<LectureBlock>.Update(LectureBlock entity)
+            try
+            {
+                _context.LectureBlocks.Remove(lectureBlock);
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
+        }
+        public async Task<bool> Update(LectureBlock lectureBlock)
         {
-            throw new NotImplementedException();
+            if (lectureBlock == null)
+                return false;
+
+            try
+            {
+                _context.Entry(lectureBlock).State = EntityState.Modified;
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch (DbUpdateException)
+            {
+                return false;
+            }
         }
     }
 }

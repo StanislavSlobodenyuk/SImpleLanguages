@@ -93,7 +93,7 @@ namespace Application.Controllers
                     return NotFound(new BadResponse { Message = $"Not found module with id {moduleId}" });
 
                 case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "Parameter is bad" });
+                    return BadRequest(new BadResponse { Message = "Parameter is not correct" });
 
                 case MyStatusCode.InternalServerError:
                     return StatusCode(500, new BadResponse { Message = "Failed create new lesson and add its to module" });

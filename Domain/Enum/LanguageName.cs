@@ -3,7 +3,7 @@ namespace Domain.Enum
 {
     public enum LanguageName
     {
-        English, 
-        Czech
+        English = 0, 
+        Czech = 1,
     }
 }

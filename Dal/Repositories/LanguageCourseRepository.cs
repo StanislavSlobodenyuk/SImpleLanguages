@@ -16,13 +16,13 @@ namespace Dal.Repositories
             _context = context;
         }
 
-        public async Task<bool> Create(LanguageCourse entity)
+        public async Task<bool> Create(LanguageCourse course)
         {
-            if (entity == null || entity.Id == 0) return false;
+            if (course == null || course.Id == 0) return false;
 
             try
             {
-                await _context.LanguageCourses.AddAsync(entity);
+                await _context.LanguageCourses.AddAsync(course);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -31,13 +31,13 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> Delete(LanguageCourse entity)
+        public async Task<bool> Delete(LanguageCourse course)
         {
-            if (entity == null || entity.Id == 0) return false;
+            if (course == null || course.Id == 0) return false;
 
             try
             {
-                _context.Remove(entity);
+                _context.Remove(course);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -46,11 +46,11 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> Update(LanguageCourse entity)
+        public async Task<bool> Update(LanguageCourse course)
         {
             try
             {
-                _context.Entry(entity).State = EntityState.Modified;
+                _context.Entry(course).State = EntityState.Modified;
                 await _context.SaveChangesAsync();
 
                 return true;

@@ -1,0 +1,138 @@
+@import '../../styles/variables.less';
+
+header {
+    .header__container {
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0px 20px;
+
+    }
+
+    .header__logo {
+        margin-right: 20px;
+        width: 50px;
+        height: 50px;
+    }
+
+    .header__wordsTranslated {
+        flex: 1 1 auto;
+        display: flex;
+        column-gap: 30px;
+
+        >li:not(:first-child) {
+            background-repeat: no-repeat;
+            background-position: 0px 7.5px;
+            background-size: 18px 13px;
+            padding-left: 25px;
+        }
+
+        >li:nth-child(2) {
+            background-image: url('../../img/Flags/Ukraine.png');
+        }
+
+        >li:nth-child(3) {
+            background-image: url('../../img/Flags/United-Kingdom.png');
+        }
+
+        >li:nth-child(4) {
+            background-image: url('../../img/Flags/Poland.png');
+        }
+
+        >li:nth-child(5) {
+            background-image: url('../../img/Flags/French.png');
+        }
+    }
+}
+
+.header__buttons {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+
+    .header__themeButton {
+        position: relative;
+        width: 60px;
+        height: 30px;
+        border-radius: 25% / 50%;
+        border: none;
+        background-color: #c9c9c9;
+
+        background-repeat: no-repeat;
+    }
+
+    .header__themeButton_day::after,
+    .header__themeButton_night::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+
+    .header__themeButton_day::after {
+        left: 0;
+        background-color: #8BC34A;
+    }
+
+    .header__themeButton_night::after {
+        right: 0;
+        background-color: #00BCD4;
+    }
+
+    .header__themeButton_day {
+        background-image: url('../../img/general/light-theme.svg');
+        background-position: 33px 5px;
+    }
+
+    .header__themeButton_night {
+        background-image: url('../../img/general/night-theme.svg');
+        background-position: 7px 5px;
+    }
+
+    .header__localizationButton>button {
+        position: relative;
+        padding: 0;
+        margin: 0px 10px;
+    }
+
+    .localizationButton_dark>button {
+        background-color: @darkBackground;
+        color: @darkTextColor;
+    }
+
+    .localizationButton_light>button {
+        background-color: @lightBackground;
+        color: @lightTextColor;
+    }
+
+    .localizationButton_dark>button:hover,
+    .localizationButton_light>button:hover {
+        color: #4A90E2;
+    }
+
+    .header__localizationButton>button::after {
+        content: "";
+        position: absolute;
+        top: 30%;
+        right: -12px;
+        width: 0;
+        height: 0;
+        border-left: 5px solid transparent;
+        border-right: 5px solid transparent;
+    }
+
+    .localizationButton_light>button::after {
+        border-top: 8px solid @lightTextColor;
+    }
+
+    .localizationButton_dark>button::after {
+        border-top: 8px solid @darkTextColor;
+    }
+
+    .header__localizationButton>button:hover::after {
+        border-top-color: #4A90E2;
+    }
+}
