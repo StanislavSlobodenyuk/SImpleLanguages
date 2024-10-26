@@ -1,0 +1,47 @@
+@import url(/src/styles/variables.less);
+
+.sorting {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.sorting__img {
+    position: relative;
+    top: 4px
+}
+
+.sorting__img img {
+    width: 24px;
+    height: 24px;
+}
+
+.dropdown {
+    position: absolute;
+    z-index: 18px;
+
+    &_dark {
+        background-color: @darkBackground;
+        color: @darkTextColor;
+    }
+
+    &_light {
+        background-color: #fff;
+        color: @lightTextColor;
+    }
+
+    &__options {
+        border: 1px solid black;
+        font-size: 18px;
+    }
+
+    &__options>div {
+        padding: 8px;
+    }
+
+    &__options>div:first-child {
+        border-bottom: 1px solid #000;
+    }
+}

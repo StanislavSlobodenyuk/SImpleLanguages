@@ -1,4 +1,4 @@
-import { useTheme } from '../Hooks/ThemeContext'
+import { useTheme } from '../../Hooks/ThemeContext'
 import { menuLinks } from '../Common/Menu/menuData'
 import Maintitle from '../Common/MainTitle/MainTitle'
 import Menu from '../Common/Menu/Menu'

@@ -1,0 +1,77 @@
+@import '/src/styles/variables.less';
+
+.review {
+    display: flex;
+    flex-direction: column;
+    flex: 25%;
+    padding: 15px;
+    border-radius: 20px;
+    font-size: 16px;
+    letter-spacing: normal;
+    line-height: 130%;
+
+    &_dark {
+        background-color: @darkBackground;
+        color: @darkTextColor;
+    }
+
+    &_light {
+        background-color: #fff;
+        color: @lightTextColor;
+    }
+}
+
+
+.review *:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.text {
+    flex: 1 0 auto;
+    font-size: 16px;
+}
+
+.date {
+    opacity: 0.5;
+}
+
+.grade {
+    display: flex;
+    gap: 5px;
+
+    &_light {
+
+        .greyStar,
+        .goldStar {
+            background-color: @buttonLightTheme;
+        }
+    }
+
+    &_dark {
+
+        .greyStar,
+        .goldStar {
+            background-color: @buttonDarkTheme;
+        }
+    }
+}
+
+.greyStar,
+.goldStar {
+    padding: 5px;
+    font-size: 20px;
+
+    border-radius: 5px;
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    text-align: center;
+}
+
+.greyStar {
+    color: grey;
+}
+
+.goldStar {
+    color: gold;
+}

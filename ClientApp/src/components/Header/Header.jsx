@@ -1,7 +1,7 @@
 import WordsMix from './WordsMix';
 import Button from '../Common/Button/Button';
 import { useState } from 'react';
-import { useTheme } from '../Hooks/ThemeContext';
+import { useTheme } from '../../Hooks/ThemeContext';
 import styles from './header.module.less';
 import logo from '../../img/logo.svg';
 

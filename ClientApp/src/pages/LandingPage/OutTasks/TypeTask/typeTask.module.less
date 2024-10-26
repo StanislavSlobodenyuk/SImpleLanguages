@@ -1,0 +1,23 @@
+.item {
+    display: flex;
+}
+
+.content {
+    flex: 1 1 auto;
+    padding: 30px 0px;
+}
+
+.content *:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.image {
+    flex: 0 0 300px;
+}
+
+.image>img {
+
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+}

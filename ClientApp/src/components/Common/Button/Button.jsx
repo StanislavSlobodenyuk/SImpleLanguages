@@ -1,5 +1,5 @@
 import styles from './Button.module.less'
-import { useTheme } from '../../Hooks/ThemeContext'
+import { useTheme } from '../../../Hooks/ThemeContext'
 
 export default function Button({ children }) {
     const { theme } = useTheme();

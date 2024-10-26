@@ -1,0 +1,51 @@
+@import url('/src/styles/variables.less');
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    column-gap: 20px;
+    margin: 20px 0px;
+}
+
+.paginationLink {
+    padding: 5px 10px;
+    border-radius: 40%;
+}
+
+.paginationLink_dark {
+    background-color: @darkBackground;
+    color: @darkTextColor;
+}
+
+.paginationLink_light {
+    background-color: #fff;
+    color: @lightTextColor;
+}
+
+.isDisabled {
+    color: #999;
+}
+
+.isDisabled>a {
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.activePage_dark>a {
+    color: @lightTextColor;
+    background-color: @buttonDarkTheme;
+}
+
+.activePage_light>a {
+    color: @darkTextColor;
+    background-color: @buttonLightTheme;
+}
+
+.pagination_first,
+.pagination_prev{
+    border-radius: 15px 0px 0px 15px;
+}
+.pagination_last,
+.pagination_next{
+    border-radius: 0px 15px 15px 0px;
+}

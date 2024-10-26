@@ -1,0 +1,41 @@
+@import '../../../styles/variables.less';
+
+.outTasks>:nth-child(2) {
+    margin-bottom: 15px;
+}
+
+.outTasks__typesTasks {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-bottom: 30px;
+
+}
+
+.outTasks__typesTasks {
+
+    &::before,
+    &::after {
+        content: '';
+        position: relative;
+        left: -20px;
+        width: calc(100% + 40px);
+        padding-bottom: 20px;
+    }
+
+    &_dark {
+
+        &::before,
+        &::after {
+            border-top: 1px solid @lightBackground;
+        }
+    }
+
+    &_light {
+
+        &::before,
+        &::after {
+            border-top: 1px solid @darkBackground;
+        }
+    }
+}

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { menuLinks } from '../Common/Menu/menuData'
 import { sociable } from '../Common/Sociable/sociableData'
@@ -25,7 +26,7 @@ export default function Sidebar() {
                         </div>
                         <ul className={`${styles.dropdownMenu} ${isOpen ? styles.show : ''}`}>
                             <p className={styles.menu__additional_text}>Курс: English elementary</p>
-                            <a href="#" className={styles.menu__change_course}>Натисніть для зміни курсу</a>
+                            <Link to={"/courses"} className={styles.menu__change_course}>Натисніть для зміни курсу</Link>
                             <Menu {...menuLinks[2]} />
                             <Menu {...menuLinks[3]} />
                             <Menu {...menuLinks[4]} />

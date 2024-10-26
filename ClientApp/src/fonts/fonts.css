@@ -19,7 +19,7 @@
         url('Calibri-Bold.woff') format('woff'),
         url('Calibri-Bold.ttf') format('truetype');
     font-weight: bold;
-    font-style: normal;
+    font-style: bold;
 }
 
 @font-face {
