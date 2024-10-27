@@ -1,0 +1,78 @@
+.comments {
+    margin-right: 0px !important;
+
+    &__writecomment {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+
+    &__img {
+        width: 50px;
+        height: 50px;
+    }
+
+    &__img img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    &__form {
+        width: 100%;
+    }
+
+    &__input {
+        border: none;
+        outline: none;
+        box-sizing: border-box;
+        border-bottom: 1px solid black;
+        background-color: inherit;
+        width: 100%;
+    }
+
+    &__buttonActions {
+        display: flex;
+        justify-content: end;
+        gap: 10px;
+        margin-top: 10px;
+    }
+}
+
+.comentsContainer:not(:last-child) {
+    margin-bottom: 40px;
+
+}
+
+.comment {
+    display: flex;
+    gap: 10px;
+
+    // &__icon {
+    //     width: 70px;
+    //     height: 70px;
+    // }
+
+    &__icon img {
+        width: 50px;
+        height: 50px;
+    }
+
+    &__userName,
+    &__comment {
+        margin-bottom: 10px;
+    }
+
+    &__reaction {
+        display: flex;
+        gap: 60px;
+        align-items: center;
+    }
+
+    &__like,
+    &__diselike {
+        display: flex;
+        gap: 10px;
+        width: 30px;
+        height: 30px;
+    }
+}

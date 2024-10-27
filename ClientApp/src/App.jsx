@@ -5,6 +5,7 @@ import Footer from "./components/Footer/Footer";
 import { ThemeProvider } from "./Hooks/ThemeContext";
 import LandingPage from './pages/LandingPage/LandingPage';
 import Courses from './pages/Courses/Courses';
+import Course from './pages/Course/Course';
 import { useTheme } from './Hooks/ThemeContext';
 
 export default function App() {
@@ -29,8 +30,8 @@ function AppContent() {
                     <Routes>
                         <Route path="/landing" element={<LandingPage />} />
                         <Route path="/courses" element={<Courses />} />
-                        {/* <Route path="/course" element={<Course />} />
-                        <Route path="/lessons" element={<Lessons />} />
+                        <Route path="/course/:id" element={<Course />} />
+                        {/*<Route path="/lessons" element={<Lessons />} />
                         <Route path="/lessonTheory" element={<LessonTheory />} />
                         <Route path="/lessonPractice" element={<LessonPractice />} />
                         <Route path="/lessonPractice" element={<LessonResult />} /> */}
