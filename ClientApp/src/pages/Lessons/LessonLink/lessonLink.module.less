@@ -1,0 +1,105 @@
+@import url('/src//styles/variables.less');
+
+@keyframes fly-out {
+    0% {
+        width: 100px;
+        border-radius: 50%/50%;
+    }
+
+    100% {
+        width: 300px;
+    }
+}
+
+@keyframes fly-in {
+    0% {
+        width: 300px;
+        border-radius: 20%/50%;
+    }
+
+    40% {
+        opacity: 0.1;
+    }
+
+    100% {
+        width: 50px;
+        border-radius: 50%/50%;
+        opacity: 0;
+    }
+}
+
+
+.lessonLink {
+    display: flex;
+    align-items: center;
+
+    &__figure {
+        position: relative;
+        z-index: 2;
+        background-color: @lightBackground;
+        color: @lightTextColor;
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+
+
+        &_dark {
+            background-color: @buttonDarkTheme;
+        }
+
+        &_light {
+            background-color: @buttonLightTheme;
+        }
+    }
+
+    &__number {
+        font-size: 32px;
+    }
+
+    &__animation {
+        position: relative;
+        z-index: 1;
+        right: 120px;
+        width: 300px;
+        height: 120px;
+        display: flex;
+        gap: 10px;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-left: 60px;
+        border-radius: 20% / 50%;
+        opacity: 0.8;
+
+        &_dark {
+            background-color: @darkBackground;
+            color: @darkTextColor;
+        }
+
+        &_light {
+            background-color: @lightBackground;
+            color: @lightTextColor;
+        }
+    }
+
+    &__text {
+        text-align: center;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 55%;
+        font-size: 18px;
+    }
+}
+
+.flyOut {
+    animation: fly-out 2s forwards;
+}
+
+.flyIn {
+    animation: fly-in 2s forwards;
+}

@@ -71,11 +71,11 @@ export default function Comments() {
                 </form>
             </div>
             <Sorting />
-            {
-                Object.keys(comments).map((userId) => {
-                    const comment = comments[userId]
-                    return (
-                        <div className={styles.comentsContainer}>
+            <div className={styles.comentsContainer}>
+                {
+                    Object.keys(comments).map((userId) => {
+                        const comment = comments[userId]
+                        return (
                             <div key={userId} className={styles.comment}>
                                 <div className={styles.comment__icon}>
                                     <img src={comment.userIcon} alt="User Icon" />
@@ -103,10 +103,10 @@ export default function Comments() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    )
-                })
-            }
+                        )
+                    })
+                }
+            </div>
         </div>
     );
 }

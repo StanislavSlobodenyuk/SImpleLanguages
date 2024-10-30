@@ -33,7 +33,9 @@ export default function CourseCard({ course }) {
                     <Link to={`/course/${course.id}`} onClick={scrollToTop}>
                         <Button>Переглянути</Button>
                     </Link>
-                    <Button>Розпочати</Button>
+                    <Link to={`/course/${course.id}/lessons`} onClick={scrollToTop}>
+                        <Button>Розпочати</Button>
+                    </Link>
                 </div>
             </div>
         </div>

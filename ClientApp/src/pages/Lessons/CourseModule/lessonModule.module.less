@@ -1,0 +1,68 @@
+@import url('/src/styles/variables.less');
+
+.lessons {
+    &__flex {
+        width: calc(100% + 5px);
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+
+        &_active {
+            font-weight: bold;
+        }
+
+        &_dark {
+            background-color: @buttonDarkTheme;
+        }
+
+        &_light {
+            background-color: @buttonLightTheme;
+        }
+    }
+
+    &__text {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        width: 90%;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    &__text b {
+        font-size: 18px;
+    }
+
+    &__dropdownList {
+        position: relative;
+        top: 10px;
+        right: 15px;
+        width: 0;
+        height: 0;
+        border-top: 9px solid black;
+        border-left: 6px solid transparent;
+        border-right: 6px solid transparent;
+        cursor: pointer;
+    }
+
+
+    .lessonsModule__dropdownList_open {
+        transform: rotate(180deg);
+        transition: transform 0.5s ease;
+    }
+}
+
+.lesson {
+    font-size: 16px;
+
+    &__content {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+    }
+}
+
+.lesson:not(:last-child) {
+    border-bottom: 1px black solid;
+}

@@ -1,0 +1,108 @@
+@import url('/src//styles/variables.less');
+
+.lessons {
+    &__flexContainer {
+        height: calc(100vh - 50px);
+        display: flex;
+        flex-grow: 1;
+        gap: 20px;
+    }
+
+    &__lessonsMenu,
+    &__lessonsMap {
+
+        position: relative;
+        padding: 0 !important;
+        overflow-x: hidden;
+        height: 85%;
+    }
+
+    &__lessonsMenu {
+        transition: transform 0.3s ease;
+        overflow-y: scroll;
+        border-radius: 20px 0 0 20px !important;
+        flex: 1 1 30%;
+
+        &::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: #e5ebf1;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 20px;
+        }
+    }
+
+    &__lessonsMap {
+        position: relative;
+        z-index: 2;
+        overflow-y: scroll !important;
+        flex: 1 1 70%;
+    }
+
+
+    &__lessonsMenu::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    &__lessonsMenu::-webkit-scrollbar-track {
+        background: inherit;
+    }
+
+    &__lessonsMenu::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 20px;
+    }
+}
+
+.modal {
+    all: unset;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: calc(50% - 75px);
+    left: calc(50% - 150px);
+    width: 300px;
+    height: 150px;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    border-radius: 20px;
+
+    &_dark {
+        background-color: @darkBackground;
+        color: @darkTextColor;
+    }
+
+    &_light {
+        background-color: @lightBackground;
+        color: @lightTextColor;
+    }
+}
+
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}
+
+.modal__flexContainer {
+    display: flex;
+    gap: 15px;
+
+    button {
+        padding: 10px 0;
+        text-align: center;
+        width: 120px;
+    }
+}
