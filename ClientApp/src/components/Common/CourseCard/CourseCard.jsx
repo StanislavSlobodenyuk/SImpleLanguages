@@ -20,7 +20,9 @@ export default function CourseCard({ course }) {
     return (
         <div key={course.id} className={styles.course}>
             <div className={styles.image}>
-                <img src={course.image} alt="" />
+                <Link to={`/course/${course.id}/lessons`} onClick={scrollToTop}>
+                    <img src={course.image} alt="" />
+                </Link>
             </div>
             <div className={`${styles.content} ${theme === 'dark' ? styles.content_dark : styles.content_light}`}>
                 <div className={styles.title}>{course.title}</div>

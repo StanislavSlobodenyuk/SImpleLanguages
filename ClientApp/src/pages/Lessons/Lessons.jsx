@@ -165,10 +165,10 @@ export default function Lessons() {
                         <div className={`${styles.modal} ${theme === 'dark' ? styles.modal_dark : styles.modal_light}`}>
                             <h4 className={styles.modal__title}>Оберіть з чого почати</h4>
                             <div className={styles.modal__flexContainer}>
-                                <Link to={`/course/${courseId}/lessonTheory/${currentLesson.id}`}>
+                                <Link to={`/course/${encodeURIComponent(course.title)}/module/${encodeURIComponent(currentModule.title)}/lessonTheory/${currentLesson.id}`}>
                                     <Button click={closeModal}>Теорія</Button>
                                 </Link>
-                                <Link to={`/course/${courseId}/lessonPractice/${currentLesson.id}`}>
+                                <Link to={`/course/${encodeURIComponent(course.title)}/module/${encodeURIComponent(currentModule.title)}/lessonPractice/${currentLesson.id}`}>
                                     <Button click={closeModal}>Практика</Button>
                                 </Link>
                             </div>

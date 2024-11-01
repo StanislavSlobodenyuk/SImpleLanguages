@@ -12,7 +12,7 @@ export const menuLinks = [
     {
         id: "menu-lessons",
         text: 'Уроки',
-        link: "#"
+        link: "`/course/${course.id}/lessons`"
     },
     {
         id: "manu-grammar",

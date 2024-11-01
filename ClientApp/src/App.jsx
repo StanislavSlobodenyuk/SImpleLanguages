@@ -38,8 +38,8 @@ function AppContent() {
                         <Route path="/courses" element={<Courses />} />
                         <Route path="/course/:id" element={<Course />} />
                         <Route path="/course/:id/lessons" element={<Lessons />} />
-                        <Route path="/course/:courseId/lessonTheory/:lessonId" element={<LessonTheory />} />
-                        <Route path="/course/:courseId/lessonPractice/:lessonId" element={<LessonPractice />} />
+                        <Route path="/course/:courseTitle/module/:moduleTitle/lessonTheory/:lessonId" element={<LessonTheory />} />
+                        <Route path="/course/:courseTitle/module/:moduleTitle/lessonPractice/:lessonId" element={<LessonPractice />} />
                         {/*<Route path="/lessonPractice" element={<LessonResult />} /> */}
 
                         <Route path="/" element={<Navigate to="/landing" />} />
