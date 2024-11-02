@@ -5,9 +5,10 @@ import { sociable } from '../Common/Sociable/sociableData'
 import Maintitle from '../Common/MainTitle/MainTitle'
 import Menu from '../Common/Menu/Menu'
 import Sociable from '../Common/Sociable/Sociable'
+import Button from '../Common/Button/Button'
 import styles from './sidebar.module.less'
 
-export default function Sidebar() {
+export default function Sidebar({ authenticated }) {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -18,24 +19,30 @@ export default function Sidebar() {
         <aside>
             <div className={styles.sidebar__container}>
                 <Maintitle location="sidebar" />
-                <div className={styles.sidebar__menu}>
-                    <ul className={styles.menu__links}>
-                        <Menu {...menuLinks[0]} />
-                        <div onClick={toggleDropdown}>
-                            <Menu {...menuLinks[1]} />
-                        </div>
-                        <ul className={`${styles.dropdownMenu} ${isOpen ? styles.show : ''}`}>
-                            <p className={styles.menu__additional_text}>Курс: English elementary</p>
-                            <Link to={"/courses"} className={styles.menu__change_course}>Натисніть для зміни курсу</Link>
-                            <Menu {...menuLinks[2]} />
-                            <Menu {...menuLinks[3]} />
-                            <Menu {...menuLinks[4]} />
+                {authenticated === true
+                    ? (<div className={styles.sidebar__menu}>
+                        <ul className={styles.menu__links}>
+                            <Menu {...menuLinks[0]} />
+                            <div onClick={toggleDropdown}>
+                                <Menu {...menuLinks[1]} />
+                            </div>
+                            <ul className={`${styles.dropdownMenu} ${isOpen ? styles.show : ''}`}>
+                                <p className={styles.menu__additional_text}>Курс: English elementary</p>
+                                <Link to={"/courses"} className={styles.menu__change_course}>Натисніть для зміни курсу</Link>
+                                <Menu {...menuLinks[2]} />
+                                <Menu {...menuLinks[3]} />
+                                <Menu {...menuLinks[4]} />
+                            </ul>
+                            <Menu {...menuLinks[5]} />
+                            <Menu {...menuLinks[6]} />
+                            <Menu {...menuLinks[7]} />
                         </ul>
-                        <Menu {...menuLinks[5]} />
-                        <Menu {...menuLinks[6]} />
-                        <Menu {...menuLinks[7]} />
-                    </ul>
-                </div>
+                    </div>)
+                    : (<div className={styles.sidebar__buttons}>
+                        <Button>Увійти</Button>
+                        <Button>Зареєструватись</Button>
+                    </div>)
+                }
                 <div className={styles.sidebar__sociables}>
                     <Sociable {...sociable[0]} />
                     <Sociable {...sociable[1]} />

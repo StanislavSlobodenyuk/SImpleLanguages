@@ -20,6 +20,53 @@ header {
         height: 50px;
     }
 
+    .header__miniProfile {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 100px;
+        margin-right: auto;
+
+        img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .header__userInformation {
+            flex: 1 1 auto;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header__userIcon {
+            display: flex;
+            width: 50px;
+            height: 50px;
+
+            img {
+                width: 50px;
+                height: 50px;
+            }
+        }
+
+        .header__selectCourse {
+            font-size: 16px;
+        }
+
+        .header__values {
+            display: flex;
+            gap: 45px;
+        }
+
+        .header__raiting,
+        .header__money {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+    }
+
     .header__wordsTranslated {
         flex: 1 1 auto;
         display: flex;
@@ -51,9 +98,27 @@ header {
 }
 
 .header__buttons {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 30px;
+
+    .header__notificationDownList {
+        position: absolute;
+        z-index: 20;
+        background-color: #fff;
+        width: 300px;
+        min-height: 100%;
+        top: 56px;
+        left: -20px;
+        border-radius: 10px;
+    }
+    .header__notificationDownList>div:not(:last-child){
+        border-bottom: 1px solid black;
+    }
+    .header__notificationDownList>div>p{
+        padding: 10px;
+    }
 
     .header__themeButton {
         position: relative;

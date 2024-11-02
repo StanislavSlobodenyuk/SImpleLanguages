@@ -1,4 +1,5 @@
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import styles from './lessonPractice.module.less'
 import SimpleQuestion from "./QuestionsType/SimpleQuestion";
 import AudioQuestion from "./QuestionsType/AudioQuestions";
@@ -83,7 +84,9 @@ export default function LessonPractice() {
                 )}
             </div>
             <div className={styles.practice__buttonResults}>
-                <Button>Переглянути результати</Button>
+                <Link to={`/course/${encodeURIComponent(courseTitle)}/module/${encodeURIComponent(moduleTitle)}/lessonPractice/${lessonId}/result`} >
+                    <Button>Переглянути результати</Button>
+                </Link>
             </div>
         </div>
     );

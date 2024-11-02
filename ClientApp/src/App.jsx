@@ -1,17 +1,9 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import { useState } from 'react';
 import { useTheme } from './Hooks/ThemeContext';
 import { ThemeProvider } from "./Hooks/ThemeContext";
-import Sidebar from "./components/Sidebar/Sidebar";
-import Header from "./components/Header/Header";
-import Footer from "./components/Footer/Footer";
-import LandingPage from './pages/LandingPage/LandingPage';
-import Courses from './pages/Courses/Courses';
-import Course from './pages/Course/Course';
-import Lessons from './pages/Lessons/Lessons';
-import LessonTheory from './pages/LessonTheory/LessonTheory';
-import LessonPractice from './pages/LessonPractice/LessonPractice';
-
-
+import { Header, Footer, Sidebar, ProtectedRoute } from './components';
+import { LandingPage, Courses, Course, Lessons, LessonTheory, LessonPractice, LessonResult, LoginPage } from './pages';
 
 
 export default function App() {
@@ -25,24 +17,38 @@ export default function App() {
 }
 
 function AppContent() {
+    const [isAuthenticated, setIsAuthenticated] = useState(true);
     const { theme } = useTheme();
+
+    const protectedRoutes = [
+        { path: "/courses", element: <Courses /> },
+        { path: "/course/:id", element: <Course /> },
+        { path: "/course/:id/lessons", element: <Lessons /> },
+        { path: "/course/:courseTitle/module/:moduleTitle/lessonTheory/:lessonId", element: <LessonTheory /> },
+        { path: "/course/:courseTitle/module/:moduleTitle/lessonPractice/:lessonId", element: <LessonPractice /> },
+        { path: "/course/:courseTitle/module/:moduleTitle/lessonPractice/:lessonId/result", element: <LessonResult /> }
+    ];
 
     return (
         <>
-            <Sidebar />
+            <Sidebar authenticated={isAuthenticated} />
             <div className={"content__container"}>
-                <Header />
+                <Header authenticated={isAuthenticated} />
                 <main className={theme === 'dark' ? "darkMain" : "lightMain"}>
                     <Routes>
                         <Route path="/landing" element={<LandingPage />} />
-                        <Route path="/courses" element={<Courses />} />
-                        <Route path="/course/:id" element={<Course />} />
-                        <Route path="/course/:id/lessons" element={<Lessons />} />
-                        <Route path="/course/:courseTitle/module/:moduleTitle/lessonTheory/:lessonId" element={<LessonTheory />} />
-                        <Route path="/course/:courseTitle/module/:moduleTitle/lessonPractice/:lessonId" element={<LessonPractice />} />
-                        {/*<Route path="/lessonPractice" element={<LessonResult />} /> */}
-
-                        <Route path="/" element={<Navigate to="/landing" />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        {protectedRoutes.map((route, index) => (
+                            <Route
+                                key={index}
+                                path={route.path}
+                                element={
+                                    <ProtectedRoute authenticated={isAuthenticated}>
+                                        {route.element}
+                                    </ProtectedRoute>
+                                }
+                            />
+                        ))}
                     </Routes>
                 </main>
                 <Footer />
