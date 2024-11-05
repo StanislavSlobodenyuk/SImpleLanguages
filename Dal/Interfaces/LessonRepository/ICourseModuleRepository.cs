@@ -1,5 +1,4 @@
 ﻿using Domain.Entity.Content.Lessons;
-using Domain.Entity.Content.Metadata.Course;
 
 namespace Dal.Interfaces.LessonRepositories
 {

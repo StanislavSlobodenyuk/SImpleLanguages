@@ -4,12 +4,12 @@ namespace Domain.Entity.Content.Question
 {
     public class AudioQuestion : BaseQuestion
     {
-        public string AudioUrl { get; set; }
+        public string? AudioPath { get; set; }
 
-        public AudioQuestion(string audioUrl, string text, string rightAnswer, TypeQuestion type) 
-            : base(text, rightAnswer, type)
+        public AudioQuestion() { }
+        public AudioQuestion(string audioPath, string questionText, QustionType QuestionType, AnswerType answerType) : base(questionText, QuestionType, answerType)
         {
-            AudioUrl = audioUrl;
+            AudioPath = audioPath;
         }
     }
 }

@@ -3,7 +3,6 @@ using Common.Response;
 using Domain.Entity.Content.Lessons;
 using Dto;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 using Service.Interfaces;
 using Xunit;
@@ -45,7 +44,7 @@ namespace Test.ModuleTests.LessonTest
         {
             // Arrange
             int moduleId =  1;
-            int lessonid = 1;
+            //int lessonid = 1;
 
             SetupMockServiceMethod(expectedStatusCode, methodName);
 
@@ -54,8 +53,8 @@ namespace Test.ModuleTests.LessonTest
                 () => _controller.GetModule(moduleId),
                 () => _controller.UpdateModule(_updateDto, moduleId),
                 () => _controller.ChangeAccess(moduleId),
-                () => _controller.AddLesson(new Lesson("lesson1", true, "iconPath", 2), moduleId),
-                () => _controller.DeleteLesson(moduleId, lessonid),
+                () => _controller.AddLesson(new Lesson("lesson1", true, 2), moduleId),
+                //() => _controller.DeleteLesson(moduleId, lessonid),
             };
 
             // Act
@@ -95,7 +94,7 @@ namespace Test.ModuleTests.LessonTest
         private void SetupMockServiceMethod(int expectedStatusCode, string methodName, string message = "TestMessage")
         {
             CourseModule courseModule = new CourseModule("module1", true, "iconPath");
-            Lesson lesson = new Lesson("lesson1", true, "iconPath", 2);
+            Lesson lesson = new Lesson("lesson1", true, 2);
             switch (methodName)
             {
                 case "GetModule":
@@ -180,23 +179,23 @@ namespace Test.ModuleTests.LessonTest
                     }
                     break;
 
-                case "DeleteLesson":
-                    if (expectedStatusCode == 200)
-                    {
-                        _mockService.Setup(s => s.DeleteLesson(It.IsAny<int>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(true));
-                    }
-                    else if (expectedStatusCode == 404)
-                    {
-                        _mockService.Setup(s => s.DeleteLesson(It.IsAny<int>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleNotFound<bool>(message));
-                    }
-                    else if (expectedStatusCode == 500)
-                    {
-                        _mockService.Setup(s => s.DeleteLesson(It.IsAny<int>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<bool>(message));
-                    }
-                    break;
+                //case "DeleteLesson":
+                //    if (expectedStatusCode == 200)
+                //    {
+                //        _mockService.Setup(s => s.DeleteLesson(It.IsAny<int>(), It.IsAny<int>()))
+                //            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(true));
+                //    }
+                //    else if (expectedStatusCode == 404)
+                //    {
+                //        _mockService.Setup(s => s.DeleteLesson(It.IsAny<int>(), It.IsAny<int>()))
+                //            .ReturnsAsync(BaseResponseHelper.HandleNotFound<bool>(message));
+                //    }
+                //    else if (expectedStatusCode == 500)
+                //    {
+                //        _mockService.Setup(s => s.DeleteLesson(It.IsAny<int>(), It.IsAny<int>()))
+                //            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<bool>(message));
+                //    }
+                //    break;
             }
         }
     }

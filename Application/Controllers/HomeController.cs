@@ -10,7 +10,7 @@ namespace Application.Controllers
         [HttpGet]
         public IActionResult CheckApi()
         {
-            var response = new { Message = "Server work" };
+            var response = new { message = "Server work" };
             return Ok(response);
         }
     }

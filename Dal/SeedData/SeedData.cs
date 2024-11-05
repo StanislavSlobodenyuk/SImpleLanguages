@@ -1,12 +1,463 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Domain.Entity.Content.CourseContent;
+using Domain.Entity.Content.Lessons;
+using Domain.Entity.Content.Question;
+using Domain.Entity.Content.Question.Answer;
+using Domain.Enum;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace Dal.SeedData
 {
-    internal class SeedData
+    public static class SeedData
     {
+        public static void Seed(ApplicationDbContext context)
+        {
+            if (!context.Courses.Any())
+            {
+                var courses = new List<Course>
+                {
+                    new Course{
+                        Title = "Основи англійської мови",
+                        Description = "Цей курс охоплює основи англійської мови для початківців.",
+                        Language = LanguageName.English,
+                        Level = LanguageLevel.Beginner,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Англійська для туристів",
+                        Description = "Курс з англійської для тих, хто подорожує.",
+                        Language = LanguageName.English,
+                        Level = LanguageLevel.Elementary,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Поглиблене вивчення української мови",
+                        Description = "Цей курс призначений для тих, хто хоче покращити свої знання української.",
+                        Language = LanguageName.Ukrainian,
+                        Level = LanguageLevel.Intermediate,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Основи польської мови",
+                        Description = "Вивчайте польську мову з нуля.",
+                        Language = LanguageName.Polish,
+                        Level = LanguageLevel.Beginner,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Чеська мова для початківців",
+                        Description = "Цей курс є ідеальним для новачків у вивченні чеської мови.",
+                        Language =LanguageName.Cheska,
+                        Level = LanguageLevel.Beginner,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Польська мова для туристів",
+                        Description = "Вивчайте польську для подорожей по Польщі.",
+                        Language = LanguageName.Polish,
+                        Level = LanguageLevel.Elementary,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Просунутий курс англійської мови",
+                        Description = "Поглиблене вивчення англійської для досвідчених.",
+                        Language = LanguageName.English,
+                        Level = LanguageLevel.Advanced,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Середній курс української мови",
+                        Description = "Для тих, хто вже знає основи української мови.",
+                        Language = LanguageName.Ukrainian,
+                        Level = LanguageLevel.Intermediate,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Англійська для бізнесу",
+                        Description = "Цей курс призначений для тих, хто хоче вивчити англійську для роботи.",
+                        Language = LanguageName.English,
+                        Level = LanguageLevel.UpperIntermediate,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    },
+                    new Course
+                    {
+                        Title = "Чеська для бізнесу",
+                        Description = "Вивчайте чеську мову для роботи у Чехії.",
+                        Language = LanguageName.Cheska,
+                        Level = LanguageLevel.UpperIntermediate,
+                        Cost = 0,
+                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
+                    }
+                };
+
+                context.Courses.AddRange(courses);
+                context.SaveChanges();
+            }
+
+            if (!context.CourseModules.Any())
+            {
+                var courseModules = new List<CourseModule>
+                {
+                    new CourseModule
+                    {
+                        Title = "Основи англійської мови",
+                        PathToMap = "https://i.ibb.co/gRT0pTL/map.png",
+                        IsAvailable = true,
+                        CourseId = 1
+                    },
+                    new CourseModule
+                    {
+                        Title = "Лексика та словниковий запас",
+                        PathToMap = "https://i.ibb.co/gRT0pTL/map.png",
+                        IsAvailable = true,
+                        CourseId = 1
+                    },
+                    new CourseModule
+                    {
+                        Title = "Граматика на прикладах",
+                        PathToMap = "https://i.ibb.co/gRT0pTL/map.png",
+                        IsAvailable = true,
+                        CourseId = 1
+                    },
+                    new CourseModule
+                    {
+                        Title = "Слухання та вимова",
+                        PathToMap = "https://i.ibb.co/gRT0pTL/map.png",
+                        IsAvailable = true,
+                        CourseId = 1
+                    },
+                    new CourseModule
+                    {
+                        Title = "Читання та письмо",
+                        PathToMap = "https://i.ibb.co/gRT0pTL/map.png",
+                        IsAvailable = true,
+                        CourseId = 1
+                    },
+                    new CourseModule
+                    {
+                        Title = "Практика та повторення",
+                        PathToMap = "https://i.ibb.co/gRT0pTL/map.png",
+                        IsAvailable = true,
+                        CourseId = 1
+                    },
+
+                };
+
+                context.CourseModules.AddRange(courseModules);
+                context.SaveChanges();
+            }
+
+            if (!context.Lessons.Any())
+            {
+                var lessons = new List<Lesson>
+                {
+                    // Для первого модуля
+                    new Lesson { Title = "Вступ до граматики", IsAvailable = true, ModuleLessonsId = 1 },
+                    new Lesson { Title = "Основні слова та фрази", IsAvailable = true, ModuleLessonsId = 1 },
+                    new Lesson { Title = "Вживання дієслів", IsAvailable = true, ModuleLessonsId = 1 },
+                    new Lesson { Title = "Часи в англійській", IsAvailable = true, ModuleLessonsId = 1 },
+                    new Lesson { Title = "Запитання та відповіді", IsAvailable = true, ModuleLessonsId = 1 },
+                    new Lesson { Title = "Короткі речення", IsAvailable = true, ModuleLessonsId = 1 },
+
+                    // Для второго модуля
+                    new Lesson { Title = "Повсякденні слова", IsAvailable = true, ModuleLessonsId = 2 },
+                    new Lesson { Title = "Теми: їжа", IsAvailable = true, ModuleLessonsId = 2 },
+                    new Lesson { Title = "Теми: подорожі", IsAvailable = true, ModuleLessonsId = 2 },
+                    new Lesson { Title = "Теми: погода", IsAvailable = true, ModuleLessonsId = 2 },
+                    new Lesson { Title = "Антоніми та синоніми", IsAvailable = true, ModuleLessonsId = 2 },
+                    new Lesson { Title = "Вивчення фраз", IsAvailable = true, ModuleLessonsId = 2 },
+
+                    // Для третьего модуля
+                    new Lesson { Title = "Структура речень", IsAvailable = true, ModuleLessonsId = 3 },
+                    new Lesson { Title = "Вживання артиклів", IsAvailable = true, ModuleLessonsId = 3 },
+                    new Lesson { Title = "Прийменники", IsAvailable = true, ModuleLessonsId = 3 },
+                    new Lesson { Title = "Прикметники та прислівники", IsAvailable = true, ModuleLessonsId = 3 },
+                    new Lesson { Title = "Заперечення", IsAvailable = true, ModuleLessonsId = 3 },
+                    new Lesson { Title = "Складні речення", IsAvailable = true, ModuleLessonsId = 3 },
+
+                    // Для четвертого модуля
+                    new Lesson { Title = "Вимова звуків", IsAvailable = true, ModuleLessonsId = 4 },
+                    new Lesson { Title = "Слухові вправи", IsAvailable = true, ModuleLessonsId = 4 },
+                    new Lesson { Title = "Аудіо вправи", IsAvailable = true, ModuleLessonsId = 4 },
+                    new Lesson { Title = "Розуміння на слух", IsAvailable = true, ModuleLessonsId = 4 },
+                    new Lesson { Title = "Повторення фраз", IsAvailable = true, ModuleLessonsId = 4 },
+                    new Lesson { Title = "Діалоги", IsAvailable = true, ModuleLessonsId = 4 },
+
+                    // Для пятого модуля
+                    new Lesson { Title = "Читання текстів", IsAvailable = true, ModuleLessonsId = 5 },
+                    new Lesson { Title = "Написання речень", IsAvailable = true, ModuleLessonsId = 5 },
+                    new Lesson { Title = "Огляд граматики", IsAvailable = true, ModuleLessonsId = 5 },
+                    new Lesson { Title = "Складення історій", IsAvailable = true, ModuleLessonsId = 5 },
+                    new Lesson { Title = "Анотації", IsAvailable = true, ModuleLessonsId = 5 },
+                    new Lesson { Title = "Есе", IsAvailable = true, ModuleLessonsId = 5 },
+
+                    // Для шестого модуля
+                    new Lesson { Title = "Повторення граматики", IsAvailable = true, ModuleLessonsId = 6 },
+                    new Lesson { Title = "Розмовна практика", IsAvailable = true, ModuleLessonsId = 6 },
+                    new Lesson { Title = "Пробні тести", IsAvailable = true, ModuleLessonsId = 6 },
+                    new Lesson { Title = "Вправи на повторення", IsAvailable = true, ModuleLessonsId = 6 },
+                    new Lesson { Title = "Групова робота", IsAvailable = true, ModuleLessonsId = 6 },
+                    new Lesson { Title = "Зворотній зв'язок", IsAvailable = true, ModuleLessonsId = 6 }
+
+                };
+
+                context.Lessons.AddRange(lessons);
+                context.SaveChanges();
+            }
+
+            if (!context.AudioQuestions.Any() && !context.TestQuestions.Any() && !context.TextQuestions.Any() && !context.ImageQuestions.Any())
+            {
+                List<AudioQuestion> audioQuestionList = new List<AudioQuestion>
+                {
+                    new AudioQuestion
+                    {
+                        QuestionText = "Прослухайте та дайте відповідь на питання",
+                        QType = QustionType.AudioQuestion,
+                        AType = AnswerType.Radio,
+                        AudioPath = "/src/audioTest/testSound.mp3",
+                    },
+                };
+                List<TestQuestion> testQuestionList = new List<TestQuestion>
+                {
+                   new TestQuestion
+                    {
+                        QuestionText = "Який переклад слова \"family\"",
+                        QType = QustionType.TestQuestion,
+                        AType = AnswerType.Radio
+                    }
+                };
+                List<TextQuestion> textQuestionList = new List<TextQuestion>
+                {
+                    new TextQuestion
+                    {
+                        QuestionText = "Що подобається Анні?",
+                        QType = QustionType.TextQuestion,
+                        AType = AnswerType.CheckBox,
+                        Text = "Anna likes to read books. She reads every day after school. Her favorite book is about animals. She also loves to draw pictures of her favorite animals. Anna wants to become a vet and help animals when she grows up."
+                    }
+                };
+                List<ImageQuestion> imageQuestionList = new List<ImageQuestion>
+                {
+                    new ImageQuestion
+                    {
+                        QuestionText = "Прослухайте та дайте відповідь на питання",
+                        QType = QustionType.AudioQuestion,
+                        AType = AnswerType.Input,
+                        ImagePath = "/src/img/Content/cat.png",
+                    },
+                };
+
+                context.AudioQuestions.AddRange(audioQuestionList);
+                context.TestQuestions.AddRange(testQuestionList);
+                context.TextQuestions.AddRange(textQuestionList);
+                context.ImageQuestions.AddRange(imageQuestionList);
+                context.SaveChanges();
+            }
+
+            if (!context.Theories.Any())
+            {
+                List<Theory> theories = new List<Theory>
+                {
+                    new Theory
+                    {
+                        Title = "Початок вивчення англійської мови",
+                        TextContent = "Тут дуже багато контенту про англійську мову і все інше тут дуже багато контенту " +
+                        "про англійську мову і все інше  тут дуже багато контенту про англійську мову і все інше тут дуже " +
+                        "багато контенту про англійську мову і все інше  тут дуже багато контенту про англійську мову і все " +
+                        "інше",
+                        ListContent = new List<string>{ },
+                        ImagePath = null,
+                        Type = TheoryType.Text,
+                        LessonId = 1,
+                    },
+                    new Theory
+                    {
+                        Title = "У англійській мові є три основні часові форми: минулий, теперішній та майбутній часи. Кожен з них має просту, тривалу, досконалу і досконалу тривалу форму.",
+                        TextContent = null,
+                        ListContent = new List<string>
+                        {
+                            "Теперішній час (Present): I play (Я граю)",
+                            "Минулий час (Past): I played (Я грав)",
+                            "Майбутній час (Future): I will play (Я буду грати)"
+                        },
+                        ImagePath = null,
+                        Type = TheoryType.List,
+                        LessonId = 1,
+                    },
+                    new Theory
+                    {
+                        Title = "Початок вивчення англійської мови",
+                        TextContent = null,
+                        ListContent = new List<string>{ },
+                        ImagePath = "https://i.ibb.co/dQgnLF4/About-Service.png",
+                        Type = TheoryType.Text,
+                        LessonId = 1,
+                    }
+                };
+                context.Theories.AddRange(theories);
+                context.SaveChanges();
+            }
+
+            if (!context.LessonQuestions.Any())
+            {
+                List<LessonQuestion> lessonQuestions = new List<LessonQuestion>()
+                {
+                    new LessonQuestion
+                    {
+                        LessonId = 1,
+                        AudioQuestionId = 1,
+                    },
+                    new LessonQuestion
+                    {
+                        LessonId = 1,
+                        TestQuestionId = 1,
+                    },
+                    new LessonQuestion
+                    {
+                        LessonId = 1,
+                        TextQuestionId = 1,
+                    },
+                    new LessonQuestion
+                    {
+                        LessonId = 1,
+                        ImageQuestionId = 1,
+                    },
+                };
+                context.LessonQuestions.AddRange(lessonQuestions);
+                context.SaveChanges();
+            }
+
+            if (!context.AnswerOptions.Any())
+            {
+                List<AnswerOption> answerOptions = new List<AnswerOption>()
+                {
+                    new AnswerOption
+                    {
+                        AudioQuestionId = 1,
+                        Option = "Hello my name`s Den"
+                    },
+                    new AnswerOption
+                    {
+                        AudioQuestionId = 1,
+                        Option = "Good evening Den"
+                    },
+                    new AnswerOption
+                    {
+                        AudioQuestionId = 1,
+                        Option = "Bye Den"
+                    },
+                    new AnswerOption
+                    {
+                        AudioQuestionId = 1,
+                        Option = "How are you Den?"
+                    },
+                    new AnswerOption
+                    {
+                        TestQuestionId = 1,
+                        Option = "Сім\'я"
+                    },
+                    new AnswerOption
+                    {
+                        TestQuestionId = 1,
+                        Option = "Дерево"
+                    },
+                    new AnswerOption
+                    {
+                        TestQuestionId = 1,
+                        Option = "Батько"
+                    },
+                    new AnswerOption
+                    {
+                        TestQuestionId = 1,
+                        Option = "Мати"
+                    },
+                    new AnswerOption
+                    {
+                        TextQuestionId = 1,
+                        Option = "Play soccer"
+                    },
+                    new AnswerOption
+                    {
+                        TextQuestionId = 1,
+                        Option = "Read books"
+                    },
+                    new AnswerOption
+                    {
+                        TextQuestionId = 1,
+                        Option = "Draw pictures"
+                    },
+                    new AnswerOption
+                    {
+                        TextQuestionId = 1,
+                        Option = "Cook food"
+                    },
+                    new AnswerOption
+                    {
+                        TextQuestionId = 1,
+                        Option = "Sing songs"
+                    },
+                    new AnswerOption
+                    {
+                        ImageQuestionId = 1,
+                        Option = "InputType"
+                    },
+                };
+
+                context.AnswerOptions.AddRange(answerOptions);
+                context.SaveChanges();
+            }
+
+            if (!context.RightAnswers.Any())
+            {
+                List<RightAnswer> rightAnswers = new List<RightAnswer>()
+                {
+                    new RightAnswer
+                    {
+                        AudioQuestionId = 1,
+                        Answer = "Hello my name`s Den"
+                    },
+                    new RightAnswer
+                    {
+                        TestQuestionId = 1,
+                        Answer = "Сім\'я"
+                    },
+                    new RightAnswer
+                    {
+                        TextQuestionId = 1,
+                        Answer = "Read books"
+                    },
+                    new RightAnswer
+                    {
+                        TextQuestionId = 1,
+                        Answer = "Draw pictures"
+                    },
+                    new RightAnswer
+                    {
+                        ImageQuestionId = 1,
+                        Answer = "Cat"
+                    },
+                };
+
+                context.RightAnswers.AddRange(rightAnswers);
+                context.SaveChanges();
+            }
+        }
     }
 }

@@ -1,24 +1,24 @@
 import Pagination from 'react-js-pagination';
-import { useState, useEffect } from 'react';
-import { useTheme } from '/src/Hooks/ThemeContext'
+import { useTheme } from '/src/Hooks/ThemeContext';
 import styles from './pagination.module.less';
 
-export default function MyPagination({ items, itemsPerPage = 9, onPageChange, activePage, setActivePage }) {
+export default function MyPagination({ items, itemsPerPage = 9, onPageChange, activePage }) {
     const { theme } = useTheme();
 
-    useEffect(() => {
-        const indexOfLastItem = activePage * itemsPerPage;
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-        const currentItems = items.slice(indexOfFirstItem, indexOfLastItem);
-        onPageChange(currentItems);
-    }, [activePage, items, itemsPerPage, onPageChange]);
+    const scrollToTop = () => {
+        const scrollStep = -window.scrollY / 15;
+        const scrollInterval = setInterval(() => {
+            if (window.scrollY !== 0) {
+                window.scrollBy(0, scrollStep);
+            } else {
+                clearInterval(scrollInterval);
+            }
+        }, 15);
+    }
 
     const handlePageChange = (pageNumber) => {
-        setActivePage(pageNumber);
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        })
+        onPageChange(pageNumber);
+        scrollToTop();
     };
 
     return (

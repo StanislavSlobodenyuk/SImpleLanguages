@@ -1,5 +1,6 @@
 using Application.InitRepositories;
 using Dal;
+using Dal.SeedData;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -8,7 +9,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
-        builder => builder.WithOrigins("http://localhost:3000")
+        builder => builder.WithOrigins("http://localhost:5173")
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
@@ -28,12 +29,22 @@ DependencyInjectionSetup.RegisterServices(builder.Services);
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    context.Database.Migrate();
+    SeedData.Seed(context);
+}
+
 app.UseCors("AllowSpecificOrigin");
 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "http://localhost:5173");
+    });
 }
 
 app.UseHttpsRedirection();

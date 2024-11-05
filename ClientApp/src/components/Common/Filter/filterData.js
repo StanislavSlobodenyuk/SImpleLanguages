@@ -3,31 +3,31 @@ const filters = [
     {
         key: 'language',
         options: [
-            { value: 'all', label: 'Мова' },
-            { value: 'english', label: 'Англійська' },
-            { value: 'ukrainian', label: 'Українська' },
-            { value: 'polish', label: 'Польська' },
-            { value: 'cheska', label: 'Чешська' },
+            { value: 'All', label: 'Мова' },
+            { value: 'English', label: 'Англійська' },
+            { value: 'Ukrainian', label: 'Українська' },
+            { value: 'Polish', label: 'Польська' },
+            { value: 'Cheska', label: 'Чешська' },
         ],
     },
 
     {
         key: 'level',
         options: [
-            { value: 'all', label: 'Рівень' },
-            { value: 'beginner', label: 'A1: Початковий' },
-            { value: 'elementary', label: 'A2: Базовий' },
-            { value: 'intermediate', label: 'B1: Середній' },
-            { value: 'upperntermediate', label: 'B2: Вище-середнього' },
-            { value: 'advanced', label: 'C1: Просунутий' },
-            { value: 'proficient', label: 'C2: Досвідчений' },
+            { value: 'All', label: 'Рівень' },
+            { value: 'Beginner', label: 'A1: Початковий' },
+            { value: 'Elementary', label: 'A2: Базовий' },
+            { value: 'Intermediate', label: 'B1: Середній' },
+            { value: 'Upperntermediate', label: 'B2: Вище-середнього' },
+            { value: 'Advanced', label: 'C1: Просунутий' },
+            { value: 'Proficient', label: 'C2: Досвідчений' },
         ],
     },
 
     {
         key: 'numberLessons',
         options: [
-            { value: 'all', label: 'Кількість уроків' },
+            { value: 'All', label: 'Кількість уроків' },
             { value: '1-50', label: '1-50' },
             { value: '51-100', label: '51-100' },
             { value: '101-200', label: '101-200' },
@@ -38,14 +38,14 @@ const filters = [
     {
         key: 'cost',
         options: [
-            { value: 'all', label: 'Доступ' },
-            { value: 'free', label: 'Безплатний' },
-            { value: 'paid', label: 'Платний' },
+            { value: 'All', label: 'Доступ' },
+            { value: 'Free', label: 'Безплатний' },
+            { value: 'Paid', label: 'Платний' },
         ],
     },
 
     {
-        key: 'futureCourses',
+        key: 'inDevelopment',
         label: 'Показати курсі в розробці?',
         options: [
             { value: false, label: 'Не показувати' },
@@ -70,6 +70,6 @@ export const CourseFilter = {
     level: filters.find(item => item.key === 'level'),
     numberLessons: filters.find(item => item.key === 'numberLessons'),
     cost: filters.find(item => item.key === 'cost'),
-    futureCourses: filters.find(item => item.key === 'futureCourses'),
+    futureCourses: filters.find(item => item.key === 'inDevelopment'),
     completeCourses: filters.find(item => item.key === 'completeCourses')
 }

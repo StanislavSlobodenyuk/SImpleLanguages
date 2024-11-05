@@ -1,15 +1,13 @@
-﻿
-using Domain.Entity.Base;
-using Domain.Entity.Content.Metadata.Course;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Domain.Entity.Base;
+using Domain.Entity.Content.CourseContent;
 
 namespace Domain.Entity.Content
 {
-    public abstract class BaseContent : BaseEntity
+    public abstract class BaseContentCourse : BaseEntity
     {
-        public int LanguageCourseId { get; private set; }
-        public LanguageCourse? LanguageCourse { get; private set; }
+        public int CourseId { get;  set; }
+        public Course? Course { get; private set; }
 
-        protected BaseContent() { }
+        protected BaseContentCourse() { }
     }
 }

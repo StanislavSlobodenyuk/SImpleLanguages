@@ -32,39 +32,6 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<Lesson>("Server error");
             }
         }
-        public async Task<BaseResponse<Lesson>> GetLessonLecture(int lessonId)
-        {
-            Lesson? currentLesson = await _lessonRepository.GetLecture(lessonId);
-
-            try
-            {
-                if (currentLesson == null)
-                    return BaseResponseHelper.HandleNotFound<Lesson>($"Lesson with id {lessonId} not found");
-
-                return BaseResponseHelper.HandleSuccessfulRequest(currentLesson);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<Lesson>("Server error");
-            }
-        }
-        public async Task<BaseResponse<Lesson>> GetLessonPractice(int lessonId)
-        {
-            Lesson? currentLesson = await _lessonRepository.GetPractice(lessonId);
-
-            try
-            {
-                if (currentLesson == null)
-                    return BaseResponseHelper.HandleNotFound<Lesson>($"Lesson with id {lessonId} not found");
-
-                return BaseResponseHelper.HandleSuccessfulRequest(currentLesson);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<Lesson>("Server error");
-            }
-        }
-
         public async Task<BaseResponse<Lesson>> ChangeAvailable(int lessonId)
         {
             Lesson? currentLesson = await _lessonRepository.GetById(lessonId);

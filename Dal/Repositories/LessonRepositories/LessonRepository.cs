@@ -26,24 +26,6 @@ namespace Dal.Repositories.LessonRepositories
                 return null;
             }
         }
-        public async Task<Lesson?> GetLecture(int lessonId)
-        {
-            return await _context.Lessons
-                .Include(l => l.LectureBlocks)
-                .FirstOrDefaultAsync(l => l.Id == lessonId);
-        }
-        public async Task<Lesson?> GetPractice(int lessonId)
-        {
-            return await _context.Lessons
-                .Include(l => l.LessonQuestions)
-                    .ThenInclude(q => q.TestQuestion)
-                .Include(l => l.LessonQuestions)
-                    .ThenInclude(q => q.AudioQuestion)
-                .Include(l => l.LessonQuestions)
-                    .ThenInclude(q => q.TranslateQuestion)
-                .FirstOrDefaultAsync(l => l.Id == lessonId);
-        }
-
         public async Task<bool> Create(Lesson lesson)
         {
             if (lesson == null || lesson.Id == 0) return false;

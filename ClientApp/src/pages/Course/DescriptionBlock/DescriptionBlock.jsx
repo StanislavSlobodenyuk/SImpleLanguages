@@ -1,6 +1,7 @@
 import Button from '/src/components/Common/Button/Button'
 import styles from './descriptionBlock.module.less'
 import { Link } from 'react-router-dom';
+import { levelMapping, contriesImageMapping } from '/src/Mapping/Mappinig'
 
 export default function DescriptionBlock({ course }) {
     return (
@@ -8,9 +9,9 @@ export default function DescriptionBlock({ course }) {
             <div className={styles.course__flexContainer}>
                 <h3 className={styles.course__title}>{course.title}</h3>
                 <div className={styles.course__img}>
-                    <img src="/src/img/Flags/United-Kingdom__round.png" alt="" />
+                    <img src={contriesImageMapping[course.language]} alt="Course image" />
                 </div>
-                <div className={styles.course__level}>Рівень: {course.level}</div>
+                <div className={styles.course__level}>Рівень: {levelMapping[course.level]}</div>
             </div>
             <div className={styles.course__description}>{course.description}</div>
             <div className={styles.course__themes}>Теми: привітання та знайомства, особиста інформація, сім’я та друзі, числа та дати, основні дії та дієслова  </div>

@@ -28,11 +28,7 @@ namespace Dal.Configuration.Lessonsconfiguration
                 .HasColumnName("Is_available")
                 .IsRequired();
 
-            builder.Property(e => e.IconPath)
-                .HasColumnName("Icon_path")
-                .IsRequired();
-
-            builder.HasMany(e => e.LectureBlocks)
+            builder.HasMany(e => e.TheoryBlock)
                 .WithOne(e => e.Lesson)
                 .HasForeignKey(e => e.LessonId)
                 .HasConstraintName("FK_Lesson_LessonId_LectureBlock")

@@ -17,6 +17,10 @@ namespace Dal.Configuration.Lessonsconfiguration
                 .ValueGeneratedOnAdd()
                 .HasColumnName("Id");
 
+            builder.Property(x => x.CourseId)
+                .IsRequired()
+                .HasColumnName("CourseId");
+
             builder.Property(x => x.TimeStamp)
                 .IsRowVersion()
                 .IsConcurrencyToken();
@@ -26,7 +30,7 @@ namespace Dal.Configuration.Lessonsconfiguration
                 .HasColumnName("Title");
 
             builder.Property(x => x.IsAvailable)
-                .HasDefaultValue(false)
+                .HasDefaultValue(true)
                 .HasColumnName("Is_available");
 
             builder.Property(x => x.PathToMap)

@@ -4,10 +4,10 @@ using Application.Controllers;
 using Dto;
 using Service.Interfaces;
 using Common.Response;
-using Domain.Entity.Content.Metadata.Course;
 using Microsoft.AspNetCore.Mvc;
 using Domain.Entity.Content.Lessons;
 using Domain.Enum;
+using Domain.Entity.Content.CourseContent;
 
 namespace Test.XUnitTests.MetadataTests
 {
@@ -16,13 +16,13 @@ namespace Test.XUnitTests.MetadataTests
     {
         // Assert
         protected readonly CourseController _controller;
-        protected readonly Mock<ILanguageCourseService> _mockService;
+        protected readonly Mock<ICourseService> _mockService;
         protected readonly CourseFilterDto _filterDto;
         protected readonly UpdateCourseDto _updateCourseDto;
 
         public LanguageCourseControllerTests()
         {
-            _mockService = new Mock<ILanguageCourseService>();
+            _mockService = new Mock<ICourseService>();
             _controller = new CourseController(_mockService.Object);
             _filterDto = new CourseFilterDto();
             _updateCourseDto = new UpdateCourseDto();
@@ -67,13 +67,9 @@ namespace Test.XUnitTests.MetadataTests
 
             List<Func<Task<IActionResult>>> methods = new List<Func<Task<IActionResult>>>
             {
-                () => _controller.ViewCourse(courseId),
-                () => _controller.CreateCourse(new LanguageCourse("Name", "description", languageName, languageLevel, "IconPath")),
+                () => _controller.CreateCourse(new Course("Name", "description", languageName, languageLevel, "IconPath")),
                 () => _controller.DeleteCourse(courseId),
                 () => _controller.UpdateCourse(_updateCourseDto, courseId),
-                () => _controller.AddModule(new CourseModule("Name", true, "path"), courseId),
-                () => _controller.DeleteModule(courseId, moduleId),
-                () => _controller.ViewCourses(_filterDto)
             };
 
             // Act
@@ -120,40 +116,40 @@ namespace Test.XUnitTests.MetadataTests
                     if (expectedStatusCode == 200)
                     {
                         _mockService.Setup(s => s.GetCourseById(It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(new LanguageCourse("Name", "description", languageName, languageLevel, "IconPath")));
+                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(new Course("Name", "description", languageName, languageLevel, "IconPath")));
                     }
                     else if (expectedStatusCode == 400)
                     {
                         _mockService.Setup(s => s.GetCourseById(It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<LanguageCourse>(message));
+                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<Course>(message));
                     }
                     else if (expectedStatusCode == 404)
                     {
                         _mockService.Setup(s => s.GetCourseById(It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleNotFound<LanguageCourse>(message));
+                            .ReturnsAsync(BaseResponseHelper.HandleNotFound<Course>(message));
                     }
                     else if (expectedStatusCode == 500)
                     {
                         _mockService.Setup(s => s.GetCourseById(It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<LanguageCourse>(message));
+                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<Course>(message));
                     }
                     break;
 
                 case "CreateCourse":
                     if (expectedStatusCode == 200)
                     {
-                        _mockService.Setup(s => s.CreateCourse(It.IsAny<LanguageCourse>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(new LanguageCourse("Name", "description", languageName, languageLevel, "IconPath")));
+                        _mockService.Setup(s => s.CreateCourse(It.IsAny<Course>()))
+                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(new Course("Name", "description", languageName, languageLevel, "IconPath")));
                     }
                     else if (expectedStatusCode == 400)
                     {
-                        _mockService.Setup(s => s.CreateCourse(It.IsAny<LanguageCourse>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<LanguageCourse>(message));
+                        _mockService.Setup(s => s.CreateCourse(It.IsAny<Course>()))
+                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<Course>(message));
                     }
                     else if (expectedStatusCode == 500)
                     {
-                        _mockService.Setup(s => s.CreateCourse(It.IsAny<LanguageCourse>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<LanguageCourse>(message));
+                        _mockService.Setup(s => s.CreateCourse(It.IsAny<Course>()))
+                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<Course>(message));
                     }
                     break;
 
@@ -184,97 +180,23 @@ namespace Test.XUnitTests.MetadataTests
                     if (expectedStatusCode == 200)
                     {
                         _mockService.Setup(s => s.UpdateCourse(It.IsAny<UpdateCourseDto>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(new LanguageCourse("Name", "description", languageName, languageLevel, "IconPath")));
+                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(new Course("Name", "description", languageName, languageLevel, "IconPath")));
                     }
                     else if (expectedStatusCode == 400)
                     {
                         _mockService.Setup(s => s.UpdateCourse(It.IsAny<UpdateCourseDto>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<LanguageCourse>(message));
+                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<Course>(message));
                     }
                     else if (expectedStatusCode == 404)
                     {
                         _mockService.Setup(s => s.UpdateCourse(It.IsAny<UpdateCourseDto>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleNotFound<LanguageCourse>(message));
+                            .ReturnsAsync(BaseResponseHelper.HandleNotFound<Course>(message));
                     }
                     else if (expectedStatusCode == 500)
                     {
                         _mockService.Setup(s => s.UpdateCourse(It.IsAny<UpdateCourseDto>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<LanguageCourse>(message));
+                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<Course>(message));
                     }
-                    break;
-
-                case "AddModule":
-                    if (expectedStatusCode == 200)
-                    {
-                        _mockService.Setup(s => s.AddModule(It.IsAny<CourseModule>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(new LanguageCourse("Name", "description", languageName, languageLevel, "IconPath")));
-                    }
-                    else if (expectedStatusCode == 400)
-                    {
-                        _mockService.Setup(s => s.AddModule(It.IsAny<CourseModule>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<LanguageCourse>(message));
-                    }             
-                    else if (expectedStatusCode == 500)
-                    {
-                        _mockService.Setup(s => s.AddModule(It.IsAny<CourseModule>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<LanguageCourse>(message));
-                    }
-                    break;
-
-                case "DeleteModule":
-                    if (expectedStatusCode == 200)
-                    {
-                        _mockService.Setup(s => s.DeleteModule(It.IsAny<int>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(true));
-                    }
-                    else if (expectedStatusCode == 400)
-                    {
-                        _mockService.Setup(s => s.DeleteModule(It.IsAny<int>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<bool>(message));
-                    }
-                    else if (expectedStatusCode == 404)
-                    {
-                        _mockService.Setup(s => s.DeleteModule(It.IsAny<int>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleNotFound<bool>(message));
-                    }
-                    else if (expectedStatusCode == 500)
-                    {
-                        _mockService.Setup(s => s.DeleteModule(It.IsAny<int>(), It.IsAny<int>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<bool>(message));
-                    }
-                    break;
-
-                case "GetFillterCourses":
-
-                    var coursesList = new List<LanguageCourse>
-                    {
-                        new LanguageCourse( "Name", "description", languageName, languageLevel, "IconPath"),
-                        new LanguageCourse ("Name2", "description2", languageName, languageLevel, "IconPath2"),
-                        // Добавьте больше курсов, если необходимо
-                    };
-
-                    if (expectedStatusCode == 200)
-                    {
-                        _mockService.Setup(s => s.GetFillterCourses(It.IsAny<CourseFilterDto>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleSuccessfulRequest(new List<LanguageCourse>
-                            {
-                                new LanguageCourse( "Name", "description", languageName, languageLevel, "IconPath"),
-                                new LanguageCourse ("Name2", "description2", languageName, languageLevel, "IconPath2"),
-                            }.AsEnumerable()));
-                    }
-                    else if (expectedStatusCode == 400)
-                    {
-                        _mockService.Setup(s => s.GetFillterCourses(It.IsAny<CourseFilterDto>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleBadRequest<IEnumerable<LanguageCourse>>(message));
-                    }
-                    else if (expectedStatusCode == 404)
-                    {
-                        _mockService.Setup(s => s.GetFillterCourses(It.IsAny<CourseFilterDto>()))
-                            .ReturnsAsync(BaseResponseHelper.HandleNotFound<IEnumerable<LanguageCourse>>(message));
-                    }
-                    else if (expectedStatusCode == 500)
-                        _mockService.Setup(s => s.GetFillterCourses(It.IsAny<CourseFilterDto>()))
-                                    .ReturnsAsync(BaseResponseHelper.HandleInternalServerError<IEnumerable<LanguageCourse>>(message));
                     break;
             }
         }

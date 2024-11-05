@@ -4,7 +4,9 @@ import OutCourses from './OutCourses/OutCourses'
 import OutTasks from './OutTasks/OutTasks'
 import YourTrust from './YourTrust/YourTrust'
 
+
 export default function LandingPage() {
+
     return (
         <>
             <section> <AboutService /></section>

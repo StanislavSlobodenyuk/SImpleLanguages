@@ -1,5 +1,4 @@
-﻿using Dal.Interfaces;
-using Dal.Interfaces.LessonRepositories;
+﻿using Dal.Interfaces.LessonRepositories;
 using Domain.Entity.Content.Lessons;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,11 +12,11 @@ namespace Dal.Repositories
         {
             _context = context;
         }
-        public async Task<LectureBlock?> GetById(int id)
+        public async Task<Theory?> GetById(int id)
         {
             try
             {
-                LectureBlock? lecture = await _context.LectureBlocks.FirstOrDefaultAsync(x => x.Id == id);
+                Theory? lecture = await _context.Theories.FirstOrDefaultAsync(x => x.Id == id);
                 if (lecture == null)
                     return null;
 
@@ -29,14 +28,14 @@ namespace Dal.Repositories
             }
         }
 
-        public async Task<bool> Create(LectureBlock lectureBlock)
+        public async Task<bool> Create(Theory lectureBlock)
         {
             if (lectureBlock == null)
                 return false;  
 
             try
             {
-                _context.LectureBlocks.Add(lectureBlock);  
+                _context.Theories.Add(lectureBlock);  
                 await _context.SaveChangesAsync();
                 
                 return true;
@@ -46,14 +45,14 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> Delete(LectureBlock lectureBlock)
+        public async Task<bool> Delete(Theory lectureBlock)
         {
             if (lectureBlock == null)
                 return false;
 
             try
             {
-                _context.LectureBlocks.Remove(lectureBlock);
+                _context.Theories.Remove(lectureBlock);
                 await _context.SaveChangesAsync();
 
                 return true;
@@ -63,7 +62,7 @@ namespace Dal.Repositories
                 return false;
             }
         }
-        public async Task<bool> Update(LectureBlock lectureBlock)
+        public async Task<bool> Update(Theory lectureBlock)
         {
             if (lectureBlock == null)
                 return false;

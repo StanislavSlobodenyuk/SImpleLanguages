@@ -6,8 +6,9 @@ namespace Domain.Entity.Content.Question
 {
     public class TestQuestion : BaseQuestion
     {
-        public IEnumerable<TestAnswerOption> AnswerOptions { get; set; } = new List<TestAnswerOption>();
-        public TestQuestion(string text, string rightAnswer, TypeQuestion type) : base(text, rightAnswer, type)
+        public TestQuestion() { }
+        public TestQuestion(string questionText, QustionType questionType, AnswerType answerType)
+         : base(questionText, questionType, answerType)
         {
         }
     }

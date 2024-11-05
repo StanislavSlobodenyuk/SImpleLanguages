@@ -13,7 +13,7 @@
     justify-content: space-between;
     border-radius: 25px;
     background-color: #fff;
-    font-size: 16px;
+    font-size: 18px;
     min-height: 100%;
 }
 
@@ -38,6 +38,10 @@
     padding: 10px 15px 20px;
 }
 
+.content>:not(:last-child) {
+    margin-bottom: 10px;
+}
+
 .content_dark {
     background-color: @darkBackground;
     color: @darkTextColor;
@@ -53,14 +57,8 @@
     font-weight: bold;
 }
 
-.description {
-    margin-bottom: 10px;
-}
 
-.flexContainer {
-    display: flex;
-    gap: 30px;
-}
+
 
 .buttonFlexContainer {
     display: flex;

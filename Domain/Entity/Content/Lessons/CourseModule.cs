@@ -1,17 +1,14 @@
-﻿
-using Domain.Entity.Content.Metadata.Course;
-using Domain.Enum;
-
-namespace Domain.Entity.Content.Lessons
+﻿namespace Domain.Entity.Content.Lessons
 {
-    public class CourseModule : BaseContent
+    public class CourseModule : BaseContentCourse
     {
         public string? Title { get; set; }
-        public bool IsAvailable { get; set; } = false;
         public string? PathToMap { get; set; }
+        public bool IsAvailable { get; set; } = true;
 
         public ICollection<Lesson> Lessons { get;  set; } = new List<Lesson>();
 
+        public CourseModule() { }
         public CourseModule(string title, bool isAvailable, string pathToMap)
         {
             Title = title;

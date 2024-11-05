@@ -13,33 +13,11 @@ namespace Dal.Configuration.Questions
         {
             builder.ToTable("Test_Question", "dbo");
             builder.HasKey(x => x.Id);
-            builder.Property(x => x.Id)
-               .ValueGeneratedOnAdd()
-               .HasColumnName("Id");
-
-            builder.Property(e => e.TimeStamp)
-                .IsRowVersion()
-                .IsConcurrencyToken();
-
-            builder.Property(e => e.Text)
-                .IsRequired()
-                .HasColumnName("Text")
-                .HasMaxLength(400);
-
-            builder.Property(e => e.RightAnswer)
-                .IsRequired()
-                .HasColumnName("Right_answer");
-
-            builder.Property(e => e.Type)
-                .IsRequired()
-                .HasColumnName("Type");
-
-            builder
-                .HasMany(e => e.AnswerOptions)
-                .WithOne(e => e.TestQuestion)
-                .HasForeignKey(e => e.TestQuestionId)
-                .HasConstraintName("FK_TestQuestion_TestQuestionId_AnswerOptions")
-                .OnDelete(DeleteBehavior.Restrict);
+            builder.Property(x => x.Id).ValueGeneratedOnAdd().HasColumnName("Id");
+            builder.Property(e => e.TimeStamp).IsRowVersion().IsConcurrencyToken();
+            builder.Property(e => e.QuestionText).IsRequired().HasColumnName("QuestionText").HasMaxLength(400);
+            builder.Property(e => e.QType).IsRequired().HasColumnName("QuestionType");
+            builder.Property(e => e.AType).IsRequired().HasColumnName("AnswerType");
         }
     }
 }

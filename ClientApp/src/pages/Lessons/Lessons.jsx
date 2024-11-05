@@ -16,6 +16,7 @@ const course = {
             id: 1,
             title: 'Основи англійської мови',
             mapImg: '/src/img/Content/map.png',
+            courseId: 1,
             lessons: [
                 { id: 1, title: 'Вступ до граматики', isComplete: true, countTask: 5 },
                 { id: 2, title: 'Основні слова та фрази', isComplete: true, countTask: 7 },

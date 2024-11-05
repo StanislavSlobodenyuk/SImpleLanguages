@@ -22,7 +22,7 @@ namespace Application.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Domain.Entity.Content.Image.LectureImage", b =>
+            modelBuilder.Entity("Domain.Entity.Content.CourseContent.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -31,24 +31,49 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("ImageId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Cost")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("decimal(18, 2)")
+                        .HasDefaultValue(0m)
+                        .HasColumnName("Cost");
 
-                    b.Property<int>("LectureId")
-                        .HasColumnType("int");
+                    b.Property<string>("Description")
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)")
+                        .HasDefaultValue("Опис ще не написаний")
+                        .HasColumnName("Description");
+
+                    b.Property<string>("ImgPath")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Icon_path");
+
+                    b.Property<bool>("InDevelopment")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Language")
+                        .HasColumnType("int")
+                        .HasColumnName("Language");
+
+                    b.Property<int>("Level")
+                        .HasColumnType("int")
+                        .HasColumnName("Level");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("Title");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("ImageId");
-
-                    b.HasIndex("LectureId");
-
-                    b.ToTable("Lecture_Image", "dbo");
+                    b.ToTable("Course", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Image.MyImage", b =>
@@ -76,45 +101,6 @@ namespace Application.Migrations
                     b.ToTable("MyImage", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Image.QuestionImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AudioQuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("ImageId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestQuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("TranslateQuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AudioQuestionId");
-
-                    b.HasIndex("ImageId");
-
-                    b.HasIndex("TestQuestionId");
-
-                    b.HasIndex("TranslateQuestionId");
-
-                    b.ToTable("Question_Image", "dbo");
-                });
-
             modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
                 {
                     b.Property<int>("Id")
@@ -124,14 +110,15 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int")
+                        .HasColumnName("CourseId");
+
                     b.Property<bool>("IsAvailable")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
-                        .HasDefaultValue(false)
+                        .HasDefaultValue(true)
                         .HasColumnName("Is_available");
-
-                    b.Property<int>("LanguageCourseId")
-                        .HasColumnType("int");
 
                     b.Property<string>("PathToMap")
                         .IsRequired()
@@ -150,44 +137,9 @@ namespace Application.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("LanguageCourseId");
+                    b.HasIndex("CourseId");
 
                     b.ToTable("Course_Module", (string)null);
-                });
-
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.LectureBlock", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("Id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Content");
-
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)")
-                        .HasColumnName("Title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("LessonId");
-
-                    b.ToTable("Lecture", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Lessons.Lesson", b =>
@@ -198,11 +150,6 @@ namespace Application.Migrations
                         .HasColumnName("Id");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("IconPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Icon_path");
 
                     b.Property<bool>("IsAvailable")
                         .ValueGeneratedOnAdd()
@@ -231,7 +178,7 @@ namespace Application.Migrations
                     b.ToTable("Lesson", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Metadata.Course.LanguageCourse", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.LessonQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -240,37 +187,20 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Description")
-                        .ValueGeneratedOnAdd()
-                        .HasMaxLength(1000)
-                        .HasColumnType("nvarchar(1000)")
-                        .HasDefaultValue("Опис ще не написаний")
-                        .HasColumnName("Description");
+                    b.Property<int?>("AudioQuestionId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Difficult")
-                        .HasColumnType("int")
-                        .HasColumnName("Difficult");
+                    b.Property<int?>("ImageQuestionId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("IconPath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Icon_path");
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
 
-                    b.Property<int>("Language")
-                        .HasColumnType("int")
-                        .HasColumnName("Language");
+                    b.Property<int?>("TestQuestionId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)")
-                        .HasColumnName("Name");
-
-                    b.Property<float>("Progres")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("real")
-                        .HasDefaultValue(0f)
-                        .HasColumnName("Last_save_result");
+                    b.Property<int?>("TextQuestionId")
+                        .HasColumnType("int");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
@@ -279,7 +209,145 @@ namespace Application.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Course", "dbo");
+                    b.HasIndex("AudioQuestionId");
+
+                    b.HasIndex("ImageQuestionId");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("TestQuestionId");
+
+                    b.HasIndex("TextQuestionId");
+
+                    b.ToTable("Lesson_question", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.Theory", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("ImagePath")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Image_path");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("TextContent")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Text_content");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Title");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int")
+                        .HasColumnName("Type");
+
+                    b.Property<string>("_serializedListContent")
+                        .HasColumnType("text")
+                        .HasColumnName("ListContent");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.ToTable("Theory", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Question.Answer.AnswerOption", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int?>("AudioQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ImageQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Option")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("Option");
+
+                    b.Property<int?>("TestQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TextQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AudioQuestionId");
+
+                    b.HasIndex("ImageQuestionId");
+
+                    b.HasIndex("TestQuestionId");
+
+                    b.HasIndex("TextQuestionId");
+
+                    b.ToTable("AnswerOption", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Question.Answer.RightAnswer", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Answer")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<int?>("AudioQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ImageQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TestQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("TextQuestionId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AudioQuestionId");
+
+                    b.HasIndex("ImageQuestionId");
+
+                    b.HasIndex("TestQuestionId");
+
+                    b.HasIndex("TextQuestionId");
+
+                    b.ToTable("RightAnswers", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.AudioQuestion", b =>
@@ -291,39 +359,36 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("AudioUrl")
-                        .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)")
-                        .HasColumnName("Audio_url");
+                    b.Property<int>("AType")
+                        .HasColumnType("int")
+                        .HasColumnName("AnswerType");
 
-                    b.Property<string>("RightAnswer")
+                    b.Property<string>("AudioPath")
                         .IsRequired()
-                        .HasMaxLength(300)
-                        .HasColumnType("nvarchar(300)")
-                        .HasColumnName("Right_answer");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Audio_path");
 
-                    b.Property<string>("Text")
+                    b.Property<int>("QType")
+                        .HasColumnType("int")
+                        .HasColumnName("QuestionType");
+
+                    b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)")
-                        .HasColumnName("Text");
+                        .HasColumnName("QuestionText");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int")
-                        .HasColumnName("Type");
-
                     b.HasKey("Id");
 
-                    b.ToTable(" Audio_Question", "dbo");
+                    b.ToTable("Audio_Question", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.LessonQuestion", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Question.ImageQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -332,53 +397,24 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<int>("AudioQuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("LessonId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TestQuestionId")
-                        .HasColumnType("int");
-
-                    b.Property<byte[]>("TimeStamp")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion");
-
-                    b.Property<int>("TranslateQuestionId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AudioQuestionId");
-
-                    b.HasIndex("LessonId");
-
-                    b.HasIndex("TestQuestionId");
-
-                    b.HasIndex("TranslateQuestionId");
-
-                    b.ToTable("Lesson_question", "dbo");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Content.Question.TestAnswerOption", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
+                    b.Property<int>("AType")
                         .HasColumnType("int")
-                        .HasColumnName("Id");
+                        .HasColumnName("AnswerType");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("OptionText")
+                    b.Property<string>("ImagePath")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)")
-                        .HasColumnName("Answer_option");
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Image_path");
 
-                    b.Property<int>("TestQuestionId")
-                        .HasColumnType("int");
+                    b.Property<int>("QType")
+                        .HasColumnType("int")
+                        .HasColumnName("QuestionType");
+
+                    b.Property<string>("QuestionText")
+                        .IsRequired()
+                        .HasMaxLength(400)
+                        .HasColumnType("nvarchar(400)")
+                        .HasColumnName("QuestionText");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
@@ -387,9 +423,7 @@ namespace Application.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TestQuestionId");
-
-                    b.ToTable("Test_answer_option", "dbo");
+                    b.ToTable("Image_Question", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.TestQuestion", b =>
@@ -401,32 +435,31 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("RightAnswer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Right_answer");
+                    b.Property<int>("AType")
+                        .HasColumnType("int")
+                        .HasColumnName("AnswerType");
 
-                    b.Property<string>("Text")
+                    b.Property<int>("QType")
+                        .HasColumnType("int")
+                        .HasColumnName("QuestionType");
+
+                    b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)")
-                        .HasColumnName("Text");
+                        .HasColumnName("QuestionText");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int")
-                        .HasColumnName("Type");
-
                     b.HasKey("Id");
 
                     b.ToTable("Test_Question", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.TranslateQuestion", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Question.TextQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -435,39 +468,33 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("RightAnswer")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Right_answer");
+                    b.Property<int>("AType")
+                        .HasColumnType("int")
+                        .HasColumnName("AnswerType");
 
-                    b.Property<string>("Sentence")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Sentense");
+                    b.Property<int>("QType")
+                        .HasColumnType("int")
+                        .HasColumnName("QuestionType");
 
-                    b.Property<string>("SentenceTranslate")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Sentense_translate");
-
-                    b.Property<string>("Text")
+                    b.Property<string>("QuestionText")
                         .IsRequired()
                         .HasMaxLength(400)
                         .HasColumnType("nvarchar(400)")
-                        .HasColumnName("Text");
+                        .HasColumnName("QuestionText");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Text_with_question");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int")
-                        .HasColumnName("Type");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Translate_Question", "dbo");
+                    b.ToTable("Text_Question", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -668,88 +695,16 @@ namespace Application.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Image.LectureImage", b =>
-                {
-                    b.HasOne("Domain.Entity.Content.Image.MyImage", "Image")
-                        .WithMany("LectureImages")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_LecturesImages_ImageId_Image");
-
-                    b.HasOne("Domain.Entity.Content.Lessons.LectureBlock", "Lecture")
-                        .WithMany("LectureImages")
-                        .HasForeignKey("LectureId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_LecturesImages_LectureId");
-
-                    b.Navigation("Image");
-
-                    b.Navigation("Lecture");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Content.Image.QuestionImage", b =>
-                {
-                    b.HasOne("Domain.Entity.Content.Question.AudioQuestion", "AudioQuestion")
-                        .WithMany("QuestionImages")
-                        .HasForeignKey("AudioQuestionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_QuestionImages_AudioQuestionId_AudioQuestion");
-
-                    b.HasOne("Domain.Entity.Content.Image.MyImage", "Image")
-                        .WithMany("QuestionImages")
-                        .HasForeignKey("ImageId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_QuestionImages_ImageId_Image");
-
-                    b.HasOne("Domain.Entity.Content.Question.TestQuestion", "TestQuestion")
-                        .WithMany("QuestionImages")
-                        .HasForeignKey("TestQuestionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_QuestionImages_TestQuestionId_TestQuestion");
-
-                    b.HasOne("Domain.Entity.Content.Question.TranslateQuestion", "TranslateQuestion")
-                        .WithMany("QuestionImages")
-                        .HasForeignKey("TranslateQuestionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_QuestionImages_TranslateQuestionId_TranslateQuestion");
-
-                    b.Navigation("AudioQuestion");
-
-                    b.Navigation("Image");
-
-                    b.Navigation("TestQuestion");
-
-                    b.Navigation("TranslateQuestion");
-                });
-
             modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
                 {
-                    b.HasOne("Domain.Entity.Content.Metadata.Course.LanguageCourse", "LanguageCourse")
+                    b.HasOne("Domain.Entity.Content.CourseContent.Course", "Course")
                         .WithMany("CourseModules")
-                        .HasForeignKey("LanguageCourseId")
+                        .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
-                        .HasConstraintName("FK_LanguegeCourse_LanguageCourseId_CourseModules");
+                        .HasConstraintName("Course_CourseId_CourseModules");
 
-                    b.Navigation("LanguageCourse");
-                });
-
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.LectureBlock", b =>
-                {
-                    b.HasOne("Domain.Entity.Content.Lessons.Lesson", "Lesson")
-                        .WithMany("LectureBlocks")
-                        .HasForeignKey("LessonId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_Lesson_LessonId_LectureBlock");
-
-                    b.Navigation("Lesson");
+                    b.Navigation("Course");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Lessons.Lesson", b =>
@@ -764,14 +719,19 @@ namespace Application.Migrations
                     b.Navigation("CourseModules");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.LessonQuestion", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.LessonQuestion", b =>
                 {
                     b.HasOne("Domain.Entity.Content.Question.AudioQuestion", "AudioQuestion")
                         .WithMany("LessonQuestions")
                         .HasForeignKey("AudioQuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
                         .HasConstraintName("FK_LessonQuestions_AudioQuestionId_AudioQuestion");
+
+                    b.HasOne("Domain.Entity.Content.Question.ImageQuestion", "ImageQuestion")
+                        .WithMany("LessonQuestions")
+                        .HasForeignKey("ImageQuestionId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .HasConstraintName("FK_LessonQuestions_ImageQuestionId_ImageQuestion");
 
                     b.HasOne("Domain.Entity.Content.Lessons.Lesson", "Lesson")
                         .WithMany("LessonQuestions")
@@ -784,35 +744,97 @@ namespace Application.Migrations
                         .WithMany("LessonQuestions")
                         .HasForeignKey("TestQuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
                         .HasConstraintName("FK_LessonQuestions_TestQuestionId_TestQuestion");
 
-                    b.HasOne("Domain.Entity.Content.Question.TranslateQuestion", "TranslateQuestion")
+                    b.HasOne("Domain.Entity.Content.Question.TextQuestion", "TextQuestion")
                         .WithMany("LessonQuestions")
-                        .HasForeignKey("TranslateQuestionId")
+                        .HasForeignKey("TextQuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_LessonQuestions_TranslateQuestionId_TranslateQuestion");
+                        .HasConstraintName("FK_LessonQuestions_TextQuestionId_TextQuestion");
 
                     b.Navigation("AudioQuestion");
+
+                    b.Navigation("ImageQuestion");
 
                     b.Navigation("Lesson");
 
                     b.Navigation("TestQuestion");
 
-                    b.Navigation("TranslateQuestion");
+                    b.Navigation("TextQuestion");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.TestAnswerOption", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Lessons.Theory", b =>
                 {
+                    b.HasOne("Domain.Entity.Content.Lessons.Lesson", "Lesson")
+                        .WithMany("TheoryBlock")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Lesson_LessonId_LectureBlock");
+
+                    b.Navigation("Lesson");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Question.Answer.AnswerOption", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.Question.AudioQuestion", "AudioQuestion")
+                        .WithMany("AnswerOptions")
+                        .HasForeignKey("AudioQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Entity.Content.Question.ImageQuestion", "ImageQuestion")
+                        .WithMany("AnswerOptions")
+                        .HasForeignKey("ImageQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("Domain.Entity.Content.Question.TestQuestion", "TestQuestion")
                         .WithMany("AnswerOptions")
                         .HasForeignKey("TestQuestionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired()
-                        .HasConstraintName("FK_TestQuestion_TestQuestionId_AnswerOptions");
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Entity.Content.Question.TextQuestion", "TextQuestion")
+                        .WithMany("AnswerOptions")
+                        .HasForeignKey("TextQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AudioQuestion");
+
+                    b.Navigation("ImageQuestion");
 
                     b.Navigation("TestQuestion");
+
+                    b.Navigation("TextQuestion");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Question.Answer.RightAnswer", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.Question.AudioQuestion", "AudioQuestion")
+                        .WithMany("RightAnswers")
+                        .HasForeignKey("AudioQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Entity.Content.Question.ImageQuestion", "ImageQuestion")
+                        .WithMany("RightAnswers")
+                        .HasForeignKey("ImageQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Entity.Content.Question.TestQuestion", "TestQuestion")
+                        .WithMany("RightAnswers")
+                        .HasForeignKey("TestQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("Domain.Entity.Content.Question.TextQuestion", "TextQuestion")
+                        .WithMany("RightAnswers")
+                        .HasForeignKey("TextQuestionId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AudioQuestion");
+
+                    b.Navigation("ImageQuestion");
+
+                    b.Navigation("TestQuestion");
+
+                    b.Navigation("TextQuestion");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -866,11 +888,9 @@ namespace Application.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Image.MyImage", b =>
+            modelBuilder.Entity("Domain.Entity.Content.CourseContent.Course", b =>
                 {
-                    b.Navigation("LectureImages");
-
-                    b.Navigation("QuestionImages");
+                    b.Navigation("CourseModules");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
@@ -878,28 +898,29 @@ namespace Application.Migrations
                     b.Navigation("Lessons");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Lessons.LectureBlock", b =>
-                {
-                    b.Navigation("LectureImages");
-                });
-
             modelBuilder.Entity("Domain.Entity.Content.Lessons.Lesson", b =>
                 {
-                    b.Navigation("LectureBlocks");
-
                     b.Navigation("LessonQuestions");
-                });
 
-            modelBuilder.Entity("Domain.Entity.Content.Metadata.Course.LanguageCourse", b =>
-                {
-                    b.Navigation("CourseModules");
+                    b.Navigation("TheoryBlock");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.AudioQuestion", b =>
                 {
+                    b.Navigation("AnswerOptions");
+
                     b.Navigation("LessonQuestions");
 
-                    b.Navigation("QuestionImages");
+                    b.Navigation("RightAnswers");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.Question.ImageQuestion", b =>
+                {
+                    b.Navigation("AnswerOptions");
+
+                    b.Navigation("LessonQuestions");
+
+                    b.Navigation("RightAnswers");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.TestQuestion", b =>
@@ -908,14 +929,16 @@ namespace Application.Migrations
 
                     b.Navigation("LessonQuestions");
 
-                    b.Navigation("QuestionImages");
+                    b.Navigation("RightAnswers");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.TranslateQuestion", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Question.TextQuestion", b =>
                 {
+                    b.Navigation("AnswerOptions");
+
                     b.Navigation("LessonQuestions");
 
-                    b.Navigation("QuestionImages");
+                    b.Navigation("RightAnswers");
                 });
 #pragma warning restore 612, 618
         }

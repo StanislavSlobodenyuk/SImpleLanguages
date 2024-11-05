@@ -8,9 +8,6 @@ namespace Service.Interfaces
     public interface ILessonService
     {
         Task<BaseResponse<Lesson>> ChangeAvailable(int lessonId);
-        
         Task<BaseResponse<Lesson>> GetLesson(int lessonId);
-        Task<BaseResponse<Lesson>> GetLessonLecture(int lessonId);
-        Task<BaseResponse<Lesson>> GetLessonPractice(int lessonId);
     }
 }

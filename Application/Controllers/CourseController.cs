@@ -1,10 +1,11 @@
 ﻿using Common.Enum;
 using Common.Response.ErrorResponse;
 using Domain.Entity.Content.Lessons;
-using Domain.Entity.Content.Metadata.Course;
+using Domain.Entity.Content.CourseContent;
 using Dto;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
+using Domain.Enum;
 
 namespace Application.Controllers
 {
@@ -12,18 +13,35 @@ namespace Application.Controllers
     [ApiController]
     public class CourseController : Controller
     {
-        private readonly ILanguageCourseService _languageCourseService;
+        private readonly ICourseService _languageCourseService;
 
-        public CourseController(ILanguageCourseService languageCourseService)
+        public CourseController(ICourseService languageCourseService)
         {
             _languageCourseService = languageCourseService;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> ViewCourses([FromQuery] CourseFilterDto filterDto)
+        [HttpGet("get-all")]
+        public async Task<IActionResult> GetCourses(
+            [FromQuery] string? searchTitle,
+            [FromQuery] string? language,
+            [FromQuery] string? level,
+            [FromQuery] string? lessonCount,
+            [FromQuery] string? cost,
+            [FromQuery] bool inDevelopment)
         {
+            CourseFilterDto filterDto = new CourseFilterDto
+            {
+                SearchTitle = searchTitle ?? "",
+                Language = language,
+                Level = level,
+                LessonCount = lessonCount,
+                Cost = cost,
+                InDevelopment = inDevelopment
+            };
+
             var response = await _languageCourseService.GetFillterCourses(filterDto);
 
+            
             switch (response.StatusCode)
             {
                 case MyStatusCode.NotFound:
@@ -43,8 +61,8 @@ namespace Application.Controllers
             }
         }
 
-        [HttpGet] 
-        public async Task<IActionResult> ViewCourse([FromQuery] int courseId) 
+        [HttpGet("{courseId}")]
+        public async Task<IActionResult> GetCourse(int courseId) 
         {
             var response = await _languageCourseService.GetCourseById(courseId);
 
@@ -68,7 +86,7 @@ namespace Application.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCourse([FromBody] LanguageCourse languageCourse)
+        public async Task<IActionResult> CreateCourse([FromBody] Course languageCourse)
         {
             var response = await _languageCourseService.CreateCourse(languageCourse);
 
@@ -87,7 +105,7 @@ namespace Application.Controllers
                     return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
             }
         }
-
+       
         [HttpDelete("{courseId}")]
         public async Task<IActionResult> DeleteCourse(int courseId)
         {
@@ -111,7 +129,7 @@ namespace Application.Controllers
                     return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
             }
         }
-
+       
         [HttpPut("{courseId}")]
         public async Task<IActionResult> UpdateCourse([FromBody] UpdateCourseDto updateData, int courseId)
         {
@@ -134,51 +152,6 @@ namespace Application.Controllers
                     return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
             }
         }
-
-        [HttpPost]
-        public async Task<IActionResult> AddModule([FromBody] CourseModule courseModule, int courseId) 
-        {
-            var response = await _languageCourseService.AddModule(courseModule, courseId);
-
-            switch (response.StatusCode)
-            {
-                case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "Parameter is bad" });
-
-                case MyStatusCode.InternalServerError:
-                    return StatusCode(500, new BadResponse { Message = "Failed create new module and add its to course" });
-
-                case MyStatusCode.OK:
-                    return Ok(response.Data);
-
-                default:
-                    return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
-            }
-        }
-
-        [HttpDelete]
-        public async Task<IActionResult> DeleteModule(int courseId, int moduleId)
-        {
-            var response = await _languageCourseService.DeleteModule(courseId, moduleId);
-
-            switch (response.StatusCode)
-            {
-                case MyStatusCode.NotFound:
-                    return NotFound(new BadResponse { Message = $"Not found course with id {courseId} or module with id {moduleId}" });
-
-                case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "Parameter is not correct"});
-
-                case MyStatusCode.InternalServerError:
-                    return StatusCode(500, new BadResponse { Message = $"Failed delete module {moduleId} from course {courseId}" });
-
-                case MyStatusCode.OK:
-                    return Ok(response.Data);
-
-                default:
-                    return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
-            }
-        }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
-
+        
     }
 }

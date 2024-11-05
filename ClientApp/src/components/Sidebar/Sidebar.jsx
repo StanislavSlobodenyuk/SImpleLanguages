@@ -9,7 +9,7 @@ import Button from '../Common/Button/Button'
 import styles from './sidebar.module.less'
 
 export default function Sidebar({ authenticated }) {
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
 
     const toggleDropdown = () => {
         setIsOpen(!isOpen);

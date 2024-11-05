@@ -1,26 +1,10 @@
-import { useState } from 'react';
-import styles from './filter.module.less'
+import { useState, useEffect } from 'react';
+import styles from './filter.module.less';
 
-export default function Filter({ filters, onFilterChange }) {
-
-    const [selectedFilters, setSelectedFilters] = useState({
-        language: 'all',
-        level: 'all',
-        numberLessons: 'all',
-        cost: 'all',
-        futureCourses: 'false',
-        completeCourses: 'false',
-    })
-
+export default function Filter({ filters, selectedFilters, onFilterChange }) {
     const handleChange = (key, value) => {
-        const newSelectedFilters = {
-            ...selectedFilters,
-            [key]: value
-        };
-
-        setSelectedFilters(newSelectedFilters);
-
-        onFilterChange(newSelectedFilters); // callback
+        const newSelectedFilters = { ...selectedFilters, [key]: value };
+        onFilterChange(newSelectedFilters); // Callback для обновления фильтров
     };
 
     return (
@@ -30,7 +14,11 @@ export default function Filter({ filters, onFilterChange }) {
                 return (
                     <div key={key} className={styles.filter}>
                         <label className={styles.label}>{filter.label}</label>
-                        <select className={styles.select} value={selectedFilters[key]} onChange={(e) => handleChange(key, e.target.value)}>
+                        <select
+                            className={styles.select}
+                            value={selectedFilters[key]}
+                            onChange={(e) => handleChange(key, e.target.value)}
+                        >
                             {filter.options.map(option => (
                                 <option key={option.value} value={option.value} className={styles.option}>
                                     {option.label}

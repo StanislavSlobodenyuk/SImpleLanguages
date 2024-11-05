@@ -2,7 +2,7 @@
 
 namespace Dal.Interfaces.LessonRepositories
 {
-    public interface IlectureRepository : IBaseRepository<LectureBlock>
+    public interface IlectureRepository : IBaseRepository<Theory>
     {
 
     }

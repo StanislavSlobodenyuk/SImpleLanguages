@@ -20,9 +20,9 @@ function AppContent() {
     const [isAuthenticated, setIsAuthenticated] = useState(true);
     const { theme } = useTheme();
 
-    const protectedRoutes = [
-        { path: "/courses", element: <Courses /> },
-        { path: "/course/:id", element: <Course /> },
+        const protectedRoutes = [
+            { path: "/courses", element: <Courses /> },
+            { path: "/course/:id", element: <Course /> },
         { path: "/course/:id/lessons", element: <Lessons /> },
         { path: "/course/:courseTitle/module/:moduleTitle/lessonTheory/:lessonId", element: <LessonTheory /> },
         { path: "/course/:courseTitle/module/:moduleTitle/lessonPractice/:lessonId", element: <LessonPractice /> },

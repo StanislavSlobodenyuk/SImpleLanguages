@@ -3,6 +3,8 @@ using Dal.Interfaces.LessonRepositories;
 using Domain.Entity.Content.Lessons;
 using Dto;
 using Service.Interfaces;
+using System;
+using System.Threading.Tasks;
 
 namespace Service.Implementations
 {
@@ -102,30 +104,30 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<CourseModule>("Server error");
             }
         }
-        public async Task<BaseResponse<bool>> DeleteLesson(int moduleId, int lessonId)
-        {
-            CourseModule? currentModule = await _moduleLessonsRepository.GetById(moduleId);
+        //public async Task<BaseResponse<bool>> DeleteLesson(int moduleId, int lessonId)
+        //{
+        //    CourseModule? currentModule = await _moduleLessonsRepository.GetById(moduleId);
 
-            if (currentModule == null)
-                return BaseResponseHelper.HandleNotFound<bool>($"The module with id {moduleId} was not found");
+        //    if (currentModule == null)
+        //        return BaseResponseHelper.HandleNotFound<bool>($"The module with id {moduleId} was not found");
 
-            Lesson? currentLesson =  currentModule.Lessons.FirstOrDefault(l => l.Id == moduleId);
+        //    Lesson? currentLesson =  currentModule.Lessons.FirstOrDefault(l => l.Id == moduleId);
 
-            if (currentLesson == null)
-                return BaseResponseHelper.HandleNotFound<bool>($"The lesson with id {lessonId} was not found");
+        //    if (currentLesson == null)
+        //        return BaseResponseHelper.HandleNotFound<bool>($"The lesson with id {lessonId} was not found");
 
-            try
-            {
-                bool result = await _moduleLessonsRepository.DeleteLessonFromModule(currentModule, currentLesson);
-                if (!result)
-                    return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson from module");
+        //    try
+        //    {
+        //        bool result = await _moduleLessonsRepository.DeleteLessonFromModule(currentModule, currentLesson);
+        //        if (!result)
+        //            return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson from module");
 
-                return BaseResponseHelper.HandleSuccessfulRequest(true);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson");
-            }
-        }
+        //        return BaseResponseHelper.HandleSuccessfulRequest(true);
+        //    }
+        //    catch (Exception)
+        //    {
+        //        return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson");
+        //    }
+        //}
     }
 }
