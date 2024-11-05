@@ -7,7 +7,7 @@ namespace Service.Interfaces
 {
     public interface ILessonService
     {
+        Task<BaseResponse<IEnumerable<Lesson>>> GetLessons(int moduleId);
         Task<BaseResponse<Lesson>> ChangeAvailable(int lessonId);
-        Task<BaseResponse<Lesson>> GetLesson(int lessonId);
     }
 }

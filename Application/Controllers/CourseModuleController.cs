@@ -1,128 +1,90 @@
 ﻿
 using Common.Enum;
 using Common.Response.ErrorResponse;
-using Domain.Entity.Content.Lessons;
 using Dto;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
 
 namespace Application.Controllers
 {
-    //[Route("api/[controller]")]
-    //[ApiController]
-    //public class CourseModuleController : Controller
-    //{
-    //    private readonly ICourseModuleService _courseModuleService;
+    [Route("api/[controller]")]
+    [ApiController]
+    public class CourseModuleController : Controller
+    {
+        private readonly ICourseModuleService _courseModuleService;
 
-    //    public CourseModuleController(ICourseModuleService courseModuleService)
-    //    {
-    //        _courseModuleService = courseModuleService;
-    //    }
+        public CourseModuleController(ICourseModuleService courseModuleService)
+        {
+            _courseModuleService = courseModuleService;
+        }
 
-    //    public async Task<IActionResult> GetModule([FromQuery] int moduleId)
-    //    {
-    //        var response = await _courseModuleService.GetModule(moduleId);
+        [HttpGet("get-all{courseId}")]
+        public async Task<IActionResult> GetModules(int courseId)
+        {
+            var response = await _courseModuleService.GetModules(courseId);
 
-    //        switch (response.StatusCode)
-    //        {
-    //            case MyStatusCode.NotFound:
-    //                return NotFound(new BadResponse { Message = $"Not found course module with id {moduleId}" });
+            switch (response.StatusCode)
+            {
+                case MyStatusCode.NotFound:
+                    return NotFound(new BadResponse { Message = $"Not found course module from course with id {courseId}" });
 
-    //            case MyStatusCode.InternalServerError:
-    //                return StatusCode(500, new BadResponse { Message = "Failded get module" });
+                case MyStatusCode.InternalServerError:
+                    return StatusCode(500, new BadResponse { Message = "Failed get modules" });
 
-    //            case MyStatusCode.BadRequest:
-    //                return BadRequest(new BadResponse { Message = "Parameter is not correct" });
+                case MyStatusCode.BadRequest:
+                    return BadRequest(new BadResponse { Message = "Parameter is not correct" });
 
-    //            case MyStatusCode.OK:
-    //                return Ok(true);
+                case MyStatusCode.OK:
+                    return Ok(response.Data);
 
-    //            default:
-    //                return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
-    //        }
-    //    }
-    //    public async Task<IActionResult> UpdateModule([FromBody] UpdateCourseModuleDto updateDto, int moduleId)
-    //    {
-    //        var response = await _courseModuleService.UpdateModule(updateDto, moduleId);
+                default:
+                    return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
+            }
+        }
 
-    //        switch (response.StatusCode)
-    //        {
-    //            case MyStatusCode.NotFound:
-    //                return NotFound(new BadResponse { Message = $"Not found course module with id {moduleId}" });
+        [HttpPut]
+        public async Task<IActionResult> UpdateModule([FromBody] UpdateCourseModuleDto updateDto, int moduleId)
+        {
+            var response = await _courseModuleService.UpdateModule(updateDto, moduleId);
 
-    //            case MyStatusCode.InternalServerError:
-    //                return StatusCode(500, new BadResponse { Message = "Failded update module" });
+            switch (response.StatusCode)
+            {
+                case MyStatusCode.NotFound:
+                    return NotFound(new BadResponse { Message = $"Not found course module with id {moduleId}" });
 
-    //            case MyStatusCode.BadRequest:
-    //                return BadRequest(new BadResponse { Message = "Parameter is not correct" });
+                case MyStatusCode.InternalServerError:
+                    return StatusCode(500, new BadResponse { Message = "Failded update module" });
 
-    //            case MyStatusCode.OK:
-    //                return Ok(response.Data);
+                case MyStatusCode.BadRequest:
+                    return BadRequest(new BadResponse { Message = "Parameter is not correct" });
 
-    //            default:
-    //                return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
-    //        }
-    //    }
-    //    public async Task<IActionResult> ChangeAccess([FromQuery] int moduleId)
-    //    {
-    //        var response = await _courseModuleService.ChangeAvailableModule(moduleId);
+                case MyStatusCode.OK:
+                    return Ok(response.Data);
 
-    //        switch (response.StatusCode)
-    //        {
-    //            case MyStatusCode.NotFound:
-    //                return NotFound(new BadResponse { Message = $"Not found course module with id {moduleId}" });
+                default:
+                    return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
+            }
+        }
 
-    //            case MyStatusCode.InternalServerError:
-    //                return StatusCode(500, new BadResponse { Message = "Failded change abailable" });
+        [HttpPut("change-access")]
+        public async Task<IActionResult> ChangeAccess([FromQuery] int moduleId)
+        {
+            var response = await _courseModuleService.ChangeAvailableModule(moduleId);
 
-    //            case MyStatusCode.OK:
-    //                return Ok(response.Data);
+            switch (response.StatusCode)
+            {
+                case MyStatusCode.NotFound:
+                    return NotFound(new BadResponse { Message = $"Not found course module with id {moduleId}" });
 
-    //            default:
-    //                return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
-    //        }
-    //    }
+                case MyStatusCode.InternalServerError:
+                    return StatusCode(500, new BadResponse { Message = "Failded change abailable" });
 
-    //    public async Task<IActionResult> AddLesson([FromBody] Lesson lesson, int moduleId)
-    //    {
-    //        var response = await _courseModuleService.AddLesson(lesson, moduleId);
+                case MyStatusCode.OK:
+                    return Ok(response.Data);
 
-    //        switch (response.StatusCode)
-    //        {
-    //            case MyStatusCode.NotFound:
-    //                return NotFound(new BadResponse { Message = $"Not found module with id {moduleId}" });
-
-    //            case MyStatusCode.BadRequest:
-    //                return BadRequest(new BadResponse { Message = "Parameter is not correct" });
-
-    //            case MyStatusCode.InternalServerError:
-    //                return StatusCode(500, new BadResponse { Message = "Failed create new lesson and add its to module" });
-
-    //            case MyStatusCode.OK:
-    //                return Ok(response.Data);
-
-    //            default:
-    //                return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
-    //        }
-    //    }
-        //public async Task<IActionResult> DeleteLesson([FromQuery] int moduleId, int lessonId)
-        //{
-        //    var response = await _courseModuleService.DeleteLesson(moduleId, lessonId);
-
-        //    switch (response.StatusCode)
-        //    {
-        //        case MyStatusCode.NotFound:
-        //            return NotFound(new BadResponse { Message = $"Not found module with id {moduleId}" });
-
-        //        case MyStatusCode.InternalServerError:
-        //            return StatusCode(500, new BadResponse { Message = "Failed delete lesson from module" });
-
-        //        case MyStatusCode.OK:
-        //            return Ok(response.Data);
-
-        //        default:
-        //            return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
-        //    }
-        //}
-    //}
+                default:
+                    return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
+            }
+        }
+    }
 }

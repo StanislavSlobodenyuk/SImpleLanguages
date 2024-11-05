@@ -393,7 +393,7 @@ namespace Application.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Title = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Is_available = table.Column<bool>(type: "bit", nullable: false, defaultValue: true),
-                    ModuleLessonsId = table.Column<int>(type: "int", nullable: false),
+                    CourseModuleId = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true)
                 },
                 constraints: table =>
@@ -401,7 +401,7 @@ namespace Application.Migrations
                     table.PrimaryKey("PK_Lesson", x => x.Id);
                     table.ForeignKey(
                         name: "FK_CourseModules_.ModuleLessonsId_Lessons",
-                        column: x => x.ModuleLessonsId,
+                        column: x => x.CourseModuleId,
                         principalTable: "Course_Module",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -557,10 +557,10 @@ namespace Application.Migrations
                 column: "CourseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lesson_ModuleLessonsId",
+                name: "IX_Lesson_CourseModuleId",
                 schema: "dbo",
                 table: "Lesson",
-                column: "ModuleLessonsId");
+                column: "CourseModuleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lesson_question_AudioQuestionId",

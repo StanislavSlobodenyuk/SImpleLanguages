@@ -39,7 +39,7 @@ namespace Dal.Configuration.Lessonsconfiguration
 
             builder.HasMany(e => e.Lessons)
                 .WithOne(e => e.CourseModules)
-                .HasForeignKey(e => e.ModuleLessonsId)
+                .HasForeignKey(e => e.CourseModuleId)
                 .IsRequired()
                 .HasConstraintName("FK_CourseModules_.ModuleLessonsId_Lessons")
                 .OnDelete(DeleteBehavior.Cascade);

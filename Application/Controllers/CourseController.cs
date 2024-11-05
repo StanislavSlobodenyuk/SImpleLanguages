@@ -45,13 +45,13 @@ namespace Application.Controllers
             switch (response.StatusCode)
             {
                 case MyStatusCode.NotFound:
-                    return NotFound(new BadResponse { Message = "No courses found by filter." });
+                    return NotFound(new BadResponse { Message = response.Description });
 
                 case MyStatusCode.InternalServerError:
-                    return StatusCode(500, new BadResponse { Message = "An internal server error occurred. Please try again later." });
+                    return StatusCode(500, new BadResponse { Message = response.Description });
 
                 case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "Parameter is not correct" });
+                    return BadRequest(new BadResponse { Message = response.Description });
 
                 case MyStatusCode.OK:
                     return Ok(response.Data); 
@@ -69,13 +69,13 @@ namespace Application.Controllers
             switch (response.StatusCode)
             {
                 case MyStatusCode.NotFound:
-                    return NotFound(new BadResponse { Message = $"Not found course with id {courseId}" });
+                    return NotFound(new BadResponse { Message = response.Description });
 
                 case MyStatusCode.InternalServerError:
-                    return StatusCode(500, new BadResponse { Message = "An internal server error occurred. Please try again later." });
+                    return StatusCode(500, new BadResponse { Message = response.Description });
 
                 case MyStatusCode.BadRequest:
-                    return BadRequest(new BadResponse { Message = "Parameter is not correct" });
+                    return BadRequest(new BadResponse { Message = response.Description });
 
                 case MyStatusCode.OK:
                     return Ok(response.Data);

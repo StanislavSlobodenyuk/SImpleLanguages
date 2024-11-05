@@ -1,35 +1,57 @@
 ﻿using Common.Response;
-using Dal.Interfaces.LessonRepositories;
+using Dal.Interfaces;
 using Domain.Entity.Content.Lessons;
 using Dto;
 using Service.Interfaces;
-using System;
-using System.Threading.Tasks;
 
 namespace Service.Implementations
 {
     public class CourseModuleService : ICourseModuleService
     {
-        private readonly ICourseModuleRepository _moduleLessonsRepository;
+        private readonly ICourseModuleRepository _courseModuleRepository;
+        private readonly ICourseRepository _courseRepository;
 
-        public CourseModuleService( ICourseModuleRepository moduleLessonsRepository)
+
+        public CourseModuleService( ICourseModuleRepository courseModuleRepository, ICourseRepository courseRepository)
         { 
-            _moduleLessonsRepository = moduleLessonsRepository;
+            _courseModuleRepository = courseModuleRepository;
+            _courseRepository = courseRepository;
         }
+        public async Task<BaseResponse<IEnumerable<CourseModule>>> GetModules(int courseId)
+        {
+            if (courseId <= 0)
+                return BaseResponseHelper.HandleBadRequest<IEnumerable<CourseModule>>($"Parameter is not correct, id <= 0");
 
+            try
+            {
+                var course = await _courseRepository.GetById(courseId);
+                if (course == null) 
+                {
+                    return BaseResponseHelper.HandleNotFound<IEnumerable<CourseModule>>($"Id with course {courseId} not found");
+                }
+
+                var modules = await _courseModuleRepository.GetModules(courseId);
+
+                return BaseResponseHelper.HandleSuccessfulRequest(modules);
+            }
+            catch (Exception)
+            {
+                return BaseResponseHelper.HandleInternalServerError<IEnumerable<CourseModule>>("Failed get modules");
+            }
+        }
         public async Task<BaseResponse<CourseModule>> UpdateModule(UpdateCourseModuleDto updateDto, int courseId)
         {
             if (string.IsNullOrEmpty(updateDto.Title) && string.IsNullOrEmpty(updateDto.PathToMap))
                 return BaseResponseHelper.HandleBadRequest<CourseModule>("Parameters are empty.");
 
-            CourseModule? currentCourseModule = await _moduleLessonsRepository.GetById(courseId);
+            CourseModule? currentCourseModule = await _courseModuleRepository.GetById(courseId);
 
             if (currentCourseModule == null)
                 return BaseResponseHelper.HandleNotFound<CourseModule>($"Course module with id {courseId} not found");
 
             try
             {
-                var result = await _moduleLessonsRepository.Update(currentCourseModule);
+                var result = await _courseModuleRepository.Update(currentCourseModule);
 
                 if (result == false)
                     return BaseResponseHelper.HandleInternalServerError<CourseModule>("Failed delete module");
@@ -44,13 +66,13 @@ namespace Service.Implementations
         }
         public async Task<BaseResponse<CourseModule>> ChangeAvailableModule(int moduleId)
         {
-            CourseModule? currentModule = await _moduleLessonsRepository.GetById(moduleId);
+            CourseModule? currentModule = await _courseModuleRepository.GetById(moduleId);
             if (currentModule == null)
                 return BaseResponseHelper.HandleNotFound<CourseModule>($"Module with id {moduleId} not found");
 
             try
             {
-                bool result = await _moduleLessonsRepository.ChangeAvailableModule(currentModule);
+                bool result = await _courseModuleRepository.ChangeAvailableModule(currentModule);
 
                 if (!result)
                     return BaseResponseHelper.HandleInternalServerError<CourseModule>("Error changing availability");
@@ -62,72 +84,5 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<CourseModule>("An unexpected error occurred.");
             }
         }
-        
-        public async Task<BaseResponse<CourseModule>> GetModule(int moduleId)
-        {
-            try
-            {
-                var module = await _moduleLessonsRepository.GetById(moduleId);
-
-                if (module == null)
-                    return BaseResponseHelper.HandleNotFound<CourseModule>("Module not found");
-
-                return BaseResponseHelper.HandleSuccessfulRequest(module);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<CourseModule>("Error fetching module");
-            }
-        }
-       
-        public async Task<BaseResponse<CourseModule>> AddLesson(Lesson lesson, int moduleId)
-        {
-            if (lesson == null)
-                return BaseResponseHelper.HandleBadRequest<CourseModule>("Bad parameters in request");
-
-            var currentModule = await _moduleLessonsRepository.GetById(moduleId);
-
-            if (currentModule == null)
-                return BaseResponseHelper.HandleNotFound<CourseModule>($"Module with id {moduleId} was not found");
-
-            try
-            {
-                var newLesson = await _moduleLessonsRepository.AddLessonToModule(lesson, moduleId);
-
-                if (newLesson == null)
-                    return BaseResponseHelper.HandleInternalServerError<CourseModule>("Error adding lesson");
-
-                return BaseResponseHelper.HandleSuccessfulRequest(currentModule);
-            }
-            catch (Exception)
-            {
-                return BaseResponseHelper.HandleInternalServerError<CourseModule>("Server error");
-            }
-        }
-        //public async Task<BaseResponse<bool>> DeleteLesson(int moduleId, int lessonId)
-        //{
-        //    CourseModule? currentModule = await _moduleLessonsRepository.GetById(moduleId);
-
-        //    if (currentModule == null)
-        //        return BaseResponseHelper.HandleNotFound<bool>($"The module with id {moduleId} was not found");
-
-        //    Lesson? currentLesson =  currentModule.Lessons.FirstOrDefault(l => l.Id == moduleId);
-
-        //    if (currentLesson == null)
-        //        return BaseResponseHelper.HandleNotFound<bool>($"The lesson with id {lessonId} was not found");
-
-        //    try
-        //    {
-        //        bool result = await _moduleLessonsRepository.DeleteLessonFromModule(currentModule, currentLesson);
-        //        if (!result)
-        //            return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson from module");
-
-        //        return BaseResponseHelper.HandleSuccessfulRequest(true);
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return BaseResponseHelper.HandleInternalServerError<bool>("Error deleting lesson");
-        //    }
-        //}
     }
 }

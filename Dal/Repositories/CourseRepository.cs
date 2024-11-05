@@ -1,10 +1,11 @@
-﻿using Dal.Interfaces.CourseDir;
+﻿using Dal.Interfaces;
 using Domain.Entity.Content.CourseContent;
 using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
+using System.Reflection;
 
-namespace Dal.Repositories.CourseDir
+namespace Dal.Repositories
 {
     public class CourseRepository : ICourseRepository
     {
@@ -22,7 +23,9 @@ namespace Dal.Repositories.CourseDir
 
                 if (!string.IsNullOrEmpty(title))
                 {
+#pragma warning disable CS8602
                     courses = courses.Where(c => c.Title.Contains(title)).ToList();
+#pragma warning restore CS8602
                 }
 
                 if (language != LanguageName.All)
@@ -61,17 +64,8 @@ namespace Dal.Repositories.CourseDir
         }
         public async Task<Course?> GetById(int courseId)
         {
-            try
-            {
-                return await _context.Courses
-                 .Include(c => c.CourseModules)
-                    .ThenInclude(l => l.Lessons)
-                 .FirstOrDefaultAsync(c => c.Id == courseId);
-            }
-            catch (DbException)
-            {
-                return null;
-            }
+            return await _context.Courses
+                .FirstOrDefaultAsync(c => c.Id == courseId);
         }
         public async Task<bool> Create(Course course)
         {

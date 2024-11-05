@@ -3,6 +3,7 @@ using Domain.Entity.Content.Image;
 using Domain.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Domain.Entity.Content.Lessons
 {
@@ -15,12 +16,15 @@ namespace Domain.Entity.Content.Lessons
         [NotMapped]
         public List<string> ListContent
         {
-            get => _serializedListContent == null ? new List<string>() : JsonSerializer.Deserialize<List<string>>(_serializedListContent);
+            get => _serializedListContent == null
+                ? new List<string>()
+                : JsonSerializer.Deserialize<List<string>>(_serializedListContent) ?? new List<string>();
             set => _serializedListContent = JsonSerializer.Serialize(value);
         }
         public string? ImagePath { get; set; }
 
         public int LessonId { get; set; }
+        [JsonIgnore]
         public Lesson? Lesson { get; set; }
     }
 }

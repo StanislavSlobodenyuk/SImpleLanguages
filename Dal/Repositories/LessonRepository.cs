@@ -1,10 +1,10 @@
-﻿using Dal.Interfaces.LessonRepositories;
+﻿using Dal.Interfaces;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
-namespace Dal.Repositories.LessonRepositories
+namespace Dal.Repositories
 {
     public class LessonRepository : ILessonRepository
     {
@@ -22,9 +22,12 @@ namespace Dal.Repositories.LessonRepositories
             }
             catch (DbException)
             {
-                // Логирование исключения
                 return null;
             }
+        }
+        public async Task<IEnumerable<Lesson>> GetLessons(int moduleId)
+        {
+            return await _context.Lessons.Where(l => l.CourseModuleId == moduleId).ToListAsync();
         }
         public async Task<bool> Create(Lesson lesson)
         {
@@ -56,10 +59,9 @@ namespace Dal.Repositories.LessonRepositories
                 return false;
             }
         }
-
         public async Task<bool> Update(Lesson lesson)
         {
-            if (lesson == null) 
+            if (lesson == null)
                 return false;
 
             try
@@ -76,16 +78,16 @@ namespace Dal.Repositories.LessonRepositories
         }
         public async Task<Lesson?> ChangeAvailableLesson(Lesson lesson)
         {
-            if( lesson == null)
+            if (lesson == null)
                 return null;
 
             try
             {
                 if (lesson.IsAvailable == true)
                 {
-                     lesson.IsAvailable = false;
+                    lesson.IsAvailable = false;
                 }
-                else { lesson.IsAvailable = true;}
+                else { lesson.IsAvailable = true; }
 
                 _context.Entry(lesson).Property(p => p.IsAvailable).IsModified = true;
                 await _context.SaveChangesAsync();

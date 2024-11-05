@@ -1,7 +1,7 @@
 ﻿using Domain.Entity.Content.CourseContent;
 using Domain.Enum;
 
-namespace Dal.Interfaces.CourseDir
+namespace Dal.Interfaces
 {
     public interface ICourseRepository : IBaseRepository<Course>
     {

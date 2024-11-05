@@ -5,7 +5,7 @@ using Domain.Entity.Content.CourseContent;
 using Domain.Enum;
 using Dto;
 using Service.Interfaces;
-using Dal.Interfaces.CourseDir;
+using Dal.Interfaces;
 
 namespace Service.Implementations
 {
@@ -58,7 +58,7 @@ namespace Service.Implementations
         public async Task<BaseResponse<Course>> GetCourseById(int courseId)
         {
             if (courseId <= 0)
-                return BaseResponseHelper.HandleBadRequest<Course>("Invalid parameters");
+                return BaseResponseHelper.HandleBadRequest<Course>($"Invalid parameters {courseId} <= 0");
 
             try
             {
@@ -71,7 +71,7 @@ namespace Service.Implementations
             }
             catch (Exception)
             {
-                return BaseResponseHelper.HandleInternalServerError<Course>("Course not Founde");
+                return BaseResponseHelper.HandleInternalServerError<Course>("Course not found");
             }
         }
         public async Task<BaseResponse<Course>> CreateCourse(Course course)

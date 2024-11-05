@@ -1,8 +1,8 @@
-﻿using Dal.Interfaces.LessonRepositories;
+﻿using Dal.Interfaces;
 using Domain.Entity.Content.Lessons;
 using Microsoft.EntityFrameworkCore;
 
-namespace Dal.Repositories.LessonRepositories
+namespace Dal.Repositories
 {
     public class CourseModuleRepositories : ICourseModuleRepository
     {
@@ -15,8 +15,20 @@ namespace Dal.Repositories.LessonRepositories
         public async Task<CourseModule?> GetById(int moduleId)
         {
             return await _context.CourseModules
-                 .Include(c => c.Lessons)
                  .FirstOrDefaultAsync(c => c.Id == moduleId);
+        }
+        public async Task<IEnumerable<CourseModule>> GetModules(int courseId)
+        {
+            try
+            {
+                List<CourseModule> modules = await _context.CourseModules.Where(cm => cm.CourseId == courseId).ToListAsync();
+
+                return modules;
+            }
+            catch (DbUpdateException)
+            {
+                return new List<CourseModule>();
+            }
         }
 
         public async Task<bool> Create(CourseModule module)
@@ -77,50 +89,6 @@ namespace Dal.Repositories.LessonRepositories
                 else { module.IsAvailable = true; }
 
                 _context.Entry(module).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
-
-                return true;
-            }
-            catch (DbUpdateException)
-            {
-                return false;
-            }
-        }
-        public async Task<Lesson?> AddLessonToModule(Lesson lesson, int moduleId)
-        {
-            CourseModule? module = await _context.CourseModules
-                .Include(c => c.Lessons)
-                .FirstOrDefaultAsync(e => e.Id == moduleId);
-
-            if (module == null || lesson == null)
-                return null;
-
-            try
-            {
-                _context.Lessons.Add(lesson);
-                await _context.SaveChangesAsync();
-
-                module.Lessons.Add(lesson);
-                await _context.SaveChangesAsync();
-
-                return lesson;
-            }
-            catch (DbUpdateException)
-            {
-                return null;
-            }
-        }
-        public async Task<bool> DeleteLessonFromModule(CourseModule module, Lesson lesson)
-        {
-            if (module == null || lesson == null) return false;
-
-
-            try
-            {
-                module.Lessons.Remove(lesson);
-                await _context.SaveChangesAsync();
-
-                _context.Lessons.Remove(lesson);
                 await _context.SaveChangesAsync();
 
                 return true;

@@ -169,52 +169,52 @@ namespace Dal.SeedData
                 var lessons = new List<Lesson>
                 {
                     // Для первого модуля
-                    new Lesson { Title = "Вступ до граматики", IsAvailable = true, ModuleLessonsId = 1 },
-                    new Lesson { Title = "Основні слова та фрази", IsAvailable = true, ModuleLessonsId = 1 },
-                    new Lesson { Title = "Вживання дієслів", IsAvailable = true, ModuleLessonsId = 1 },
-                    new Lesson { Title = "Часи в англійській", IsAvailable = true, ModuleLessonsId = 1 },
-                    new Lesson { Title = "Запитання та відповіді", IsAvailable = true, ModuleLessonsId = 1 },
-                    new Lesson { Title = "Короткі речення", IsAvailable = true, ModuleLessonsId = 1 },
+                    new Lesson { Title = "Вступ до граматики", IsAvailable = true, CourseModuleId = 1 },
+                    new Lesson { Title = "Основні слова та фрази", IsAvailable = true, CourseModuleId = 1 },
+                    new Lesson { Title = "Вживання дієслів", IsAvailable = true, CourseModuleId = 1 },
+                    new Lesson { Title = "Часи в англійській", IsAvailable = true, CourseModuleId = 1 },
+                    new Lesson { Title = "Запитання та відповіді", IsAvailable = true, CourseModuleId = 1 },
+                    new Lesson { Title = "Короткі речення", IsAvailable = true, CourseModuleId = 1 },
 
                     // Для второго модуля
-                    new Lesson { Title = "Повсякденні слова", IsAvailable = true, ModuleLessonsId = 2 },
-                    new Lesson { Title = "Теми: їжа", IsAvailable = true, ModuleLessonsId = 2 },
-                    new Lesson { Title = "Теми: подорожі", IsAvailable = true, ModuleLessonsId = 2 },
-                    new Lesson { Title = "Теми: погода", IsAvailable = true, ModuleLessonsId = 2 },
-                    new Lesson { Title = "Антоніми та синоніми", IsAvailable = true, ModuleLessonsId = 2 },
-                    new Lesson { Title = "Вивчення фраз", IsAvailable = true, ModuleLessonsId = 2 },
+                    new Lesson { Title = "Повсякденні слова", IsAvailable = true, CourseModuleId = 2 },
+                    new Lesson { Title = "Теми: їжа", IsAvailable = true, CourseModuleId = 2 },
+                    new Lesson { Title = "Теми: подорожі", IsAvailable = true, CourseModuleId = 2 },
+                    new Lesson { Title = "Теми: погода", IsAvailable = true, CourseModuleId = 2 },
+                    new Lesson { Title = "Антоніми та синоніми", IsAvailable = true, CourseModuleId = 2 },
+                    new Lesson { Title = "Вивчення фраз", IsAvailable = true, CourseModuleId = 2 },
 
                     // Для третьего модуля
-                    new Lesson { Title = "Структура речень", IsAvailable = true, ModuleLessonsId = 3 },
-                    new Lesson { Title = "Вживання артиклів", IsAvailable = true, ModuleLessonsId = 3 },
-                    new Lesson { Title = "Прийменники", IsAvailable = true, ModuleLessonsId = 3 },
-                    new Lesson { Title = "Прикметники та прислівники", IsAvailable = true, ModuleLessonsId = 3 },
-                    new Lesson { Title = "Заперечення", IsAvailable = true, ModuleLessonsId = 3 },
-                    new Lesson { Title = "Складні речення", IsAvailable = true, ModuleLessonsId = 3 },
+                    new Lesson { Title = "Структура речень", IsAvailable = true, CourseModuleId = 3 },
+                    new Lesson { Title = "Вживання артиклів", IsAvailable = true, CourseModuleId = 3 },
+                    new Lesson { Title = "Прийменники", IsAvailable = true, CourseModuleId = 3 },
+                    new Lesson { Title = "Прикметники та прислівники", IsAvailable = true, CourseModuleId = 3 },
+                    new Lesson { Title = "Заперечення", IsAvailable = true, CourseModuleId = 3 },
+                    new Lesson { Title = "Складні речення", IsAvailable = true, CourseModuleId = 3 },
 
                     // Для четвертого модуля
-                    new Lesson { Title = "Вимова звуків", IsAvailable = true, ModuleLessonsId = 4 },
-                    new Lesson { Title = "Слухові вправи", IsAvailable = true, ModuleLessonsId = 4 },
-                    new Lesson { Title = "Аудіо вправи", IsAvailable = true, ModuleLessonsId = 4 },
-                    new Lesson { Title = "Розуміння на слух", IsAvailable = true, ModuleLessonsId = 4 },
-                    new Lesson { Title = "Повторення фраз", IsAvailable = true, ModuleLessonsId = 4 },
-                    new Lesson { Title = "Діалоги", IsAvailable = true, ModuleLessonsId = 4 },
+                    new Lesson { Title = "Вимова звуків", IsAvailable = true, CourseModuleId = 4 },
+                    new Lesson { Title = "Слухові вправи", IsAvailable = true, CourseModuleId = 4 },
+                    new Lesson { Title = "Аудіо вправи", IsAvailable = true, CourseModuleId = 4 },
+                    new Lesson { Title = "Розуміння на слух", IsAvailable = true, CourseModuleId = 4 },
+                    new Lesson { Title = "Повторення фраз", IsAvailable = true, CourseModuleId = 4 },
+                    new Lesson { Title = "Діалоги", IsAvailable = true, CourseModuleId = 4 },
 
                     // Для пятого модуля
-                    new Lesson { Title = "Читання текстів", IsAvailable = true, ModuleLessonsId = 5 },
-                    new Lesson { Title = "Написання речень", IsAvailable = true, ModuleLessonsId = 5 },
-                    new Lesson { Title = "Огляд граматики", IsAvailable = true, ModuleLessonsId = 5 },
-                    new Lesson { Title = "Складення історій", IsAvailable = true, ModuleLessonsId = 5 },
-                    new Lesson { Title = "Анотації", IsAvailable = true, ModuleLessonsId = 5 },
-                    new Lesson { Title = "Есе", IsAvailable = true, ModuleLessonsId = 5 },
+                    new Lesson { Title = "Читання текстів", IsAvailable = true, CourseModuleId = 5 },
+                    new Lesson { Title = "Написання речень", IsAvailable = true, CourseModuleId = 5 },
+                    new Lesson { Title = "Огляд граматики", IsAvailable = true, CourseModuleId = 5 },
+                    new Lesson { Title = "Складення історій", IsAvailable = true, CourseModuleId = 5 },
+                    new Lesson { Title = "Анотації", IsAvailable = true, CourseModuleId = 5 },
+                    new Lesson { Title = "Есе", IsAvailable = true, CourseModuleId = 5 },
 
                     // Для шестого модуля
-                    new Lesson { Title = "Повторення граматики", IsAvailable = true, ModuleLessonsId = 6 },
-                    new Lesson { Title = "Розмовна практика", IsAvailable = true, ModuleLessonsId = 6 },
-                    new Lesson { Title = "Пробні тести", IsAvailable = true, ModuleLessonsId = 6 },
-                    new Lesson { Title = "Вправи на повторення", IsAvailable = true, ModuleLessonsId = 6 },
-                    new Lesson { Title = "Групова робота", IsAvailable = true, ModuleLessonsId = 6 },
-                    new Lesson { Title = "Зворотній зв'язок", IsAvailable = true, ModuleLessonsId = 6 }
+                    new Lesson { Title = "Повторення граматики", IsAvailable = true, CourseModuleId = 6 },
+                    new Lesson { Title = "Розмовна практика", IsAvailable = true, CourseModuleId = 6 },
+                    new Lesson { Title = "Пробні тести", IsAvailable = true, CourseModuleId = 6 },
+                    new Lesson { Title = "Вправи на повторення", IsAvailable = true, CourseModuleId = 6 },
+                    new Lesson { Title = "Групова робота", IsAvailable = true, CourseModuleId = 6 },
+                    new Lesson { Title = "Зворотній зв'язок", IsAvailable = true, CourseModuleId = 6 }
 
                 };
 

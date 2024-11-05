@@ -1,4 +1,7 @@
-﻿namespace Domain.Entity.Content.Lessons
+﻿using Domain.Entity.Content.CourseContent;
+using System.Text.Json.Serialization;
+
+namespace Domain.Entity.Content.Lessons
 {
     public class CourseModule : BaseContentCourse
     {

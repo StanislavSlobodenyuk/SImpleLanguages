@@ -1,12 +1,10 @@
 ﻿using Domain.Entity.Content.Lessons;
 
-namespace Dal.Interfaces.LessonRepositories
+namespace Dal.Interfaces
 {
     public interface ICourseModuleRepository : IBaseRepository<CourseModule>
     {
+        Task<IEnumerable<CourseModule>> GetModules(int courseId);
         Task<bool> ChangeAvailableModule(CourseModule module);
-
-        Task<Lesson?> AddLessonToModule(Lesson lesson, int moduleId);
-        Task<bool> DeleteLessonFromModule(CourseModule module, Lesson lesson);
     }
 }

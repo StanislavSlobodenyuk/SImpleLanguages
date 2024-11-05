@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Application.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241105014132_Init")]
+    [Migration("20241105135112_Init")]
     partial class Init
     {
         /// <inheritdoc />
@@ -154,14 +154,14 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("CourseModuleId")
+                        .HasColumnType("int");
+
                     b.Property<bool>("IsAvailable")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bit")
                         .HasDefaultValue(true)
                         .HasColumnName("Is_available");
-
-                    b.Property<int>("ModuleLessonsId")
-                        .HasColumnType("int");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
@@ -176,7 +176,7 @@ namespace Application.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ModuleLessonsId");
+                    b.HasIndex("CourseModuleId");
 
                     b.ToTable("Lesson", "dbo");
                 });
@@ -714,7 +714,7 @@ namespace Application.Migrations
                 {
                     b.HasOne("Domain.Entity.Content.Lessons.CourseModule", "CourseModules")
                         .WithMany("Lessons")
-                        .HasForeignKey("ModuleLessonsId")
+                        .HasForeignKey("CourseModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
                         .HasConstraintName("FK_CourseModules_.ModuleLessonsId_Lessons");

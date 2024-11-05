@@ -37,6 +37,7 @@ namespace Common.Response
             {
                 Data = data,
                 StatusCode = MyStatusCode.OK,
+                Description = "Ok"
             };
         }
     }
