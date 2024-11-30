@@ -39,8 +39,7 @@ export default function Sidebar({ authenticated }) {
                         </ul>
                     </div>)
                     : (<div className={styles.sidebar__buttons}>
-                        <Button>Увійти</Button>
-                        <Button>Зареєструватись</Button>
+                        <Link to="/register"> <Button>Авторизоватись</Button></Link>
                     </div>)
                 }
                 <div className={styles.sidebar__sociables}>

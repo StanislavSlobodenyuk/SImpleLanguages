@@ -1,9 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import { useState } from 'react';
-import { useTheme } from './Hooks/ThemeContext';
-import { ThemeProvider } from "./Hooks/ThemeContext";
-import { Header, Footer, Sidebar, ProtectedRoute } from './components';
-import { LandingPage, Courses, Course, Lessons, LessonTheory, LessonPractice, LessonResult, LoginPage } from './pages';
+import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
+import { ThemeProvider, useTheme } from './Hooks/ThemeContext';
+import { Header, Footer, Sidebar } from './components';
+import { ProtectedRoute } from './auth/index.js';
+import { useSelector } from 'react-redux';
+import routes from './Rootes'
 
 
 export default function App() {
@@ -17,42 +17,37 @@ export default function App() {
 }
 
 function AppContent() {
-    const [isAuthenticated, setIsAuthenticated] = useState(true);
+    const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const { theme } = useTheme();
+    const location = useLocation();
 
-        const protectedRoutes = [
-            { path: "/courses", element: <Courses /> },
-            { path: "/course/:id", element: <Course /> },
-        { path: "/course/:id/lessons", element: <Lessons /> },
-        { path: "/course/:courseTitle/module/:moduleTitle/lessonTheory/:lessonId", element: <LessonTheory /> },
-        { path: "/course/:courseTitle/module/:moduleTitle/lessonPractice/:lessonId", element: <LessonPractice /> },
-        { path: "/course/:courseTitle/module/:moduleTitle/lessonPractice/:lessonId/result", element: <LessonResult /> }
-    ];
+    const isMinimalLayout = ['/login', '/register'].includes(location.pathname);
 
     return (
-        <>
-            <Sidebar authenticated={isAuthenticated} />
-            <div className={"content__container"}>
-                <Header authenticated={isAuthenticated} />
+        <div className={isMinimalLayout ? "for-register-and-login" : "default-layout"}>
+            {!isMinimalLayout && <Sidebar authenticated={isAuthenticated} />}
+            <div className="content__container">
+                {!isMinimalLayout && <Header authenticated={isAuthenticated} />}
                 <main className={theme === 'dark' ? "darkMain" : "lightMain"}>
                     <Routes>
-                        <Route path="/landing" element={<LandingPage />} />
-                        <Route path="/login" element={<LoginPage />} />
-                        {protectedRoutes.map((route, index) => (
+                        {routes.public.map(({ path, element }, index) => (
+                            <Route key={index} path={path} element={element} />
+                        ))}
+                        {routes.protected.map(({ path, element }, index) => (
                             <Route
                                 key={index}
-                                path={route.path}
+                                path={path}
                                 element={
                                     <ProtectedRoute authenticated={isAuthenticated}>
-                                        {route.element}
+                                        {element}
                                     </ProtectedRoute>
                                 }
                             />
                         ))}
                     </Routes>
                 </main>
-                <Footer />
+                {!isMinimalLayout && <Footer />}
             </div>
-        </>
+        </div>
     );
 }

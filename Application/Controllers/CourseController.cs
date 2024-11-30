@@ -1,11 +1,9 @@
 ﻿using Common.Enum;
 using Common.Response.ErrorResponse;
-using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.CourseContent;
 using Dto;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
-using Domain.Enum;
 
 namespace Application.Controllers
 {
@@ -13,11 +11,11 @@ namespace Application.Controllers
     [ApiController]
     public class CourseController : Controller
     {
-        private readonly ICourseService _languageCourseService;
+        private readonly ICourseService _courseService;
 
-        public CourseController(ICourseService languageCourseService)
+        public CourseController(ICourseService courseService)
         {
-            _languageCourseService = languageCourseService;
+            _courseService = courseService;
         }
 
         [HttpGet("get-all")]
@@ -39,7 +37,7 @@ namespace Application.Controllers
                 InDevelopment = inDevelopment
             };
 
-            var response = await _languageCourseService.GetFillterCourses(filterDto);
+            var response = await _courseService.GetFillterCourses(filterDto);
 
             
             switch (response.StatusCode)
@@ -64,7 +62,7 @@ namespace Application.Controllers
         [HttpGet("{courseId}")]
         public async Task<IActionResult> GetCourse(int courseId) 
         {
-            var response = await _languageCourseService.GetCourseById(courseId);
+            var response = await _courseService.GetCourse(courseId);
 
             switch (response.StatusCode)
             {
@@ -88,7 +86,7 @@ namespace Application.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateCourse([FromBody] Course languageCourse)
         {
-            var response = await _languageCourseService.CreateCourse(languageCourse);
+            var response = await _courseService.CreateCourse(languageCourse);
 
             switch (response.StatusCode)
             {
@@ -109,7 +107,7 @@ namespace Application.Controllers
         [HttpDelete("{courseId}")]
         public async Task<IActionResult> DeleteCourse(int courseId)
         {
-            var response = await _languageCourseService.DeleteCourse(courseId);
+            var response = await _courseService.DeleteCourse(courseId);
 
             switch (response.StatusCode)
             {
@@ -133,7 +131,7 @@ namespace Application.Controllers
         [HttpPut("{courseId}")]
         public async Task<IActionResult> UpdateCourse([FromBody] UpdateCourseDto updateData, int courseId)
         {
-            var response = await _languageCourseService.UpdateCourse(updateData, courseId);
+            var response = await _courseService.UpdateCourse(updateData, courseId);
 
             switch (response.StatusCode)
             {

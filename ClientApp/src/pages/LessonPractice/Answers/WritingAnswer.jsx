@@ -5,8 +5,8 @@ export default function WritingAnswer() {
         <div className={styles.writing__buttons}>
             <textarea
                 name="answers"
-                rows="8"
-                cols="120"
+                rows="1"
+                cols="50"
                 placeholder="Enter your answer here..."
                 className={styles.writing__textarea}
             />

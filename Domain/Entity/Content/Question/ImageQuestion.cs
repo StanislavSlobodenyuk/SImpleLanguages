@@ -8,7 +8,7 @@ namespace Domain.Entity.Content.Question
         public string? ImagePath { get; set; }
 
         public ImageQuestion(){}
-        public ImageQuestion(string imagePath, string questionText, QustionType QuestionType, AnswerType answerType) : base(questionText, QuestionType, answerType)
+        public ImageQuestion(string imagePath, string questionText, QuestionType QuestionType, AnswerType answerType) : base(questionText, QuestionType, answerType)
         {
             ImagePath = imagePath;
         }

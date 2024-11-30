@@ -14,13 +14,13 @@ namespace Dal.Configuration.QuestionConfiguration
 
             builder.Property(r => r.Answer).IsRequired() .HasMaxLength(255);
             builder.Property(e => e.AudioQuestionId).IsRequired(false);
-            builder.Property(e => e.TestQuestionId).IsRequired(false);
+            builder.Property(e => e.SimpleQuestionId).IsRequired(false);
             builder.Property(e => e.TextQuestionId).IsRequired(false);
             builder.Property(e => e.ImageQuestionId).IsRequired(false);
 
-            builder.HasOne(r => r.TestQuestion)
+            builder.HasOne(r => r.SimpleQuestion)
                 .WithMany(q => q.RightAnswers) 
-                .HasForeignKey(r => r.TestQuestionId)
+                .HasForeignKey(r => r.SimpleQuestionId)
                 .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(r => r.AudioQuestion)

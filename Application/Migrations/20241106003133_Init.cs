@@ -126,7 +126,7 @@ namespace Application.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Test_Question",
+                name: "Simple_Question",
                 schema: "dbo",
                 columns: table => new
                 {
@@ -139,7 +139,7 @@ namespace Application.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Test_Question", x => x.Id);
+                    table.PrimaryKey("PK_Simple_Question", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -299,7 +299,7 @@ namespace Application.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Option = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     TimeStamp = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    TestQuestionId = table.Column<int>(type: "int", nullable: true),
+                    SimpleQuestionId = table.Column<int>(type: "int", nullable: true),
                     AudioQuestionId = table.Column<int>(type: "int", nullable: true),
                     ImageQuestionId = table.Column<int>(type: "int", nullable: true),
                     TextQuestionId = table.Column<int>(type: "int", nullable: true)
@@ -322,10 +322,10 @@ namespace Application.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_AnswerOption_Test_Question_TestQuestionId",
-                        column: x => x.TestQuestionId,
+                        name: "FK_AnswerOption_Simple_Question_SimpleQuestionId",
+                        column: x => x.SimpleQuestionId,
                         principalSchema: "dbo",
-                        principalTable: "Test_Question",
+                        principalTable: "Simple_Question",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -346,7 +346,7 @@ namespace Application.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Answer = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: false),
                     TimeStamp = table.Column<byte[]>(type: "varbinary(max)", nullable: true),
-                    TestQuestionId = table.Column<int>(type: "int", nullable: true),
+                    SimpleQuestionId = table.Column<int>(type: "int", nullable: true),
                     AudioQuestionId = table.Column<int>(type: "int", nullable: true),
                     ImageQuestionId = table.Column<int>(type: "int", nullable: true),
                     TextQuestionId = table.Column<int>(type: "int", nullable: true)
@@ -369,10 +369,10 @@ namespace Application.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_RightAnswers_Test_Question_TestQuestionId",
-                        column: x => x.TestQuestionId,
+                        name: "FK_RightAnswers_Simple_Question_SimpleQuestionId",
+                        column: x => x.SimpleQuestionId,
                         principalSchema: "dbo",
-                        principalTable: "Test_Question",
+                        principalTable: "Simple_Question",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -416,7 +416,7 @@ namespace Application.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LessonId = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<byte[]>(type: "rowversion", rowVersion: true, nullable: true),
-                    TestQuestionId = table.Column<int>(type: "int", nullable: true),
+                    SimpleQuestionId = table.Column<int>(type: "int", nullable: true),
                     AudioQuestionId = table.Column<int>(type: "int", nullable: true),
                     ImageQuestionId = table.Column<int>(type: "int", nullable: true),
                     TextQuestionId = table.Column<int>(type: "int", nullable: true)
@@ -446,10 +446,10 @@ namespace Application.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_LessonQuestions_TestQuestionId_TestQuestion",
-                        column: x => x.TestQuestionId,
+                        name: "FK_LessonQuestions_SimpleQuestionId_SimpleQuestion",
+                        column: x => x.SimpleQuestionId,
                         principalSchema: "dbo",
-                        principalTable: "Test_Question",
+                        principalTable: "Simple_Question",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -501,10 +501,10 @@ namespace Application.Migrations
                 column: "ImageQuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AnswerOption_TestQuestionId",
+                name: "IX_AnswerOption_SimpleQuestionId",
                 schema: "dbo",
                 table: "AnswerOption",
-                column: "TestQuestionId");
+                column: "SimpleQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AnswerOption_TextQuestionId",
@@ -581,10 +581,10 @@ namespace Application.Migrations
                 column: "LessonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Lesson_question_TestQuestionId",
+                name: "IX_Lesson_question_SimpleQuestionId",
                 schema: "dbo",
                 table: "Lesson_question",
-                column: "TestQuestionId");
+                column: "SimpleQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Lesson_question_TextQuestionId",
@@ -605,10 +605,10 @@ namespace Application.Migrations
                 column: "ImageQuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_RightAnswers_TestQuestionId",
+                name: "IX_RightAnswers_SimpleQuestionId",
                 schema: "dbo",
                 table: "RightAnswers",
-                column: "TestQuestionId");
+                column: "SimpleQuestionId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RightAnswers_TextQuestionId",
@@ -676,7 +676,7 @@ namespace Application.Migrations
                 schema: "dbo");
 
             migrationBuilder.DropTable(
-                name: "Test_Question",
+                name: "Simple_Question",
                 schema: "dbo");
 
             migrationBuilder.DropTable(

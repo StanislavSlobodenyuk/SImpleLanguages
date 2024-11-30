@@ -1,6 +1,4 @@
 ﻿
-using Domain.Enum;
-
 namespace Dto
 {
     public class UpdateCourseDto

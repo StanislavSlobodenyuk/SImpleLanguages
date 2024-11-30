@@ -1,11 +1,12 @@
 ﻿
 namespace Domain.Enum
 {
-    public enum QustionType
+    public enum QuestionType
     {
-        TestQuestion = 0,
+        SimpleQuestion = 0,
         AudioQuestion = 1,
         ImageQuestion = 2,
         TextQuestion = 3,
+        None = 4,
     }
 }

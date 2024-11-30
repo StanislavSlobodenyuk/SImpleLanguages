@@ -1,12 +1,14 @@
+import { QuestionAnswerMapping } from "/src/Mapping/Mappinig.js";
 import RadioAnswer from '../Answers/RadioAnswer';
 import CheckboxAnswer from '../Answers/CheckboxAnswer'
 import InputAnswer from '../Answers/InputAnswer'
 import styles from './qustions.module.less'
+import WritingAnswer from "../Answers/WritingAnswer";
 
 export default function AudioQuestion({ question }) {
     return (
         <div className={`${styles.audioQuestion} ${styles.question}`}>
-            <div className={styles.question__title}>{question.id}. {question.questionText}</div>
+            <div className={styles.question__title}>{question.uniqueId}. {question.questionText}</div>
             <div className={styles.audioQuestion__question}>
                 <div className={styles.audioQuestion__audioContainer}>
                     <audio controls className={styles.audioQuestion__audio}>
@@ -15,9 +17,10 @@ export default function AudioQuestion({ question }) {
                     </audio>
                 </div>
                 <div className={styles.audioQuestion__answerTypes}>
-                    {question.answerType === 'radio' && <RadioAnswer answers={question.answers} />}
-                    {question.answerType === 'checkbox' && <CheckboxAnswer answers={question.answers} />}
-                    {question.answerType === 'input' && <InputAnswer answers={question.answers} />}
+                    {QuestionAnswerMapping[question.aType] === 'Radio' && <RadioAnswer answers={question.answerOptions} />}
+                    {QuestionAnswerMapping[question.aType] === 'CheckBox' && <CheckboxAnswer answers={question.answerOptions} />}
+                    {QuestionAnswerMapping[question.aType] === 'Input' && <InputAnswer />}
+                    {QuestionAnswerMapping[question.aType] === 'Writing' && <WritingAnswer />}
                 </div>
             </div>
         </div>

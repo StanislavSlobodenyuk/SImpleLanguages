@@ -222,25 +222,31 @@ namespace Dal.SeedData
                 context.SaveChanges();
             }
 
-            if (!context.AudioQuestions.Any() && !context.TestQuestions.Any() && !context.TextQuestions.Any() && !context.ImageQuestions.Any())
+            if (!context.AudioQuestions.Any() && !context.SimpleQuestions.Any() && !context.TextQuestions.Any() && !context.ImageQuestions.Any())
             {
                 List<AudioQuestion> audioQuestionList = new List<AudioQuestion>
                 {
                     new AudioQuestion
                     {
                         QuestionText = "Прослухайте та дайте відповідь на питання",
-                        QType = QustionType.AudioQuestion,
+                        QType = QuestionType.AudioQuestion,
                         AType = AnswerType.Radio,
                         AudioPath = "/src/audioTest/testSound.mp3",
                     },
                 };
-                List<TestQuestion> testQuestionList = new List<TestQuestion>
+                List<SimpleQuestion> testQuestionList = new List<SimpleQuestion>
                 {
-                   new TestQuestion
+                    new SimpleQuestion
                     {
                         QuestionText = "Який переклад слова \"family\"",
-                        QType = QustionType.TestQuestion,
+                        QType = QuestionType.SimpleQuestion,
                         AType = AnswerType.Radio
+                    },
+                    new SimpleQuestion
+                    {
+                        QuestionText = " Напишіть 5 речень про себе використовуючи слова які вивчили в цьому уроці",
+                        QType = QuestionType.SimpleQuestion,
+                        AType = AnswerType.Writing
                     }
                 };
                 List<TextQuestion> textQuestionList = new List<TextQuestion>
@@ -248,7 +254,7 @@ namespace Dal.SeedData
                     new TextQuestion
                     {
                         QuestionText = "Що подобається Анні?",
-                        QType = QustionType.TextQuestion,
+                        QType = QuestionType.TextQuestion,
                         AType = AnswerType.CheckBox,
                         Text = "Anna likes to read books. She reads every day after school. Her favorite book is about animals. She also loves to draw pictures of her favorite animals. Anna wants to become a vet and help animals when she grows up."
                     }
@@ -257,15 +263,15 @@ namespace Dal.SeedData
                 {
                     new ImageQuestion
                     {
-                        QuestionText = "Прослухайте та дайте відповідь на питання",
-                        QType = QustionType.AudioQuestion,
+                        QuestionText = "хХто зображений на малюнку",
+                        QType = QuestionType.ImageQuestion,
                         AType = AnswerType.Input,
                         ImagePath = "/src/img/Content/cat.png",
                     },
                 };
 
                 context.AudioQuestions.AddRange(audioQuestionList);
-                context.TestQuestions.AddRange(testQuestionList);
+                context.SimpleQuestions.AddRange(testQuestionList);
                 context.TextQuestions.AddRange(textQuestionList);
                 context.ImageQuestions.AddRange(imageQuestionList);
                 context.SaveChanges();
@@ -327,7 +333,12 @@ namespace Dal.SeedData
                     new LessonQuestion
                     {
                         LessonId = 1,
-                        TestQuestionId = 1,
+                        SimpleQuestionId = 1,
+                    },
+                    new LessonQuestion
+                    {
+                        LessonId = 1,
+                        SimpleQuestionId = 2,
                     },
                     new LessonQuestion
                     {
@@ -370,22 +381,22 @@ namespace Dal.SeedData
                     },
                     new AnswerOption
                     {
-                        TestQuestionId = 1,
+                        SimpleQuestionId = 1,
                         Option = "Сім\'я"
                     },
                     new AnswerOption
                     {
-                        TestQuestionId = 1,
+                        SimpleQuestionId = 1,
                         Option = "Дерево"
                     },
                     new AnswerOption
                     {
-                        TestQuestionId = 1,
+                        SimpleQuestionId = 1,
                         Option = "Батько"
                     },
                     new AnswerOption
                     {
-                        TestQuestionId = 1,
+                        SimpleQuestionId = 1,
                         Option = "Мати"
                     },
                     new AnswerOption
@@ -435,7 +446,7 @@ namespace Dal.SeedData
                     },
                     new RightAnswer
                     {
-                        TestQuestionId = 1,
+                        SimpleQuestionId = 1,
                         Answer = "Сім\'я"
                     },
                     new RightAnswer

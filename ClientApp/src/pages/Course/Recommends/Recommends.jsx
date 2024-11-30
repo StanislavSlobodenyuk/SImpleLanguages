@@ -14,7 +14,6 @@ export default function Recommends({ course }) {
                     language: course.language,
                     level: course.level,
                 })
-                console.log(data)
                 setCourses(data)
             } catch (error) {
                 setError('Failed to fetch courses')

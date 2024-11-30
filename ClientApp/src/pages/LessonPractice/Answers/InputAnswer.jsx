@@ -3,7 +3,7 @@ export default function InputAnswer() {
     return (
         <div className={styles.input__buttons}>
             Answer:
-            <label className={styles.input__label}> 
+            <label className={styles.input__label}>
                 <input
                     type="text"
                     name="answers"

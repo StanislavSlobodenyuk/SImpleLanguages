@@ -34,7 +34,7 @@ export default function Courses() {
                     cost: selectedFilters.cost,
                     inDevelopment: selectedFilters.inDevelopment
                 })
-                console.log(data)
+                
                 setCourses(data)
             } catch (error) {
                 setError('Failed to fetch courses')

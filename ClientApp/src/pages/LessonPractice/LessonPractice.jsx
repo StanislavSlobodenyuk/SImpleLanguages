@@ -1,5 +1,9 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { FetchQuestion } from "/src/api/CourseApi/CourseApi";
+import { QuestionTypeMapping } from "/src/Mapping/Mappinig";
+import { useTheme } from "/src/Hooks/ThemeContext";
 import styles from './lessonPractice.module.less'
 import SimpleQuestion from "./QuestionsType/SimpleQuestion";
 import AudioQuestion from "./QuestionsType/AudioQuestions";
@@ -7,78 +11,48 @@ import TextQuestion from "./QuestionsType/TextQuestion";
 import ImageQuestion from "./QuestionsType/ImageQuestion";
 import Button from '/src/components/Common/Button/Button'
 
-const answerType = ['radio', 'checkbox', 'input', 'writing']
-const questionType = ['simple', 'audio', 'image', 'text']
-
-const practice = {
-    questions: [
-        {
-            id: 1,
-            type: questionType[0],
-            questionText: 'Який переклад слова "family"',
-            answerType: answerType[0],
-            answers: ['Сім\'я', 'Дерево', 'Батько', 'Мати'],
-            rightAnswer: 'Сім\'я'
-        },
-        {
-            id: 2,
-            type: questionType[1],
-            questionText: 'Прослухайте та перекладіть данний фрагмент',
-            answerType: answerType[0],
-            audioUrl: '/src/audioTest/testSound.mp3',
-            answers: ['Hello my name`s Den', 'Good evening Den', 'Bye Den', 'How are you Den?'],
-            rightAnswer: 'Hello my name`s Den'
-        },
-        {
-            id: 3,
-            type: questionType[3],
-            questionText: 'Прочитайте текст та виберіть всі вірні відповіді. Що подаболася Анні?',
-            answerType: answerType[1],
-            text: 'Anna likes to read books. She reads every day after school. Her favorite book is about animals. She also loves to draw pictures of her favorite animals. Anna wants to become a vet and help animals when she grows up.',
-            answers: ['Play soccer', 'Read books', 'Draw pictures', 'Cook food', 'Sing songs'],
-            rightAnswer: ['Read books', 'Draw pictures']
-        },
-        {
-            id: 4,
-            type: questionType[2],
-            questionText: 'Що ви бачите на картинці?',
-            answerType: answerType[2],
-            images: ['/src/img/Content/cat.png'],
-            answers: [],
-            rightAnswer: 'cat'
-        },
-        {
-            id: 5,
-            type: questionType[0],
-            questionText: 'Напишіть 5 речень про себе використовуючи слова які вивчили в цьому уроці',
-            answerType: answerType[3],
-            answers: [],
-            rightAnswer: ''
-        },
-    ]
-}
-
 const TaskRender = ({ question }) => {
-    switch (question.type) {
-        case 'simple':
+    switch (QuestionTypeMapping[question.qType]) {
+        case 'SimpleQuestion':
             return <SimpleQuestion question={question} />
-        case 'audio':
+        case 'AudioQuestion':
             return <AudioQuestion question={question} />
-        case 'text':
+        case 'TextQuestion':
             return <TextQuestion question={question} />
-        case 'image':
+        case 'ImageQuestion':
             return <ImageQuestion question={question} />
     }
 }
 
 export default function LessonPractice() {
     const { courseTitle, moduleTitle, lessonId } = useParams()
+    const [isQuestions, setIsQuestions] = useState([])
+    const [error, setError] = useState(null)
+    const { theme } = useTheme()
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const data = await FetchQuestion({ lessonId })
+                console.log(data)
+                setIsQuestions(data);
+            } catch (error) {
+                setError('Failes to fetch questions')
+            }
+        }
+        fetchData();
+    }, [lessonId])
+
+    if (error) {
+        return <div>{error}</div>
+    }
+
     return (
         <div className={` ${styles.practice}`}>
-            <h4 className={styles.practice__title} >Курс "{courseTitle}" модуль "{moduleTitle}" урок {lessonId}</h4>
+            <h4 className={`${styles.practice__title} ${theme === 'dark' ? styles.darkText : styles.lightText}`}> Урок {lessonId}</h4>
             <div className={styles.practice__questions}>
-                {practice.questions.map((question) =>
-                    <div key={question.id} className={`${styles.practice__questions} ${"block__container"}`}>
+                {isQuestions.map((question) =>
+                    <div key={question.uniqueId} className={`${styles.practice__questions} ${"block__container"}`}>
                         <TaskRender question={question} />
                     </div>
                 )}

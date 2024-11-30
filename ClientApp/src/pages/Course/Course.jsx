@@ -13,11 +13,8 @@ export default function Course() {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                const data = await FetchCourse({ courseId: id })
 
-                const data = await FetchCourse({
-                    courseId: id
-                })
-                console.log(data)
                 setIsCourse(data)
             } catch (error) {
                 setError('Failed to fetch course')

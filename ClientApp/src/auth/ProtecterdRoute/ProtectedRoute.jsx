@@ -7,6 +7,6 @@ const ProtectedRoute = ({ children, authenticated }) => {
         return <Navigate to="/login" replace />;
     }
 
-    return children; // Если авторизован, возвращаем дочерние компоненты
+    return children; 
 };
 export default ProtectedRoute

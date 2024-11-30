@@ -2,8 +2,6 @@
 using Domain.Entity.Content.CourseContent;
 using Domain.Enum;
 using Microsoft.EntityFrameworkCore;
-using System.Data.Common;
-using System.Reflection;
 
 namespace Dal.Repositories
 {
@@ -23,9 +21,7 @@ namespace Dal.Repositories
 
                 if (!string.IsNullOrEmpty(title))
                 {
-#pragma warning disable CS8602
                     courses = courses.Where(c => c.Title.Contains(title)).ToList();
-#pragma warning restore CS8602
                 }
 
                 if (language != LanguageName.All)

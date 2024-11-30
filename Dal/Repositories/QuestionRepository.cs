@@ -19,33 +19,33 @@ namespace Dal.Repositories
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<BaseQuestion>> GetQuestions(int lessonId)
+        public async Task<IEnumerable<object>> GetQuestions(int lessonId)
         {
             var lesson = await _context.Lessons
-               .Include(l => l.LessonQuestions)
-                   .ThenInclude(lq => lq.AudioQuestion)
-                       .ThenInclude(ao => ao.AnswerOptions) // Варианты ответов для аудио-вопросов
-      
-               .Include(l => l.LessonQuestions)
-                   .ThenInclude(lq => lq.TextQuestion)
-                       .ThenInclude(ao => ao.AnswerOptions) // Варианты ответов для текстовых вопросов
-               .Include(l => l.LessonQuestions)
-                   .ThenInclude(lq => lq.TestQuestion)
-                       .ThenInclude(ao => ao.AnswerOptions) // Варианты ответов для тестовых вопросов
-               .Include(l => l.LessonQuestions)
-                   .ThenInclude(lq => lq.ImageQuestion)
-                       .ThenInclude(ao => ao.AnswerOptions) // Варианты ответов для вопросов с изображениями
-               .FirstOrDefaultAsync(l => l.Id == lessonId);
+                .Include(l => l.LessonQuestions)
+                    .ThenInclude(lq => lq.AudioQuestion)
+                        .ThenInclude(lq => lq.AnswerOptions)
+                .Include(l => l.LessonQuestions)
+                    .ThenInclude(lq => lq.TextQuestion)
+                        .ThenInclude(lq => lq.AnswerOptions)
+                .Include(l => l.LessonQuestions)
+                    .ThenInclude(lq => lq.SimpleQuestion)
+                        .ThenInclude(lq => lq.AnswerOptions)
+                .Include(l => l.LessonQuestions)
+                    .ThenInclude(lq => lq.ImageQuestion)
+                        .ThenInclude(lq => lq.AnswerOptions)
+                .FirstOrDefaultAsync(l => l.Id == lessonId);
 
             if (lesson == null)
             {
                 throw new Exception($"Lesson with ID {lessonId} not found.");
             }
+
             var questions = lesson.LessonQuestions
-                .Select(lq => (BaseQuestion?)lq.AudioQuestion ??
-                              (BaseQuestion?)lq.TextQuestion ??
-                              (BaseQuestion?)lq.TestQuestion ??
-                              (BaseQuestion?)lq.ImageQuestion)
+                .Select(lq => lq.AudioQuestion as object ??
+                              lq.TextQuestion as object ??
+                              lq.SimpleQuestion as object ??
+                              lq.ImageQuestion as object)
                 .Where(q => q != null)
                 .ToList();
 

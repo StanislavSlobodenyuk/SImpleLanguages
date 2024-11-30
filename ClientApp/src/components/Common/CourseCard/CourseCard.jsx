@@ -6,7 +6,6 @@ import styles from './courseCard.module.less'
 
 export default function CourseCard({ course }) {
     const { theme } = useTheme()
-    console.log("Course Card" + course)
     const scrollToTop = () => {
         const scrollStep = -window.scrollY / 15;
         const scrollInterval = setInterval(() => {

@@ -1,11 +1,12 @@
 ﻿
 using Common.Response;
 using Domain.Entity.Content.Question;
+using Dto;
 
 namespace Service.Interfaces
 {
     public interface IQuestionService 
     {
-        Task<BaseResponse<IEnumerable<BaseQuestion>>> GetQuestions(int lessonId);
+        Task<BaseResponse<List<QuestionDto>>> GetQuestions(int lessonId);
     }
 }

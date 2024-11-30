@@ -6,6 +6,8 @@ using Service.Interfaces;
 
 namespace Application.Controllers
 {
+    [Route("api/[controller]")]
+    [ApiController]
     public class LessonController : Controller
     {
         private readonly ILessonService _lessoService;

@@ -28,7 +28,6 @@ namespace Dal.Configuration
                 .HasColumnName("Description")
                 .HasMaxLength(1000);
 
-
             builder.Property(e => e.Level)
                .IsRequired()
                .HasColumnName("Level");

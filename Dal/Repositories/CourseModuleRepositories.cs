@@ -19,16 +19,10 @@ namespace Dal.Repositories
         }
         public async Task<IEnumerable<CourseModule>> GetModules(int courseId)
         {
-            try
-            {
-                List<CourseModule> modules = await _context.CourseModules.Where(cm => cm.CourseId == courseId).ToListAsync();
-
-                return modules;
-            }
-            catch (DbUpdateException)
-            {
-                return new List<CourseModule>();
-            }
+            return await _context.CourseModules
+                .Where(cm => cm.CourseId == courseId)
+                .Include(l => l.Lessons)
+                .ToListAsync();
         }
 
         public async Task<bool> Create(CourseModule module)

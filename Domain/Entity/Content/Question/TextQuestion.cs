@@ -11,7 +11,7 @@ namespace Domain.Entity.Content.Question
         public TextQuestion()
         {
         }
-        public TextQuestion(string text, string questionText, QustionType QuestionType, AnswerType answerType) : base(questionText, QuestionType, answerType)
+        public TextQuestion(string text, string questionText, QuestionType QuestionType, AnswerType answerType) : base(questionText, QuestionType, answerType)
         {
             Text = text;
         }

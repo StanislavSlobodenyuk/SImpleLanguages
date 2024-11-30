@@ -18,3 +18,17 @@ export const contriesImageMapping = {
     3: '/src/img/Flags/Poland.png',
     3: '/src/img/Flags/Czech.png'
 }
+
+export const QuestionTypeMapping = {
+    0: "SimpleQuestion",
+    1: "AudioQuestion",
+    2: "ImageQuestion",
+    3: "TextQuestion"
+}
+
+export const QuestionAnswerMapping = {
+    0: "Radio",
+    1: "CheckBox",
+    2: "Input",
+    3: "Writing",
+}

@@ -196,7 +196,7 @@ namespace Application.Migrations
                     b.Property<int>("LessonId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TestQuestionId")
+                    b.Property<int?>("SimpleQuestionId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TextQuestionId")
@@ -215,7 +215,7 @@ namespace Application.Migrations
 
                     b.HasIndex("LessonId");
 
-                    b.HasIndex("TestQuestionId");
+                    b.HasIndex("SimpleQuestionId");
 
                     b.HasIndex("TextQuestionId");
 
@@ -287,7 +287,7 @@ namespace Application.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasColumnName("Option");
 
-                    b.Property<int?>("TestQuestionId")
+                    b.Property<int?>("SimpleQuestionId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TextQuestionId")
@@ -302,7 +302,7 @@ namespace Application.Migrations
 
                     b.HasIndex("ImageQuestionId");
 
-                    b.HasIndex("TestQuestionId");
+                    b.HasIndex("SimpleQuestionId");
 
                     b.HasIndex("TextQuestionId");
 
@@ -328,7 +328,7 @@ namespace Application.Migrations
                     b.Property<int?>("ImageQuestionId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TestQuestionId")
+                    b.Property<int?>("SimpleQuestionId")
                         .HasColumnType("int");
 
                     b.Property<int?>("TextQuestionId")
@@ -343,7 +343,7 @@ namespace Application.Migrations
 
                     b.HasIndex("ImageQuestionId");
 
-                    b.HasIndex("TestQuestionId");
+                    b.HasIndex("SimpleQuestionId");
 
                     b.HasIndex("TextQuestionId");
 
@@ -426,7 +426,7 @@ namespace Application.Migrations
                     b.ToTable("Image_Question", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.TestQuestion", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Question.SimpleQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -456,7 +456,7 @@ namespace Application.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Test_Question", "dbo");
+                    b.ToTable("Simple_Question", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.TextQuestion", b =>
@@ -740,11 +740,11 @@ namespace Application.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_LessonQuestions_LessonId_Lesson");
 
-                    b.HasOne("Domain.Entity.Content.Question.TestQuestion", "TestQuestion")
+                    b.HasOne("Domain.Entity.Content.Question.SimpleQuestion", "SimpleQuestion")
                         .WithMany("LessonQuestions")
-                        .HasForeignKey("TestQuestionId")
+                        .HasForeignKey("SimpleQuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
-                        .HasConstraintName("FK_LessonQuestions_TestQuestionId_TestQuestion");
+                        .HasConstraintName("FK_LessonQuestions_SimpleQuestionId_SimpleQuestion");
 
                     b.HasOne("Domain.Entity.Content.Question.TextQuestion", "TextQuestion")
                         .WithMany("LessonQuestions")
@@ -758,7 +758,7 @@ namespace Application.Migrations
 
                     b.Navigation("Lesson");
 
-                    b.Navigation("TestQuestion");
+                    b.Navigation("SimpleQuestion");
 
                     b.Navigation("TextQuestion");
                 });
@@ -787,9 +787,9 @@ namespace Application.Migrations
                         .HasForeignKey("ImageQuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Domain.Entity.Content.Question.TestQuestion", "TestQuestion")
+                    b.HasOne("Domain.Entity.Content.Question.SimpleQuestion", "SimpleQuestion")
                         .WithMany("AnswerOptions")
-                        .HasForeignKey("TestQuestionId")
+                        .HasForeignKey("SimpleQuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Domain.Entity.Content.Question.TextQuestion", "TextQuestion")
@@ -801,7 +801,7 @@ namespace Application.Migrations
 
                     b.Navigation("ImageQuestion");
 
-                    b.Navigation("TestQuestion");
+                    b.Navigation("SimpleQuestion");
 
                     b.Navigation("TextQuestion");
                 });
@@ -818,9 +818,9 @@ namespace Application.Migrations
                         .HasForeignKey("ImageQuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Domain.Entity.Content.Question.TestQuestion", "TestQuestion")
+                    b.HasOne("Domain.Entity.Content.Question.SimpleQuestion", "SimpleQuestion")
                         .WithMany("RightAnswers")
-                        .HasForeignKey("TestQuestionId")
+                        .HasForeignKey("SimpleQuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("Domain.Entity.Content.Question.TextQuestion", "TextQuestion")
@@ -832,7 +832,7 @@ namespace Application.Migrations
 
                     b.Navigation("ImageQuestion");
 
-                    b.Navigation("TestQuestion");
+                    b.Navigation("SimpleQuestion");
 
                     b.Navigation("TextQuestion");
                 });
@@ -923,7 +923,7 @@ namespace Application.Migrations
                     b.Navigation("RightAnswers");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.TestQuestion", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Question.SimpleQuestion", b =>
                 {
                     b.Navigation("AnswerOptions");
 

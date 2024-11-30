@@ -17,17 +17,17 @@ namespace Dal.Configuration.Lessonsconfiguration
 
             builder.Property(e => e.TimeStamp).IsRowVersion().IsConcurrencyToken();
             builder.Property(e => e.AudioQuestionId).IsRequired(false);
-            builder.Property(e => e.TestQuestionId).IsRequired(false);
+            builder.Property(e => e.SimpleQuestionId).IsRequired(false);
             builder.Property(e => e.TextQuestionId).IsRequired(false);
             builder.Property(e => e.ImageQuestionId).IsRequired(false);
 
 
 
             builder
-                .HasOne(lq => lq.TestQuestion)
+                .HasOne(lq => lq.SimpleQuestion)
                     .WithMany(e => e.LessonQuestions)
-                    .HasForeignKey(lq => lq.TestQuestionId)
-                    .HasConstraintName("FK_LessonQuestions_TestQuestionId_TestQuestion")
+                    .HasForeignKey(lq => lq.SimpleQuestionId)
+                    .HasConstraintName("FK_LessonQuestions_SimpleQuestionId_SimpleQuestion")
                     .OnDelete(DeleteBehavior.Restrict);
 
                 builder
@@ -42,15 +42,15 @@ namespace Dal.Configuration.Lessonsconfiguration
                    .WithMany(e => e.LessonQuestions)
                    .HasForeignKey(lq => lq.TextQuestionId)
                    .HasConstraintName("FK_LessonQuestions_TextQuestionId_TextQuestion")
-                   .OnDelete(DeleteBehavior.Restrict);
-                builder
+                    .OnDelete(DeleteBehavior.Restrict);
+            builder
                  .HasOne(lq => lq.ImageQuestion)
                  .WithMany(e => e.LessonQuestions)
                  .HasForeignKey(lq => lq.ImageQuestionId)
                  .HasConstraintName("FK_LessonQuestions_ImageQuestionId_ImageQuestion")
                  .OnDelete(DeleteBehavior.Restrict);
 
-                builder
+            builder
                     .HasOne(e => e.Lesson)
                     .WithMany(e => e.LessonQuestions)
                     .HasForeignKey(e => e.LessonId)

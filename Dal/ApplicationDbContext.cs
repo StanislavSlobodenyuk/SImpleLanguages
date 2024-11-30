@@ -34,7 +34,7 @@ namespace Dal
         public DbSet<RightAnswer> RightAnswers { get; set; }
         public DbSet<AudioQuestion> AudioQuestions { get; set; }
         public DbSet<ImageQuestion> ImageQuestions { get; set; }
-        public DbSet<TestQuestion> TestQuestions { get; set; }
+        public DbSet<SimpleQuestion> SimpleQuestions { get; set; }
         public DbSet<TextQuestion> TextQuestions { get; set; }
         // Image 
         public DbSet<MyImage> MyImages { get; set; }
@@ -59,7 +59,7 @@ namespace Dal
             builder.ApplyConfiguration(new RightAnswerConfiguration());
             builder.ApplyConfiguration(new AudioQuestionConfiguration());
             builder.ApplyConfiguration(new ImageQuestionConfiguration());
-            builder.ApplyConfiguration(new TestQuestionConfiguration());
+            builder.ApplyConfiguration(new SimpleQuestionsConfiguration());
             builder.ApplyConfiguration(new TextQuestionConfiguration());
             // Image 
             builder.ApplyConfiguration(new MyImageConfiguration());

@@ -5,14 +5,14 @@ export default function CheckboxAnswer({ answers }) {
     const { theme } = useTheme()
     return (
         <div className={`${styles.checkBox__buttons} ${theme === 'dark' ? styles.checkBox__buttons_dark : styles.checkBox__buttons_light}`}>
-            {answers.map((answer, index) => (
-                <label key={index} className={styles.checkBox__label}>
+            {answers.map((answer) => (
+                <label key={answer.id} className={styles.checkBox__label}>
                     <input
-                        type="checkBox"
+                        type="checkbox"
                         name="answers"
-                        value={answer}
+                        value={answer.option}
                     />
-                    {answer}
+                    {answer.option}
                 </label>
             ))}
         </div>

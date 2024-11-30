@@ -5,9 +5,9 @@ namespace Domain.Entity.Base
 {
     public abstract class BaseQuestionReference : BaseEntity
     {
-        public int? TestQuestionId { get; set; }
+        public int? SimpleQuestionId { get; set; }
         [JsonIgnore]
-        public TestQuestion? TestQuestion { get; set; }
+        public SimpleQuestion? SimpleQuestion { get; set; }
 
         public int? AudioQuestionId { get; set; }
         [JsonIgnore]

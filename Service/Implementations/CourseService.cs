@@ -1,6 +1,5 @@
-﻿using Common.Enum;
+﻿
 using Common.Response;
-using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.CourseContent;
 using Domain.Enum;
 using Dto;
@@ -55,7 +54,7 @@ namespace Service.Implementations
                 return BaseResponseHelper.HandleInternalServerError<IEnumerable<Course>>("Unable to display all course items");
             }
         }
-        public async Task<BaseResponse<Course>> GetCourseById(int courseId)
+        public async Task<BaseResponse<Course>> GetCourse(int courseId)
         {
             if (courseId <= 0)
                 return BaseResponseHelper.HandleBadRequest<Course>($"Invalid parameters {courseId} <= 0");

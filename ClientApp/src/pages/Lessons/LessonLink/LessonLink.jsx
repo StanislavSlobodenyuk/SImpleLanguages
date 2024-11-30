@@ -27,7 +27,7 @@ export default function LessonLink({ lesson, currentLesson, onLessonSelect, styl
     };
 
     return (
-        <div style={style} className={styles.lessonLink}>
+        <div style={style} className={`${styles.lessonLink} ${theme === 'dark' ? styles.lessonLink_dark : styles.lessonLink_light}`}>
             <div className={`
                 ${styles.lessonLink__figure} 
                 ${lesson.isComplete ? (theme === 'dark' ? styles.lessonLink__figure_dark : styles.lessonLink__figure_light) : ''}
