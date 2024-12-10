@@ -12,31 +12,29 @@ using Dal.Configuration.ImageConfiguration;
 using Dal.Configuration.Lessonsconfiguration;
 using Dal.Configuration.QuestionConfiguration;
 using Domain.Entity.Content.Question.Answer;
+using Domain.Entity.User;
+using Dal.Configuration.UserConfiguration;
 
 
 namespace Dal
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<User>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-        // Metadata
         public DbSet<Course> Courses { get; set; }
-        
-        // Main content
-        // Lessons
+     
         public DbSet<CourseModule> CourseModules { get; set; }
         public DbSet<Lesson> Lessons { get; set; }
         public DbSet<Theory> Theories { get; set; }
         public DbSet<LessonQuestion> LessonQuestions { get; set; }
-        // Questions
+
         public DbSet<AnswerOption> AnswerOptions { get; set; }
         public DbSet<RightAnswer> RightAnswers { get; set; }
         public DbSet<AudioQuestion> AudioQuestions { get; set; }
         public DbSet<ImageQuestion> ImageQuestions { get; set; }
         public DbSet<SimpleQuestion> SimpleQuestions { get; set; }
         public DbSet<TextQuestion> TextQuestions { get; set; }
-        // Image 
         public DbSet<MyImage> MyImages { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -45,23 +43,18 @@ namespace Dal
             builder.Ignore<BaseContentCourse>();
             builder.Ignore<BaseQuestion>();
 
-            // Metadata
+            builder.ApplyConfiguration(new UserConfiguration());
             builder.ApplyConfiguration(new CourseConfiguration());
-
-            // Main content
-            // Lessons
             builder.ApplyConfiguration(new CourseModuleConfiguration());
             builder.ApplyConfiguration(new LessonConfiguration());
             builder.ApplyConfiguration(new TheoryConfiguration());
             builder.ApplyConfiguration(new LessonQuestionConfiguration());
-            // Questions
             builder.ApplyConfiguration(new AnswerOptionConfiguration());
             builder.ApplyConfiguration(new RightAnswerConfiguration());
             builder.ApplyConfiguration(new AudioQuestionConfiguration());
             builder.ApplyConfiguration(new ImageQuestionConfiguration());
             builder.ApplyConfiguration(new SimpleQuestionsConfiguration());
             builder.ApplyConfiguration(new TextQuestionConfiguration());
-            // Image 
             builder.ApplyConfiguration(new MyImageConfiguration());
         }
     }
