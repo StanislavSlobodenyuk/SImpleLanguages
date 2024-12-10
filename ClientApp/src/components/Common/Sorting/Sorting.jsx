@@ -21,16 +21,16 @@ export default function Sorting() {
     return (
         <>
             <div className={styles.sorting} onClick={toggleDropdown}>
-                <div className={styles.sorting__img}>
+                <div className={styles.sortingImg}>
                     {theme === 'dark'
                         ? <img src='/src/img/general/sorting_dark.svg' alt='Sort' />
                         : <img src='/src/img/general/sorting_light.svg' alt='Sort' />}
                 </div>
-                <div className={styles.sorting__text}>Порядок сортування</div>
+                <div className={styles.sortingText}>Порядок сортування</div>
             </div>
             {isOpen && (
-                <div className={`${styles.dropdown} ${theme === 'dark' ? styles.dropdown_dark : styles.dropdown_light}`}>
-                    <div className={styles.dropdown__options}>
+                <div className={`${styles.dropdown} ${theme === 'dark' ? styles.dropdownDark : styles.dropdownLight}`}>
+                    <div className={styles.dropdownOptions}>
                         <div key="popular" onClick={() => handleSortOptions("popular")}>
                             За популярністю
                         </div>

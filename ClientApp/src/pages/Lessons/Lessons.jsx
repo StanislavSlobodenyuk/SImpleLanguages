@@ -60,9 +60,9 @@ export default function Lessons() {
 
     return (
         <div className={styles.lessons}>
-            <div className={styles.lessons__flexContainer}>
-                <div className={`${"block__container"} ${styles.lessons__lessonsMenu}`}>
-                    <div className={styles.lesonsMenu__modules}>
+            <div className={styles.lessonsFlexContainer}>
+                <div className={`${"block-container"} ${styles.lessonsLessonsMenu}`}>
+                    <div className={styles.lesonsMenuModules}>
                         {isModules.map((module) =>
                             <LessonModule
                                 key={module.id}
@@ -73,8 +73,8 @@ export default function Lessons() {
                         )}
                     </div>
                 </div>
-                <div className={`${"block__container"} ${styles.lessons__lessonsMap}`}>
-                    <div className={styles.lessons__mapImage}>
+                <div className={`${"block-container"} ${styles.lessonsLessonsMap}`}>
+                    <div className={styles.lessonsMapImage}>
                         <img src={currentModule.pathToMap} alt="Module Map" />
                         {currentModule.lessons && currentModule.lessons.map((lesson) => {
                             const position = positions[lesson.id];
@@ -100,9 +100,9 @@ export default function Lessons() {
                 <>
                     <div className={styles.modalOverlay} onClick={closeModal} />
                     <Modal>
-                        <div className={`${styles.modal} ${theme === 'dark' ? styles.modal_dark : styles.modal_light}`}>
-                            <h4 className={styles.modal__title}>Оберіть з чого почати</h4>
-                            <div className={styles.modal__flexContainer}>
+                        <div className={`${styles.modal} ${theme === 'dark' ? styles.modalDark : styles.modalLight}`}>
+                            <h4 className={styles.modalRitle}>Оберіть з чого почати</h4>
+                            <div className={styles.modalFlexContainer}>
                                 <Link to={`/course/${courseId}/module/${encodeURIComponent(currentModule.title)}/lessonTheory/${currentLesson.id}`}>
                                     <Button click={closeModal}>Теорія</Button>
                                 </Link>

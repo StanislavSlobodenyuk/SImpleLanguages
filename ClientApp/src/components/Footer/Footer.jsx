@@ -9,20 +9,20 @@ export default function Footer() {
     const { theme } = useTheme();
 
     return (
-        <footer className={theme === 'dark' ? "darkTheme" : "lightTheme"}>
-            <div className={styles.footer__container} >
-                <div className={styles.footer__logoContainer}>
-                    <img src={logo} alt="Logo" className={styles.footer__logo} />
+        <footer className={theme === 'dark' ? "dark-theme" : "light-theme"}>
+            <div className={styles.footerContainer} >
+                <div className={styles.footerLogoContainer}>
+                    <img src={logo} alt="Logo" className={styles.footerLogo} />
                 </div>
                 <Maintitle location="footer" />
-                <div className={styles.footer__menuContainer}>
-                    <ul className={`${styles.footer__menu} ${theme === 'dark' ? styles.footer__menu_dark : styles.footer__menu_light}`}>
+                <div className={styles.footerMenuContainer}>
+                    <ul className={`${styles.footerMenu} ${theme === 'dark' ? styles.footerMenuDark : styles.footerMenuLight}`}>
                         {menuLinks.map((link, index) => (
                             <Menu key={index} {...link} />
                         ))}
                     </ul>
                 </div>
-                <div className={styles.footer__privacy_links}>
+                <div className={styles.footerPrivacyLinks}>
                     <a href="#">Privacy Polyci</a>
                     <a href="#">Privacy Notice</a>
                 </div>

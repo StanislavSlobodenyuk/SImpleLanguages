@@ -1,9 +1,9 @@
-import styles from './answers.module.less'
+import styles from './answers.module.less';
 export default function InputAnswer() {
     return (
-        <div className={styles.input__buttons}>
+        <div className={styles.inputButtons}>
             Answer:
-            <label className={styles.input__label}>
+            <label className={styles.inputLabel}>
                 <input
                     type="text"
                     name="answers"

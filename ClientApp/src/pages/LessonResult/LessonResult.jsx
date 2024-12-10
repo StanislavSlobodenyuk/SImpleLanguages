@@ -1,6 +1,6 @@
 import { Link, useParams } from "react-router-dom";
-import Button from '/src/components/Common/Button/Button'
-import styles from './lessonResult.module.less'
+import Button from '/src/components/Common/Button/Button';
+import styles from './lessonResult.module.less';
 
 const result = {
     countAnswers: 5,
@@ -10,13 +10,13 @@ const result = {
 export default function LessonResult() {
     const { courseTitle, moduleTitle, lessonId } = useParams()
     return (
-        <div className={`${"block__container"} ${styles.result}`}>
+        <div className={`${"block-container"} ${styles.result}`}>
             <h4  >Курс "{courseTitle}" модуль "{moduleTitle}" урок {lessonId}</h4>
-            <div className={styles.result__text}>
+            <div className={styles.resultText}>
                 <div>Всього відповідей: {result.countAnswers}</div>
                 <div>Кількість правильних відповідей: {result.countRightAnswers}</div>
             </div>
-            <div className={styles.result__buttons}>
+            <div className={styles.resultButtons}>
                 <Button>Подивитися результати</Button>
                 <Link to={`/course/${encodeURIComponent(courseTitle)}/module/${encodeURIComponent(moduleTitle)}/lessonTheory/${lessonId}`}>
                     <Button>Перейти до лекції</Button>

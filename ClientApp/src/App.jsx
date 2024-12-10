@@ -20,34 +20,39 @@ function AppContent() {
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const { theme } = useTheme();
     const location = useLocation();
-
     const isMinimalLayout = ['/login', '/register'].includes(location.pathname);
 
     return (
         <div className={isMinimalLayout ? "for-register-and-login" : "default-layout"}>
             {!isMinimalLayout && <Sidebar authenticated={isAuthenticated} />}
-            <div className="content__container">
+            <div className="content-container">
                 {!isMinimalLayout && <Header authenticated={isAuthenticated} />}
-                <main className={theme === 'dark' ? "darkMain" : "lightMain"}>
-                    <Routes>
-                        {routes.public.map(({ path, element }, index) => (
-                            <Route key={index} path={path} element={element} />
-                        ))}
-                        {routes.protected.map(({ path, element }, index) => (
-                            <Route
-                                key={index}
-                                path={path}
-                                element={
-                                    <ProtectedRoute authenticated={isAuthenticated}>
-                                        {element}
-                                    </ProtectedRoute>
-                                }
-                            />
-                        ))}
-                    </Routes>
-                </main>
+                <MainContent theme={theme} isAuthenticated={isAuthenticated} />
                 {!isMinimalLayout && <Footer />}
             </div>
         </div>
     );
+
+    function MainContent({ theme, isAuthenticated }) {
+        return (
+            <main className={theme === 'dark' ? "dark-main" : "light-main"}>
+                <Routes>
+                    {routes.public.map(({ path, element }, index) => (
+                        <Route key={index} path={path} element={element} />
+                    ))}
+                    {routes.protected.map(({ path, element }, index) => (
+                        <Route
+                            key={index}
+                            path={path}
+                            element={
+                                <ProtectedRoute authenticated={isAuthenticated}>
+                                    {element}
+                                </ProtectedRoute>
+                            }
+                        />
+                    ))}
+                </Routes>
+            </main>
+        );
+    }
 }

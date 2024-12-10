@@ -11,6 +11,6 @@ export default function Button({ children, click }) {
     };
 
     return (
-        <button className={`${styles.button} ${theme === 'dark' ? styles.button_darkTheme : styles.button_lightTheme} `} onClick={handleClick}>{children}</button>
+        <button className={`${styles.button} ${theme === 'dark' ? styles.buttonDarkTheme : styles.buttonLightTheme} `} onClick={handleClick}>{children}</button>
     )
 }

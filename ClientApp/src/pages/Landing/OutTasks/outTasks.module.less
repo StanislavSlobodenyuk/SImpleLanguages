@@ -4,7 +4,7 @@
     margin-bottom: 15px;
 }
 
-.outTasks__typesTasks {
+.outTasksTypesTasks {
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -12,7 +12,7 @@
 
 }
 
-.outTasks__typesTasks {
+.outTasksTypesTasks {
 
     &::before,
     &::after {
@@ -22,20 +22,20 @@
         width: calc(100% + 40px);
         padding-bottom: 20px;
     }
+}
 
-    &_dark {
+.outTasksTypesTasksDark {
 
-        &::before,
-        &::after {
-            border-top: 1px solid @lightBackground;
-        }
+    &::before,
+    &::after {
+        border-top: 1px solid @lightBackground;
     }
+}
 
-    &_light {
+.outTasksTypesTasksLight {
 
-        &::before,
-        &::after {
-            border-top: 1px solid @darkBackground;
-        }
+    &::before,
+    &::after {
+        border-top: 1px solid @darkBackground;
     }
 }

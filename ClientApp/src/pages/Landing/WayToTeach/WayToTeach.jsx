@@ -4,9 +4,9 @@ import { useTheme } from '../../../Hooks/ThemeContext'
 export default function WayToTeach() {
     const { theme } = useTheme()
     return (
-        <div className={`${"block__container"} ${styles.wayToTeach}`}>
-            <h2 className={styles.wayToTeach__title}>Наш підхід до навчання</h2>
-            <ol className={`${styles.wayToTeach__list} ${theme === 'dark' ? styles.darkList : styles.lightList}`}>
+        <div className={`${"block-container"} ${styles.wayToTeach}`}>
+            <h2 className={styles.wayToTeachTitle}>Наш підхід до навчання</h2>
+            <ol className={`${styles.wayToTeachList} ${theme === 'dark' ? styles.darkList : styles.lightList}`}>
                 <li><b>Індивідуалізація:</b> кожен учень може обирати з понад 10 різних мов, включаючи англійську, польську та чеську, проходячи більше ніж 1000 уроків, які адаптовані для різних рівнів підготовки.</li>
                 <li><b>Моніторинг прогресу:</b> відслідковує весь ваш шлях, в системі профілю, покращуйте ваш рівень та отримайте спеціальну валюту для відкриття нової кастомізації вашого аватару та профілю.</li>
                 <li><b>Гнучкість у навчанні:</b> в нашому проекті присутня система рейтингу для кожного курсу, проходьте завдання та отримайте рейтингові бали, змагаючись з друзями в списку лідерів.</li>

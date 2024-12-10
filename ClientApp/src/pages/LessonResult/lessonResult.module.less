@@ -6,38 +6,40 @@
     >:not(:last-child) {
         margin-bottom: 20px;
     }
+}
 
-    &__result__text {
-        flex: 1 1 auto;
-        flex-grow: 1;
-    }
+.resultText {
+    flex: 1 1 auto;
+    flex-grow: 1;
+}
 
-    &__buttons {
-        flex: 0 0 auto;
-        margin-top: auto;
-        display: grid;
-        grid-template-columns: repeat(2, 300px);
-        justify-content: space-between;
-        align-items: center;
-        row-gap: 10px;
-    }
+.resultButtons {
+    flex: 0 0 auto;
+    margin-top: auto;
+    display: grid;
+    grid-template-columns: repeat(2, 300px);
+    justify-content: space-between;
+    align-items: center;
+    row-gap: 10px;
+}
 
-    &__buttons * {
-        width: 300px;
-        border-radius: 10%/50%;
-    }
-    &__buttons>:first-child{
-        position: relative;
-        background-color: grey !important;
-    }
-    &__buttons>:first-child::after {
-        position: absolute;
-        content: 'в розробці';
-        width: 100px;
-        height: 100px;
-        top: 10px;
-        right: -35%;
-        color: red;
-        opacity: 0.3;
-    }
+.resultButtons * {
+    width: 300px;
+    border-radius: 10%/50%;
+}
+
+.resultButtons>:first-child {
+    position: relative;
+    background-color: grey !important;
+}
+
+.resultButtons>:first-child::after {
+    position: absolute;
+    content: 'в розробці';
+    width: 100px;
+    height: 100px;
+    top: 10px;
+    right: -35%;
+    color: red;
+    opacity: 0.3;
 }

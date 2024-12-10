@@ -14,10 +14,10 @@ export default function SearchBar({ id, onSearchChange }) {
 
     return (
         <div className={styles.searcBar}>
-            <form action="" className={styles.searcBar__form}>
-                <input type="text" id={id} value={currentSearch} onChange={changeSearch} className={styles.searcBar__request} />
+            <form action="" className={styles.searcBarForm}>
+                <input type="text" id={id} value={currentSearch} onChange={changeSearch} className={styles.searcBarRequest} />
 
-                <button className={styles.searcBar__button}>
+                <button className={styles.searcBarButton}>
                     {currentSearch.length === 0 ? (
                         <img src="/src/img/general/search_notActive.svg" alt="Error icon" />
                     ) : theme === 'dark' ? (

@@ -8,8 +8,8 @@ import WritingAnswer from '../Answers/WritingAnswer';
 export default function SimpleQuestion({ question }) {
     return (
         <div className={`${styles.simpleQuestion} ${styles.question}`}>
-            <div className={styles.question__title}>{question.uniqueId}. {question.questionText}</div>
-            <div className={styles.simpleQuestion__answerTypes}>
+            <div className={styles.questionTitle}>{question.uniqueId}. {question.questionText}</div>
+            <div className={styles.simpleQuestionAnswerTypes}>
                 {QuestionAnswerMapping[question.aType] === 'Radio' && <RadioAnswer answers={question.answerOptions} />}
                 {QuestionAnswerMapping[question.aType] === 'CheckBox' && <CheckboxAnswer answers={question.answerOptions} />}
                 {QuestionAnswerMapping[question.aType] === 'Input' && <InputAnswer />}

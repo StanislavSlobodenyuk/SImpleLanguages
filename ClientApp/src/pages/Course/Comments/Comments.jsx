@@ -1,7 +1,7 @@
-import { useTheme } from '/src/Hooks/ThemeContext'
-import Sorting from '/src/components/Common/Sorting/Sorting'
-import Button from '/src/components/Common/Button/Button'
-import styles from './comments.module.less'
+import { useTheme } from '/src/Hooks/ThemeContext';
+import Sorting from '/src/components/Common/Sorting/Sorting';
+import Button from '/src/components/Common/Button/Button';
+import styles from './comments.module.less';
 
 const comments = [
     {
@@ -57,14 +57,14 @@ const comments = [
 export default function Comments() {
     const { theme } = useTheme()
     return (
-        <div className={`${'block__container'} ${styles.comments}`}>
-            <div className={styles.comments__writecomment}>
-                <div className={styles.comments__img}>
+        <div className={`${'block-container'} ${styles.comments}`}>
+            <div className={styles.commentsWritecomment}>
+                <div className={styles.commentsImg}>
                     <img src="/src/img/fictive/userIconNull.svg" alt="" />
                 </div>
-                <form action="" className={styles.comments__form}>
-                    <input type="text" placeholder='Write comment' className={styles.comments__input} />
-                    <div className={styles.comments__buttonActions}>
+                <form action="" className={styles.commentsForm}>
+                    <input type="text" placeholder='Write comment' className={styles.commentsInput} />
+                    <div className={styles.commentsButtonActions}>
                         <Button>Скасувати</Button>
                         <Button>Відправити</Button>
                     </div>
@@ -77,28 +77,28 @@ export default function Comments() {
                         const comment = comments[userId]
                         return (
                             <div key={userId} className={styles.comment}>
-                                <div className={styles.comment__icon}>
+                                <div className={styles.commentIcon}>
                                     <img src={comment.userIcon} alt="User Icon" />
                                 </div>
                                 <div className="comment__content">
-                                    <div className={styles.comment__userName}>{comment.userName}</div>
-                                    <div className={styles.comment__comment}>{comment.comment}</div>
-                                    <div className={styles.comment__reaction}>
-                                        <div className={styles.comment__like}>
+                                    <div className={styles.commentUserName}>{comment.userName}</div>
+                                    <div className={styles.commentComment}>{comment.comment}</div>
+                                    <div className={styles.commentReaction}>
+                                        <div className={styles.commentLike}>
                                             {
                                                 theme === "dark"
                                                     ? <img src="/src/img/general/comments/dark-like.svg" alt="Like" />
                                                     : <img src="/src/img/general/comments/light-like.svg" alt="Like" />
                                             }
-                                            <div className={styles.comment__countLike}>{comment.countLike}</div>
+                                            <div className={styles.commentCountLike}>{comment.countLike}</div>
                                         </div>
-                                        <div className={styles.comment__diselike}>
+                                        <div className={styles.commentDiselike}>
                                             {
                                                 theme === "dark"
                                                     ? <img src="/src/img/general/comments/dark-diselike.svg" alt="Diselike" />
                                                     : <img src="/src/img/general/comments/light-diselike.svg" alt="Diselike" />
                                             }
-                                            <div className={styles.comment__countDiselike}>{comment.countDiselike}</div>
+                                            <div className={styles.commentCountDiselike}>{comment.countDiselike}</div>
                                         </div>
                                     </div>
                                 </div>

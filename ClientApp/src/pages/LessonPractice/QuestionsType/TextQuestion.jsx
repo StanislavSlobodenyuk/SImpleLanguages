@@ -8,9 +8,9 @@ import styles from './qustions.module.less'
 export default function TextQuestion({ question }) {
     return (
         <div className={`${styles.textQuestion} ${styles.question}`}>
-            <div className={styles.question__title}>{question.uniqueId}. {question.questionText}</div>
-            <div className={styles.textQuestion__text}>{question.text}</div>
-            <div className={styles.textQuestion__answerTypes}>
+            <div className={styles.questionTitle}>{question.uniqueId}. {question.questionText}</div>
+            <div className={styles.textQuestionText}>{question.text}</div>
+            <div className={styles.textQuestionAnswerTypes}>
                 {QuestionAnswerMapping[question.aType] === 'Radio' && <RadioAnswer answers={question.answerOptions} />}
                 {QuestionAnswerMapping[question.aType] === 'CheckBox' && <CheckboxAnswer answers={question.answerOptions} />}
                 {QuestionAnswerMapping[question.aType] === 'Input' && <InputAnswer />}

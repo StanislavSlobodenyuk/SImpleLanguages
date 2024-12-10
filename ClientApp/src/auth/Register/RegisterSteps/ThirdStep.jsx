@@ -67,9 +67,9 @@ export default function ThirdStep({ formData, onChange, sendData, onNext, onPrev
             <div className={styles.buttons}>
                 <div onClick={onPrev}>Повернутись</div>
                 {isScheduleEmpty ? (
-                    <div className={styles.formButton} onClick={() => { sendData(); onNext(); }}>Пропустити</div>
+                    <div className={styles.formButton} onClick={() => { sendData(); }}>Пропустити</div>
                 ) : (
-                    <div onClick={() => { sendData(); onNext(); }}>Далі</div>
+                    <div onClick={() => { sendData(); }}>Далі</div>
                 )}
             </div>
         </div>

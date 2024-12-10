@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react';
 import styles from './filter.module.less';
 
 export default function Filter({ filters, selectedFilters, onFilterChange }) {

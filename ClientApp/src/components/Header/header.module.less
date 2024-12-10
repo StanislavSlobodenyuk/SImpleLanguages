@@ -4,106 +4,108 @@ header {
     position: fixed;
     z-index: 100;
     filter: drop-shadow(0 0 5px rgba(0, 0, 0, 0.5));
+}
 
-    .header__container {
-        height: 60px;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0px 20px;
+.headerContainer {
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
 
-    }
+}
 
-    .header__logo {
-        margin-right: 20px;
-        width: 50px;
-        height: 50px;
-    }
+.headerLogo {
+    margin-right: 20px;
+    width: 50px;
+    height: 50px;
+}
 
-    .header__miniProfile {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 100px;
-        margin-right: auto;
+.headerMiniProfile {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 100px;
+    margin-right: auto;
 
-        img {
-            width: 30px;
-            height: 30px;
-        }
-
-        .header__userInformation {
-            flex: 1 1 auto;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .header__userIcon {
-            display: flex;
-            width: 50px;
-            height: 50px;
-
-            img {
-                width: 50px;
-                height: 50px;
-            }
-        }
-
-        .header__selectCourse {
-            font-size: 16px;
-        }
-
-        .header__values {
-            display: flex;
-            gap: 45px;
-        }
-
-        .header__raiting,
-        .header__money {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-    }
-
-    .header__wordsTranslated {
-        flex: 1 1 auto;
-        display: flex;
-        column-gap: 30px;
-
-        >li:not(:first-child) {
-            background-repeat: no-repeat;
-            background-position: 0px 7.5px;
-            background-size: 18px 13px;
-            padding-left: 25px;
-        }
-
-        >li:nth-child(2) {
-            background-image: url('../../img/Flags/Ukraine.png');
-        }
-
-        >li:nth-child(3) {
-            background-image: url('../../img/Flags/United-Kingdom.png');
-        }
-
-        >li:nth-child(4) {
-            background-image: url('../../img/Flags/Poland.png');
-        }
-
-        >li:nth-child(5) {
-            background-image: url('../../img/Flags/French.png');
-        }
+    img {
+        width: 30px;
+        height: 30px;
     }
 }
 
-.header__buttons {
+.headerUserInformation {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.headerUserIcon {
+    display: flex;
+    width: 50px;
+    height: 50px;
+
+    img {
+        width: 50px;
+        height: 50px;
+    }
+}
+
+.headerSelectCourse {
+    font-size: 16px;
+}
+
+.headerValues {
+    display: flex;
+    gap: 45px;
+}
+
+.headerRaiting,
+.headerMoney {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+
+.headerWordsTranslated {
+    flex: 1 1 auto;
+    display: flex;
+    column-gap: 30px;
+
+    >li:not(:first-child) {
+        background-repeat: no-repeat;
+        background-position: 0px 7.5px;
+        background-size: 18px 13px;
+        padding-left: 25px;
+    }
+
+    >li:nth-child(2) {
+        background-image: url('../../img/Flags/Ukraine.png');
+    }
+
+    >li:nth-child(3) {
+        background-image: url('../../img/Flags/United-Kingdom.png');
+    }
+
+    >li:nth-child(4) {
+        background-image: url('../../img/Flags/Poland.png');
+    }
+
+    >li:nth-child(5) {
+        background-image: url('../../img/Flags/French.png');
+    }
+}
+
+
+.headerButtons {
     position: relative;
     display: flex;
     align-items: center;
     gap: 30px;
 
-    .header__notificationDownList {
+    .headerNotificationDownList {
         position: absolute;
         z-index: 20;
         background-color: #fff;
@@ -113,14 +115,16 @@ header {
         left: -20px;
         border-radius: 10px;
     }
-    .header__notificationDownList>div:not(:last-child){
+
+    .headerNotificationDownList>div:not(:last-child) {
         border-bottom: 1px solid black;
     }
-    .header__notificationDownList>div>p{
+
+    .headerNotificationDownList>div>p {
         padding: 10px;
     }
 
-    .header__themeButton {
+    .headerThemeButton {
         position: relative;
         width: 60px;
         height: 30px;
@@ -131,8 +135,8 @@ header {
         background-repeat: no-repeat;
     }
 
-    .header__themeButton_day::after,
-    .header__themeButton_night::after {
+    .headerThemeButtonDay::after,
+    .headerThemeButtonNight::after {
         content: '';
         position: absolute;
         top: 0;
@@ -141,51 +145,51 @@ header {
         border-radius: 50%;
     }
 
-    .header__themeButton_day::after {
+    .headerThemeButtonDay::after {
         left: 0;
         background-color: #8BC34A;
     }
 
-    .header__themeButton_night::after {
+    .headerThemeButtonNight::after {
         right: 0;
         background-color: #00BCD4;
     }
 
-    .header__themeButton_day {
+    .headerThemeButtonDay {
         background-image: url('../../img/general/light-theme.svg');
         background-position: 33px 5px;
     }
 
-    .header__themeButton_night {
+    .headerThemeButtonNight {
         background-image: url('../../img/general/night-theme.svg');
         background-position: 7px 5px;
     }
 
-    .header__localizationButton>button {
+    .headerLocalizationButton>button {
         position: relative;
         padding: 0;
         margin: 0px 10px;
     }
 
-    .localizationButton_dark>button {
+    .localizationButtonDark>button {
         background-color: @darkBackground;
-        color: @darkTextColor;
-    }
-
-    .localizationButton_light>button {
-        background-color: @lightBackground;
         color: @lightTextColor;
     }
 
-    .localizationButton_dark>button:hover,
-    .localizationButton_light>button:hover {
+    .localizationButtonLight>button {
+        background-color: @lightBackground;
+        color: @darkTextColor;
+    }
+
+    .localizationButtonDark>button:hover,
+    .localizationButtonLight>button:hover {
         color: #4A90E2;
     }
 
-    .header__localizationButton>button::after {
+    .headerLocalizationButton>button::after {
         content: "";
         position: absolute;
-        top: 30%;
+        top: 40%;
         right: -12px;
         width: 0;
         height: 0;
@@ -193,15 +197,15 @@ header {
         border-right: 5px solid transparent;
     }
 
-    .localizationButton_light>button::after {
-        border-top: 8px solid @lightTextColor;
-    }
-
-    .localizationButton_dark>button::after {
+    .localizationButtonLight>button::after {
         border-top: 8px solid @darkTextColor;
     }
 
-    .header__localizationButton>button:hover::after {
+    .localizationButtonDark>button::after {
+        border-top: 8px solid @lightTextColor;
+    }
+
+    .headerLocalizationButton>button:hover::after {
         border-top-color: #4A90E2;
     }
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { logout } from '/src/auth/Register/authSlice.js';
+import { logout } from '/src/auth/Redux/authSlice.js';
 import { useNavigate } from 'react-router-dom';
+
 export default function Account() {
     const dispatch = useDispatch();
     const navigate = useNavigate();

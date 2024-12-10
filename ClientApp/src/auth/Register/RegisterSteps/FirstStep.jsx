@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
-import styles from './styles.module.less'
+import { Link } from 'react-router-dom';
+import styles from './styles.module.less';
 
 export default function FirstStep({ formData, onChange, onNext }) {
     const [errors, setErrors] = useState({});

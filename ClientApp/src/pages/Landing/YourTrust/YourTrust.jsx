@@ -1,13 +1,15 @@
 import Review from './Review/review';
 import { reviews } from './dataReviews'
 import styles from './yourTrust.module.less'
+import { useTheme } from '/src/Hooks/ThemeContext'
 
 export default function YourTrust() {
+    const { theme } = useTheme();
     return (
         <div>
             <div className={`${'block__container'} ${styles.yourTrust}`}>
-                <h2 className={styles.yourTrust__title}>Ваша довіра та підтримка, для нас є найважливішим</h2>
-                <div className={styles.yourTrust__reviews}>
+                <h2 className={`${theme === 'dark' ? 'light' : 'dark'}`}>Ваша довіра та підтримка, для нас є найважливішим</h2>
+                <div className={styles.yourTrustReviews}>
                     {
                         reviews.map((review, index) => (
                             <Review key={index} {...review} />
@@ -18,4 +20,4 @@ export default function YourTrust() {
             </div>
         </div>
     );
-}
+} styles.yourTrustTitle

@@ -1,10 +1,16 @@
 import { useState } from "react";
-import { sendRegistrationData } from "../Api/authenticationApi.js";
-import { FirstStep, SecondStep, ThirdStep, FinalStep } from './RegisterSteps/Steps.js'
+import { sendRegistrationData } from "/src/api/AuthenticationApi/authenticationApi.js";
+import FirstStep from './RegisterSteps/FirstStep.jsx';
+import SecondStep from './RegisterSteps/SecondStep.jsx';
+import ThirdStep from './RegisterSteps/ThirdStep.jsx';
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import checkAuthentication from '../checkAuthentication.jsx';
 
 export default function RegisterPage() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
     const [currentStep, setCurrentStep] = useState(1)
-    const [registrationResponse, setRegistrationResponse] = useState(null);
     const [formData, setFormData] = useState({
         userName: "",
         password: '',
@@ -24,16 +30,19 @@ export default function RegisterPage() {
     }
 
     const sendData = async () => {
+        var responseData = {}
         try {
             const response = await sendRegistrationData(formData);
-            setRegistrationResponse({ success: true, message: "Реєстрація успішна!" });
+            responseData = { success: true, message: "Реєстрація успішна!" };
         } catch (error) {
-            setRegistrationResponse({ success: false, message: "Помилка при реєстрації!" });
+            responseData = { success: false, message: "Помилка при реєстрації!" };
         }
+
+        checkAuthentication(responseData, dispatch, navigate);
     };
 
     return (
-        <div>
+        <div className="content-container">
             {currentStep === 1 && (
                 <FirstStep formData={formData} onChange={handleCharge} onNext={handleNext} />
             )}
@@ -42,9 +51,6 @@ export default function RegisterPage() {
             )}
             {currentStep === 3 && (
                 <ThirdStep formData={formData} onChange={handleCharge} onNext={handleNext} onPrev={handlePrev} sendData={sendData} />
-            )}
-            {currentStep === 4 && (
-                <FinalStep registrationResponse={registrationResponse} onPrev={handlePrev} />
             )}
         </div>
     );

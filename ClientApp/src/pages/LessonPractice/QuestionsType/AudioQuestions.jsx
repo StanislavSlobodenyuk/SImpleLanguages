@@ -8,15 +8,15 @@ import WritingAnswer from "../Answers/WritingAnswer";
 export default function AudioQuestion({ question }) {
     return (
         <div className={`${styles.audioQuestion} ${styles.question}`}>
-            <div className={styles.question__title}>{question.uniqueId}. {question.questionText}</div>
-            <div className={styles.audioQuestion__question}>
-                <div className={styles.audioQuestion__audioContainer}>
-                    <audio controls className={styles.audioQuestion__audio}>
+            <div className={styles.questionTitle}>{question.uniqueId}. {question.questionText}</div>
+            <div className={styles.audioQuestionQuestion}>
+                <div className={styles.audioQuestionAudioContainer}>
+                    <audio controls className={styles.audioQuestionAudio}>
                         <source src={question.audioUrl} type="audio/mpeg" />
                         Your browser does not support the audio tag.
                     </audio>
                 </div>
-                <div className={styles.audioQuestion__answerTypes}>
+                <div className={styles.audioQuestionAnswerTypes}>
                     {QuestionAnswerMapping[question.aType] === 'Radio' && <RadioAnswer answers={question.answerOptions} />}
                     {QuestionAnswerMapping[question.aType] === 'CheckBox' && <CheckboxAnswer answers={question.answerOptions} />}
                     {QuestionAnswerMapping[question.aType] === 'Input' && <InputAnswer />}

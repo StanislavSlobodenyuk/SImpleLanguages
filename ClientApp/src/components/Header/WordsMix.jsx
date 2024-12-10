@@ -44,7 +44,7 @@ export default function WordsMix() {
 
     return (
         <>
-            <ul className={styles.header__wordsTranslated}>
+            <ul className={styles.headerWordsTranslated}>
                 <li>А ви знали?</li>
                 <li>{currentWords.uaWord}</li>
                 <li>{currentWords.enWord}</li>

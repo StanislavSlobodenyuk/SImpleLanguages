@@ -9,18 +9,17 @@
     font-size: 16px;
     letter-spacing: normal;
     line-height: 130%;
-
-    &_dark {
-        background-color: @darkBackground;
-        color: @darkTextColor;
-    }
-
-    &_light {
-        background-color: #fff;
-        color: @lightTextColor;
-    }
 }
 
+.reviewDark {
+    background-color: @darkBackground;
+    color: @lightTextColor;
+}
+
+.reviewLight {
+    background-color: #fff;
+    color: @darkTextColor;
+}
 
 .review *:not(:last-child) {
     margin-bottom: 10px;
@@ -38,21 +37,21 @@
 .grade {
     display: flex;
     gap: 5px;
+}
 
-    &_light {
+.gradeLight {
 
-        .greyStar,
-        .goldStar {
-            background-color: @buttonLightTheme;
-        }
+    .greyStar,
+    .goldStar {
+        background-color: @buttonLightTheme;
     }
+}
 
-    &_dark {
+.gradeDark {
 
-        .greyStar,
-        .goldStar {
-            background-color: @buttonDarkTheme;
-        }
+    .greyStar,
+    .goldStar {
+        background-color: @buttonDarkTheme;
     }
 }
 

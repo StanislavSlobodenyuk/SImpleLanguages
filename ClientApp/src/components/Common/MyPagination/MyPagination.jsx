@@ -35,12 +35,12 @@ export default function MyPagination({ items, itemsPerPage = 9, onPageChange, ac
                 nextPageText={'Next'}
                 innerClass={styles.pagination}
                 itemClass={styles.paginationItem}
-                linkClass={`${styles.paginationLink} ${theme === 'dark' ? styles.paginationLink_dark : styles.paginationLink_light}`}
-                activeClass={theme === 'dark' ? styles.activePage_dark : styles.activePage_light}
-                linkClassFirst={styles.pagination_first}
-                linkClassLast={styles.pagination_last}
-                linkClassNext={styles.pagination_next}
-                linkClassPrev={styles.pagination_prev}
+                linkClass={`${styles.paginationLink} ${theme === 'dark' ? styles.paginationLinkDark : styles.paginationLinkLight}`}
+                activeClass={theme === 'dark' ? styles.activePageDark : styles.activePageLight}
+                linkClassFirst={styles.paginationFirst}
+                linkClassLast={styles.paginationLast}
+                linkClassNext={styles.paginationNext}
+                linkClassPrev={styles.paginationPrev}
             />
         </div>
     );

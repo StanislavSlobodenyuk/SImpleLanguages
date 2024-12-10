@@ -1,4 +1,4 @@
-import styles from './imageWithCaption.module.less'
+import styles from './imageWithCaption.module.less';
 
 export default function ImageWithCaption({ src, caption, isExist, location }) {
     return (

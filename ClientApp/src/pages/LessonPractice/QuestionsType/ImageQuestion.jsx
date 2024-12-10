@@ -9,9 +9,9 @@ export default function ImageQuestion({ question }) {
     const images = question.images
     return (
         <div className={`${styles.imageQuestion} ${styles.question}`}>
-            <div className={styles.question__title}>{question.uniqueId}. {question.questionText}</div>
-            <img src={question.imagePath} className={styles.imageQuestion__image}></img>
-            <div className={styles.imageQuestion__answerTypes}>
+            <div className={styles.questionTitle}>{question.uniqueId}. {question.questionText}</div>
+            <img src={question.imagePath} className={styles.imageQuestionImage}></img>
+            <div className={styles.imageQuestionAnswerTypes}>
                 {QuestionAnswerMapping[question.aType] === 'Radio' && <RadioAnswer answers={question.answerOptions} />}
                 {QuestionAnswerMapping[question.aType] === 'CheckBox' && <CheckboxAnswer answers={question.answerOptions} />}
                 {QuestionAnswerMapping[question.aType] === 'Input' && <InputAnswer />}

@@ -1,62 +1,60 @@
 @import url('/src//styles/variables.less');
 
-.lessons {
-    &__flexContainer {
-        height: calc(100vh - 50px);
-        display: flex;
-        flex-grow: 1;
-        gap: 20px;
-    }
+.lessonsFlexContainer {
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-grow: 1;
+    gap: 20px;
+}
 
-    &__lessonsMenu,
-    &__lessonsMap {
+.lessonsLessonsMenu,
+.lessonsLessonsMap {
 
-        position: relative;
-        padding: 0 !important;
-        overflow-x: hidden;
-        height: 85%;
-    }
+    position: relative;
+    padding: 0 !important;
+    overflow-x: hidden;
+    height: 85%;
+}
 
-    &__lessonsMenu {
-        transition: transform 0.3s ease;
-        overflow-y: scroll;
-        border-radius: 20px 0 0 20px !important;
-        flex: 1 1 30%;
+.lessonsLessonsMenu {
+    transition: transform 0.3s ease;
+    overflow-y: scroll;
+    border-radius: 20px 0 0 20px !important;
+    flex: 1 1 30%;
 
-        &::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        &::-webkit-scrollbar-track {
-            background: #e5ebf1;
-        }
-
-        &::-webkit-scrollbar-thumb {
-            background: #888;
-            border-radius: 20px;
-        }
-    }
-
-    &__lessonsMap {
-        position: relative;
-        z-index: 2;
-        overflow-y: scroll !important;
-        flex: 1 1 70%;
-    }
-
-
-    &__lessonsMenu::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         width: 5px;
     }
 
-    &__lessonsMenu::-webkit-scrollbar-track {
-        background: inherit;
+    &::-webkit-scrollbar-track {
+        background: #e5ebf1;
     }
 
-    &__lessonsMenu::-webkit-scrollbar-thumb {
+    &::-webkit-scrollbar-thumb {
         background: #888;
         border-radius: 20px;
     }
+}
+
+.lessonsLessonsMap {
+    position: relative;
+    z-index: 2;
+    overflow-y: scroll !important;
+    flex: 1 1 70%;
+}
+
+
+.lessonsLessonsMenu::-webkit-scrollbar {
+    width: 5px;
+}
+
+.lessonsLessonsMenu::-webkit-scrollbar-track {
+    background: inherit;
+}
+
+.lessonsLessonsMenu::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 20px;
 }
 
 .modal {
@@ -74,16 +72,16 @@
     background: rgba(0, 0, 0, 0.5);
     z-index: 1000;
     border-radius: 20px;
+}
 
-    &_dark {
-        background-color: @darkBackground;
-        color: @darkTextColor;
-    }
+.modalDark {
+    background-color: @darkBackground;
+    color: @lightTextColor;
+}
 
-    &_light {
-        background-color: @lightBackground;
-        color: @lightTextColor;
-    }
+.modalLight {
+    background-color: @lightBackground;
+    color: @darkTextColor;
 }
 
 .modalOverlay {
@@ -96,7 +94,7 @@
     z-index: 999;
 }
 
-.modal__flexContainer {
+.modalFlexContainer {
     display: flex;
     gap: 15px;
 

@@ -1,70 +1,69 @@
 @darkThemeImage: './../../img/general/footer-menu-decor-dark.svg';
 @lightThemeImage: './../../img/general/footer-menu-decor-light.svg';
 
-.footer {
-    &__container {
-        position: relative;
-        padding: 20px 20px 10px;
+
+.footerContainer {
+    position: relative;
+    padding: 20px 20px 10px;
+}
+
+&.footerLogo {
+    position: absolute;
+    top: 5%;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+}
+
+.footerMenuContainer {
+    display: flex;
+    justify-content: center;
+}
+
+.footerMenu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    max-width: 600px;
+    flex: 1;
+
+    >li:not(:last-child) {
+        background-repeat: no-repeat;
+        background-position: 100% 0;
+        padding-right: 20px;
     }
+}
 
-    &__logo {
-        position: absolute;
-        top: 5%;
-        right: 20px;
-        width: 60px;
-        height: 60px;
+.footerMenuDark {
+
+    >li:nth-child(1),
+    li:nth-child(2),
+    li:nth-child(3),
+    li:nth-child(4),
+    li:nth-child(6),
+    li:nth-child(7) {
+        background-image: url(@lightThemeImage);
     }
+}
 
-    &__menuContainer {
-        display: flex;
-        justify-content: center;
+.footerMenuLight {
+
+    >li:nth-child(1),
+    li:nth-child(2),
+    li:nth-child(3),
+    li:nth-child(4),
+    li:nth-child(6),
+    li:nth-child(7) {
+        background-image: url(@darkThemeImage);
     }
+}
 
-    &__menu {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-        max-width: 600px;
-        flex: 1;
-
-        >li:not(:last-child) {
-            background-repeat: no-repeat;
-            background-position: 100% 0;
-            padding-right: 20px;
-        }
-    }
-
-    &__menu_dark {
-
-        >li:nth-child(1),
-        li:nth-child(2),
-        li:nth-child(3),
-        li:nth-child(4),
-        li:nth-child(6),
-        li:nth-child(7) {
-            background-image: url(@lightThemeImage);
-        }
-    }
-
-    &__menu_light {
-
-        >li:nth-child(1),
-        li:nth-child(2),
-        li:nth-child(3),
-        li:nth-child(4),
-        li:nth-child(6),
-        li:nth-child(7) {
-            background-image: url(@darkThemeImage);
-        }
-    }
-
-    &__privacy_links {
-        display: flex;
-        justify-content: end;
-        gap: 20px;
-        font-size: 14px;
-        color: #4A90E2;
-    }
+.footerPrivacyLinks {
+    display: flex;
+    justify-content: end;
+    gap: 20px;
+    font-size: 14px;
+    color: #4A90E2;
 }

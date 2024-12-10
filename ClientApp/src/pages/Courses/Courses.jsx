@@ -34,7 +34,7 @@ export default function Courses() {
                     cost: selectedFilters.cost,
                     inDevelopment: selectedFilters.inDevelopment
                 })
-                
+
                 setCourses(data)
             } catch (error) {
                 setError('Failed to fetch courses')
@@ -53,7 +53,7 @@ export default function Courses() {
     const currentCourses = courses.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
-        <section className="block__container">
+        <section className="block-container">
             <h2>Всі курси</h2>
             <SearchBar id={"SearchCourse"} onSearchChange={setSearchTerm} />
             <Filter filters={CourseFilter} selectedFilters={selectedFilters} onFilterChange={setSelectedFilters} />

@@ -28,9 +28,9 @@ export default function Recommends({ course }) {
     }
 
     return (
-        <div className={`${'block__container'} ${styles.recommends}`}>
-            <h3 className={styles.recommends__title}>Схожі курси</h3>
-            <div className={styles.recommends__courses}>
+        <div className={`${'block-container'} ${styles.recommends}`}>
+            <h3 className={styles.recommendsTitle}>Схожі курси</h3>
+            <div className={styles.recommendsCourses}>
                 {
                     courses.map((course) => (
                         <div key={course.id}>

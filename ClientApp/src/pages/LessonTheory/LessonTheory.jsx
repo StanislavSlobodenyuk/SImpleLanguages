@@ -4,8 +4,8 @@ import Textblock from "./TypesTheoryBlock/TextBlock";
 import Listblock from "./TypesTheoryBlock/ListBlock";
 import Tableblock from "./TypesTheoryBlock/TableBlock";
 import Imageblock from "./TypesTheoryBlock/ImageBlock";
-import Button from '/src/components/Common/Button/Button'
-import styles from './lessonTheory.module.less'
+import Button from '/src/components/Common/Button/Button';
+import styles from './lessonTheory.module.less';
 
 export const fakeLectureBlocks = [
     {
@@ -49,15 +49,15 @@ export default function LessonTheory() {
     const { courseTitle, moduleTitle, lessonId } = useParams()
     //TODO: тут з бд по уроку будуть братися теоричні блоки та від їх кількості появлятися контент
     return (
-        <div className={`${"block__container"} ${styles.theory}`}>
-            <h4 className={styles.theory__title} >Курс "{courseTitle}" модуль "{moduleTitle}" урок {lessonId}</h4>
+        <div className={`${"block-container"} ${styles.theory}`}>
+            <h4 className={styles.theoryTitle} >Курс "{courseTitle}" модуль "{moduleTitle}" урок {lessonId}</h4>
             {fakeLectureBlocks.map((block) =>
                 <div key={block.id} className="">
                     <BlockRender block={block} />
                 </div>
             )}
 
-            <div className={styles.theory__button}>
+            <div className={styles.theoryButton}>
                 <Link to={`/course/${encodeURIComponent(courseTitle)}/module/${encodeURIComponent(moduleTitle)}/lessonPractice/${lessonId}`}>
                     <Button>Розпочати практику</Button>
                 </Link>

@@ -14,20 +14,20 @@ export default function LessonModule({ module, onModuleSelect, currentModuleId }
         <div className={styles.lessons}>
             <div
                 className={`
-                ${styles.lessons__flex} 
-                ${module.id === currentModuleId ? styles.lessons__flex_active : ''} 
-                ${theme === 'dark' ? styles.lessons__flex_dark : styles.lessons__flex_light}`}
+                ${styles.lessonsFlex} 
+                ${module.id === currentModuleId ? styles.lessonsFlexActive : ''} 
+                ${theme === 'dark' ? styles.lessonsDark : styles.lessonsLight}`}
             >
-                <div className={styles.lessons__text} onClick={onModuleSelect}>
+                <div className={styles.lessonsText} onClick={onModuleSelect}>
                     <b>Модуль {module.id}.</b> {module.title}
                 </div>
-                <div className={`${styles.lessons__dropdownList} ${isOpen ? styles.lessons__dropdownList_open : ''}`} onClick={toggleDropdown} />
+                <div className={`${styles.lessonsDropdownList} ${isOpen ? styles.lessonsDropdownListOpen : ''}`} onClick={toggleDropdown} />
             </div>
             {isOpen && module.lessons.map((lesson) => (
                 <div className={styles.lesson} key={lesson.id}>
-                    <div className={styles.lesson__content}>
-                        <div className={styles.lesson__title}>{lesson.title}</div>
-                        <div className={styles.lesson__countTask}>12 завдань</div>
+                    <div className={styles.lessonContent}>
+                        <div className={styles.lessonTitle}>{lesson.title}</div>
+                        <div className={styles.lessonCountTask}>12 завдань</div>
                     </div>
                 </div>
             ))}

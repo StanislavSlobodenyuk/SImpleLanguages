@@ -14,12 +14,12 @@
 
 .paginationLink_dark {
     background-color: @darkBackground;
-    color: @darkTextColor;
+    color: @lightTextColor;
 }
 
-.paginationLink_light {
+.paginationLinkLight {
     background-color: #fff;
-    color: @lightTextColor;
+    color: @darkTextColor;
 }
 
 .isDisabled {
@@ -31,21 +31,21 @@
     pointer-events: none;
 }
 
-.activePage_dark>a {
+.activePageDark>a {
     color: @lightTextColor;
     background-color: @buttonDarkTheme;
 }
 
-.activePage_light>a {
+.activePageLight>a {
     color: @darkTextColor;
     background-color: @buttonLightTheme;
 }
 
-.pagination_first,
-.pagination_prev{
+.paginationFirst,
+.paginationPrev{
     border-radius: 15px 0px 0px 15px;
 }
-.pagination_last,
-.pagination_next{
+.paginationLast,
+.paginationNext{
     border-radius: 0px 15px 15px 0px;
 }

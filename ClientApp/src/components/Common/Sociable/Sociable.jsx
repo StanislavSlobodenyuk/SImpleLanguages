@@ -1,4 +1,3 @@
-
 export default function Sociable({ alt, src, link }) {
     return (
         <>

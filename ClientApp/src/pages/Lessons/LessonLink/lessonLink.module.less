@@ -32,59 +32,60 @@
 .lessonLink {
     display: flex;
     align-items: center;
+}
 
-    &__figure {
-        position: relative;
-        z-index: 2;
-        background-color: @lightBackground;
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        color: @lightTextColor;
-    }
+.lessonLinkFigure {
+    position: relative;
+    z-index: 22;
+    background-color: @lightBackground;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: @darkTextColor;
+}
 
-    &__number {
-        font-size: 32px;
-    }
+.lessonLinkNumber {
+    font-size: 32px;
+}
 
-    &__animation {
-        position: relative;
-        z-index: 1;
-        right: 120px;
-        width: 300px;
-        height: 120px;
-        display: flex;
-        gap: 10px;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        padding-left: 60px;
-        border-radius: 20% / 50%;
-        opacity: 0.8;
+.lessonLinkAnimation {
+    position: relative;
+    z-index: 1;
+    right: 120px;
+    width: 300px;
+    height: 120px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-left: 60px;
+    border-radius: 20% / 50%;
+    opacity: 0.8;
+}
 
-        &_dark {
-            background-color: @darkBackground;
-            color: @darkTextColor;
-        }
+.lessonLinkAnimationDark {
+    background-color: @darkBackground;
+    color: @lightTextColor;
+}
 
-        &_light {
-            background-color: @lightBackground;
-            color: @lightTextColor;
-        }
-    }
+.lessonLinkAnimationLight {
+    background-color: @lightBackground;
+    color: @darkTextColor;
+}
 
-    &__text {
-        text-align: center;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        width: 55%;
-        font-size: 18px;
-    }
+
+.lessonLinkText {
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 55%;
+    font-size: 18px;
 }
 
 .flyOut {

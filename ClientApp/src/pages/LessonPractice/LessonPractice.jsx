@@ -4,12 +4,12 @@ import { useEffect, useState } from "react";
 import { FetchQuestion } from "/src/api/CourseApi/CourseApi";
 import { QuestionTypeMapping } from "/src/Mapping/Mappinig";
 import { useTheme } from "/src/Hooks/ThemeContext";
-import styles from './lessonPractice.module.less'
+import styles from './lessonPractice.module.less';
 import SimpleQuestion from "./QuestionsType/SimpleQuestion";
 import AudioQuestion from "./QuestionsType/AudioQuestions";
 import TextQuestion from "./QuestionsType/TextQuestion";
 import ImageQuestion from "./QuestionsType/ImageQuestion";
-import Button from '/src/components/Common/Button/Button'
+import Button from '/src/components/Common/Button/Button';
 
 const TaskRender = ({ question }) => {
     switch (QuestionTypeMapping[question.qType]) {
@@ -49,15 +49,15 @@ export default function LessonPractice() {
 
     return (
         <div className={` ${styles.practice}`}>
-            <h4 className={`${styles.practice__title} ${theme === 'dark' ? styles.darkText : styles.lightText}`}> Урок {lessonId}</h4>
-            <div className={styles.practice__questions}>
+            <h4 className={`${styles.practiceTitle} ${theme === 'dark' ? styles.darkText : styles.lightText}`}> Урок {lessonId}</h4>
+            <div className={styles.practiceQuestions}>
                 {isQuestions.map((question) =>
-                    <div key={question.uniqueId} className={`${styles.practice__questions} ${"block__container"}`}>
+                    <div key={question.uniqueId} className={`${styles.practiceQuestions} ${"block-container"}`}>
                         <TaskRender question={question} />
                     </div>
                 )}
             </div>
-            <div className={styles.practice__buttonResults}>
+            <div className={styles.practiceButtonResults}>
                 <Link to={`/course/${encodeURIComponent(courseTitle)}/module/${encodeURIComponent(moduleTitle)}/lessonPractice/${lessonId}/result`} >
                     <Button>Переглянути результати</Button>
                 </Link>

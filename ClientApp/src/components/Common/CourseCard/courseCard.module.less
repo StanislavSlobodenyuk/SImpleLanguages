@@ -42,26 +42,27 @@
     margin-bottom: 10px;
 }
 
-.content_dark {
+.contentDark {
     background-color: @darkBackground;
-    color: @darkTextColor;
-}
-
-.content_light {
-    background-color: #fff;
     color: @lightTextColor;
 }
 
-.title {
-    font-size: 18px;
-    font-weight: bold;
+.contentLight {
+    background-color: #fff;
+    color: @darkTextColor;
 }
 
-
-
+.title {
+    font-size: 22px;
+    font-weight: bold;
+}
 
 .buttonFlexContainer {
     display: flex;
     gap: 10px;
     margin-top: auto;
+}
+
+.buttonFlexContainer button {
+    font-size: 16px;
 }

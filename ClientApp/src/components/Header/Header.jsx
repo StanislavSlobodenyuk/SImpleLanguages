@@ -16,23 +16,23 @@ export default function Header({ authenticated }) {
     }
 
     return (
-        <header className={theme === 'dark' ? "darkTheme" : "lightTheme"}>
-            <div className={styles.header__container}>
-                <img className={styles.header__logo} src={logo} alt="Logo" />
+        <header className={theme === 'dark' ? "dark-theme" : "light-theme"}>
+            <div className={styles.headerContainer}>
+                <img className={styles.headerLogo} src={logo} alt="Logo" />
                 {authenticated
                     ? (
                         <MiniProfile />
                     )
                     : (<WordsMix />)
                 }
-                <div className={styles.header__buttons}>
+                <div className={styles.headerButtons}>
                     {authenticated &&
                         <>
-                            <div className={styles.header__notification} onClick={handeOpenDownList}>
+                            <div className={styles.headerNotification} onClick={handeOpenDownList}>
                                 <img src="/src/img/general/notifications.svg" alt="Notification" />
                             </div>
                             {isOpenDownlist &&
-                                <div className={styles.header__notificationDownList}>
+                                <div className={styles.headerNotificationDownList}>
                                     <div><p>notification1</p></div>
                                     <div><p>notification2</p></div>
                                     <div><p>notification3</p></div>
@@ -43,10 +43,10 @@ export default function Header({ authenticated }) {
                         </>
                     }
                     <button
-                        className={`${styles.header__themeButton} ${theme === 'dark' ? styles.header__themeButton_night : styles.header__themeButton_day}`} onClick={changeTheme}
+                        className={`${styles.headerThemeButton} ${theme === 'dark' ? styles.headerThemeButtonNight : styles.headerThemeButtonDay}`} onClick={changeTheme}
                     >
                     </button>
-                    <div className={`${styles.header__localizationButton} ${theme === 'dark' ? styles.localizationButton_dark : styles.localizationButton_light}`}>
+                    <div className={`${styles.headerLocalizationButton} ${theme === 'dark' ? styles.localizationButtonDark : styles.localizationButtonLight}`}>
                         <Button>{currentLanguage}</Button>
                     </div>
                 </div>

@@ -3,7 +3,7 @@ import { courses } from './coursesData.js'
 
 export default function OutCourses() {
     return (
-        <div className={"block__container"}>
+        <div className={"block-container"}>
             <h2>Наші курси</h2>
             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                 {

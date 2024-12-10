@@ -27,20 +27,20 @@ export default function LessonLink({ lesson, currentLesson, onLessonSelect, styl
     };
 
     return (
-        <div style={style} className={`${styles.lessonLink} ${theme === 'dark' ? styles.lessonLink_dark : styles.lessonLink_light}`}>
+        <div style={style} className={`${styles.lessonLink} ${theme === 'dark' ? styles.lessonLinkDark : styles.lessonLinkLight}`}>
             <div className={`
-                ${styles.lessonLink__figure} 
-                ${lesson.isComplete ? (theme === 'dark' ? styles.lessonLink__figure_dark : styles.lessonLink__figure_light) : ''}
+                ${styles.lessonLinkFigure} 
+                ${lesson.isComplete ? (theme === 'dark' ? styles.lessonLinkFigureDark : styles.lessonLinkFigureLight) : ''}
             `} onClick={handleSelectLesson}>
-                <div className={styles.lessonLink__number}>L {lesson.id}</div>
+                <div className={styles.lessonLinkNumber}>L {lesson.id}</div>
             </div>
             {shouldRender && (
                 <div className={`
-                    ${styles.lessonLink__animation} 
+                    ${styles.lessonLinkAnimation} 
                     ${isAnimating ? styles.flyIn : styles.flyOut}
-                    ${theme === 'dark' ? styles.lessonLink__animation_dark : styles.lessonLink__animation_light}
+                    ${theme === 'dark' ? styles.lessonLinkAnimationDark : styles.lessonLinkAnimationLight}
                 `}>
-                    <div className={styles.lessonLink__text}>{lesson.title}</div>
+                    <div className={styles.lessonLinkText}>{lesson.title}</div>
                     <Button click={openModal}>Почати</Button>
                 </div>
             )}

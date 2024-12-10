@@ -1,12 +1,12 @@
 import { useTheme } from '/src/Hooks/ThemeContext';
-import styles from './answers.module.less'
+import styles from './answers.module.less';
 
 export default function RadioAnswer({ answers }) {
     const { theme } = useTheme();
     return (
-        <div className={`${styles.radio__buttons} ${theme === 'dark' ? styles.radio__buttons_dark : styles.radio__buttons_light}`}>
+        <div className={`${styles.radioButtons} ${theme === 'dark' ? styles.radioButtonsDark : styles.radioButtonsLight}`}>
             {answers.map((answer) => (
-                <label key={answer.id} className={styles.radio__label}>
+                <label key={answer.id} className={styles.radioLabel}>
                     <input
                         type="radio"
                         name="answers"

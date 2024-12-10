@@ -1,21 +1,21 @@
 @import url('/src/styles/variables.less');
 
-.radio__buttons,
+.radioButtons,
 .checkBox__buttons {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
-.radio__label,
+.radioLabel,
 .checkBox__label {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.radio__buttons_dark,
-.checkBox__buttons_dark {
+.radioButtonsDark,
+.checkBoxButtonsDark {
 
     input[type="radio"],
     input[type="checkBox"] {
@@ -28,8 +28,8 @@
     }
 }
 
-.radio__buttons_light,
-.checkBox__buttons_light {
+.radioButtonsLight,
+.checkBoxButtonsLight {
 
     input[type="radio"],
     input[type="checkBox"] {
@@ -80,7 +80,7 @@ input[type="checkBox"]:checked::before {
     transform: translate(-50%, -50%);
 }
 
-.input__buttons input {
+.inputButtons input {
     display: block;
     background-color: #fff;
     width: 600px;
@@ -90,7 +90,7 @@ input[type="checkBox"]:checked::before {
 
 }
 
-.writing__textarea {
+.writingTextarea {
     max-width: 600px;
     padding: 5px;
     border: 2px solid #ccc;
@@ -105,11 +105,8 @@ input[type="checkBox"]:checked::before {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.writing__textarea:focus {
+.writingTextarea:focus {
     border-color: @mainLinkColor;
-    /* Колір рамки при фокусі */
     box-shadow: 0 0 5px rgba(74, 144, 226, 0.3);
-    /* Легка тінь для підсвічування */
     background-color: #ffffff;
-    /* Трохи світліший фон при фокусі */
 }

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { useTheme } from '/src/Hooks/ThemeContext';
-import { languageMapping, levelMapping } from '/src/Mapping/Mappinig'
-import Button from '/src/components/Common/Button/Button'
-import styles from './courseCard.module.less'
+import { languageMapping, levelMapping } from '/src/Mapping/Mappinig';
+import Button from '/src/components/Common/Button/Button';
+import styles from './courseCard.module.less';
 
 export default function CourseCard({ course }) {
     const { theme } = useTheme()
@@ -23,7 +23,7 @@ export default function CourseCard({ course }) {
                     <img src={course.imgPath} alt="1" />
                 </Link>
             </div>
-            <div className={`${styles.content} ${theme === 'dark' ? styles.content_dark : styles.content_light}`}>
+            <div className={`${styles.content} ${theme === 'dark' ? styles.contentDark : styles.contentLight}`}>
                 <div className={styles.title}>{course.title}</div>
                 <div className={styles.level}>Рівень: {levelMapping[course.level]}</div>
                 <div className={styles.language}>Мова: {languageMapping[course.language]}</div>
