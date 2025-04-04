@@ -5,7 +5,7 @@ namespace Common.Enum
     {
         OK = 200,
         BadRequest = 400,
-        AuthorizationError = 401,
+        Unauthorized = 401,
         NotFound = 404,
         InternalServerError = 500,
     }

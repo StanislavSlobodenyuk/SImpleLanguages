@@ -13,7 +13,7 @@ export const sendRegistrationData = async (formData) => {
 
 export const sendLoginData = async (formData) => {
     try {
-        const response = await axios.post("http://localhost:5000/api/Login", formData);
+        const response = await axios.post("http://localhost:5000/api/Authorization/Login", formData);
         console.log("Виконано вхід в аккаунт:", response.data)
         return response.data;
     } catch (error) {

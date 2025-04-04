@@ -1,7 +1,9 @@
 ﻿using Dal.Interfaces;
 using Dal.Repositories;
+using Service.AuthorizationService;
 using Service.Implementations;
 using Service.Interfaces;
+using Service.JWTService;
 
 
 namespace Application.InitRepositories
@@ -24,6 +26,8 @@ namespace Application.InitRepositories
             services.AddScoped<ILessonService, LessonService>();
             services.AddScoped<ITheoryService, TheoryService>();
             services.AddScoped<IQuestionService, QuestionService>();
+            services.AddScoped<JwtService>();
+            services.AddScoped<AuthorizationService>();
         }
     }
 }
