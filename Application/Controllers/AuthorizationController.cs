@@ -84,5 +84,25 @@ namespace Application.Controllers
 
             return Ok(authResponse);
         }
+
+        [HttpPost("external-login")]
+        public async Task<IActionResult> ExternalLogin()
+        {
+            var result = await _authorizationService.ExternalLoginAsync();
+
+            if (!result.Succeeded)
+            {
+                return BadRequest("Google login failed.");
+            }
+
+            return Ok("Successfully logged in with Google.");
+        }
+
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            await _authorizationService.LogoutAsync();
+            return Ok("Successfully logged out.");
+        }
     }
 }

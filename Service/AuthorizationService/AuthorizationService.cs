@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Service.JWTService;
+using System.Security.Claims;
 
 namespace Service.AuthorizationService
 {
@@ -161,6 +162,45 @@ namespace Service.AuthorizationService
                     Data = null
                 };
             }
+        }
+
+        public async Task<SignInResult> ExternalLoginAsync()
+        {
+            var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
+
+            var user = await _userManager.FindByEmailAsync(loginInfo.Principal.FindFirstValue(ClaimTypes.Email)!);
+
+            if (user == null)
+            {
+                user = new User
+                {
+                    UserName = loginInfo.Principal.FindFirstValue(ClaimTypes.Name),
+                    Email = loginInfo.Principal?.FindFirstValue(ClaimTypes.Email),
+                    EmailConfirmed = true
+                };
+
+                var createNewUser = await _userManager.CreateAsync(user);
+
+                if (!createNewUser.Succeeded)
+                {
+                    return SignInResult.Failed;
+                }
+            }
+
+
+            var signInResult = await _signInManager.ExternalLoginSignInAsync(loginInfo.LoginProvider, loginInfo.ProviderKey, isPersistent: false);
+
+            if (!signInResult.Succeeded)
+            {
+                return SignInResult.Failed;
+            }
+
+            return signInResult;
+        }
+
+        public async Task LogoutAsync()
+        {
+            await _signInManager.SignOutAsync();
         }
     }
 }
