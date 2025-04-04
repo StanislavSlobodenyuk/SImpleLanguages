@@ -1,6 +1,8 @@
 ﻿using Common.Enum;
+using Domain.Entity.User;
 using Dto.AuthorizationDTO;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Service.AuthorizationService;
 
@@ -12,10 +14,12 @@ namespace Application.Controllers
     public class AuthorizationController : Controller
     {
         private readonly AuthorizationService _authorizationService;
+        private readonly SignInManager<User> _signInManager;
 
-        public AuthorizationController(AuthorizationService authorizationService) 
+        public AuthorizationController(AuthorizationService authorizationService, SignInManager<User> signInManager) 
         {
             _authorizationService = authorizationService;
+            _signInManager = signInManager;
         }
 
         [HttpPost("login")]
@@ -85,8 +89,15 @@ namespace Application.Controllers
             return Ok(authResponse);
         }
 
-        [HttpPost("external-login")]
-        public async Task<IActionResult> ExternalLogin()
+        [HttpGet("google-login")]
+        public IActionResult GoogleLogin()
+        {
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", "/api/authorization/google-callback");
+            return Challenge(properties, "Google");
+        }
+
+        [HttpPost("google-callback")]
+        public async Task<IActionResult> GoogleCallback()
         {
             var result = await _authorizationService.ExternalLoginAsync();
 
