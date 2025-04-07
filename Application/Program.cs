@@ -1,6 +1,5 @@
 using Application.InitRepositories;
 using Dal;
-using Dal.SeedData;
 using Domain.Entity.User;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -10,27 +9,26 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// to work database
+// Конфигурируем работу с базой данных
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"),
         b => b.MigrationsAssembly("Application"));
 });
 
-// to work authorization
+// Добавляем аутентификацию и авторизацию
 builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.Password.RequireDigit = true;
-    options.Password.RequireLowercase = true;   
+    options.Password.RequireLowercase = true;
     options.Password.RequireUppercase = true;
     options.Password.RequireNonAlphanumeric = false;
-    options.Password.RequiredLength= 8;
+    options.Password.RequiredLength = 8;
     options.SignIn.RequireConfirmedAccount = true;
 })
 .AddEntityFrameworkStores<ApplicationDbContext>()
 .AddDefaultTokenProviders();
 
-// to work JWT
 var jwtKey = builder.Configuration["Jwt:Key"] ?? throw new InvalidOperationException("JWT Key is not configured.");
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -51,25 +49,24 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.ClientId = builder.Configuration["Google:ClientId"]!;
         options.ClientSecret = builder.Configuration["Google:ClientSecret"]!;
+        options.CallbackPath = "/api/authorization/google-callback";
+        options.SaveTokens = true;
     });
 
-// to work roles
 builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
     options.AddPolicy("UserOnly", policy => policy.RequireRole("User"));
 });
 
-// to work cookies
 builder.Services.ConfigureApplicationCookie(options =>
 {
-    options.LoginPath = "";
+    options.LoginPath = "/login";
     options.LogoutPath = "/";
     options.Cookie.Name = "AuthorizationCookies";
-
+    options.Cookie.HttpOnly = true;
 });
 
-// to work with the client
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigin",
@@ -77,7 +74,6 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
-
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -87,18 +83,6 @@ DependencyInjectionSetup.RegisterRepositories(builder.Services);
 DependencyInjectionSetup.RegisterServices(builder.Services);
 
 var app = builder.Build();
-
-// Applying migrations and data seeds
-using (var scope = app.Services.CreateScope())
-{
-    var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
-    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<User>>();
-    var roleManager = scope.ServiceProvider.GetRequiredService <RoleManager<IdentityRole>>();
-
-    context.Database.Migrate();
-
-    await SeedData.Seed(context, userManager, roleManager);
-}
 
 app.UseCors("AllowSpecificOrigin");
 
@@ -114,6 +98,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.MapControllers();
 app.UseAuthentication();
-app.UseAuthorization(); 
+app.UseAuthorization();
 
 app.Run();

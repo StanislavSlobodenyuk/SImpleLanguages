@@ -164,7 +164,7 @@ namespace Service.AuthorizationService
             }
         }
 
-        public async Task<SignInResult> ExternalLoginAsync()
+        public async Task<AuthResponse> ExternalLoginAsync()
         {
             var loginInfo = await _signInManager.GetExternalLoginInfoAsync();
 
@@ -183,7 +183,13 @@ namespace Service.AuthorizationService
 
                 if (!createNewUser.Succeeded)
                 {
-                    return SignInResult.Failed;
+                    return new AuthResponse
+                    {
+                        StatusCode = MyStatusCode.Unauthorized,
+                        AuthStatus = AuthStatus.AuthServerError,
+                        Description = "Authorization failed",
+                        Data = null
+                    };
                 }
             }
 
@@ -192,10 +198,29 @@ namespace Service.AuthorizationService
 
             if (!signInResult.Succeeded)
             {
-                return SignInResult.Failed;
+                return new AuthResponse
+                {
+                    StatusCode = MyStatusCode.Unauthorized,
+                    AuthStatus = AuthStatus.AuthServerError,
+                    Description = "Authorization failed",
+                    Data =  null
+                };
             }
 
-            return signInResult;
+            var accessToken = await _jwtService.GenerateJwtToken(user);
+            var refreshToken = _jwtService.GenerateRefreshToken();
+
+            return new AuthResponse
+            {
+                StatusCode = MyStatusCode.OK,
+                AuthStatus = AuthStatus.AuthSuccess,
+                Description = "Authorization is correct",
+                Data = new TokensDto
+                {
+                    AccessToken = accessToken,
+                    RefreshToken = refreshToken
+                }
+            };
         }
 
         public async Task LogoutAsync()

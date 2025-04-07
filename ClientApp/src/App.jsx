@@ -4,7 +4,9 @@ import { Header, Footer, Sidebar } from './components';
 import { ProtectedRoute } from './auth/index.js';
 import { useSelector } from 'react-redux';
 import routes from './Rootes'
-
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { refreshThunk } from './Redux/authSlice.js';
 
 export default function App() {
     return (
@@ -17,10 +19,20 @@ export default function App() {
 }
 
 function AppContent() {
+    const dispatch = useDispatch();
     const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
     const { theme } = useTheme();
     const location = useLocation();
     const isMinimalLayout = ['/login', '/register'].includes(location.pathname);
+
+    useEffect(() => {
+        const accessToken = localStorage.getItem("accesToken");
+        const refreshToken = localStorage.getItem("refreshToken");
+
+        if (accessToken && refreshToken) {
+            dispatch(refreshThunk({ accessToken, refreshToken }));
+        }
+    }, [dispatch])
 
     return (
         <div className={isMinimalLayout ? "for-register-and-login" : "default-layout"}>

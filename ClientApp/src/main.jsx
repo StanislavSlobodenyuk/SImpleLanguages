@@ -1,7 +1,7 @@
 import App from './App'
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux';
-import { store } from '/src/auth/Redux/store.js';
+import { store } from './Redux/store'
 import './styles/Normalize.css'
 import './fonts/fonts.css'
 import './styles/global.less'

@@ -4,7 +4,7 @@
 
 .footerContainer {
     position: relative;
-    padding: 20px 20px 10px;
+    padding: 15px 15px 5px;
 }
 
 &.footerLogo {
@@ -28,35 +28,12 @@
     gap: 15px;
     max-width: 600px;
     flex: 1;
+    font-size: 18px;
 
     >li:not(:last-child) {
         background-repeat: no-repeat;
         background-position: 100% 0;
         padding-right: 20px;
-    }
-}
-
-.footerMenuDark {
-
-    >li:nth-child(1),
-    li:nth-child(2),
-    li:nth-child(3),
-    li:nth-child(4),
-    li:nth-child(6),
-    li:nth-child(7) {
-        background-image: url(@lightThemeImage);
-    }
-}
-
-.footerMenuLight {
-
-    >li:nth-child(1),
-    li:nth-child(2),
-    li:nth-child(3),
-    li:nth-child(4),
-    li:nth-child(6),
-    li:nth-child(7) {
-        background-image: url(@darkThemeImage);
     }
 }
 

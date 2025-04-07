@@ -1,4 +1,5 @@
-﻿using Common.Enum;
+﻿using Azure.Core;
+using Common.Enum;
 using Domain.Entity.User;
 using Dto.AuthorizationDTO;
 using Microsoft.AspNetCore.Authorization;
@@ -92,22 +93,30 @@ namespace Application.Controllers
         [HttpGet("google-login")]
         public IActionResult GoogleLogin()
         {
-            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", "/api/authorization/google-callback");
+            var redirectUrl = Url.Action("GoogleCallback", "Authorization", null, Request.Scheme);
+            var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
+
             return Challenge(properties, "Google");
         }
 
-        [HttpPost("google-callback")]
+
+
+        [HttpGet("google-callback")]
         public async Task<IActionResult> GoogleCallback()
         {
             var result = await _authorizationService.ExternalLoginAsync();
 
-            if (!result.Succeeded)
+            // Логирование результата
+            Console.WriteLine("Google Callback Result: " + result);
+
+            if (result.Data == null)
             {
                 return BadRequest("Google login failed.");
             }
 
-            return Ok("Successfully logged in with Google.");
+            return Redirect($"http://localhost:5173/google-callback?accessToken={result.Data.AccessToken}&refreshToken={result.Data.RefreshToken}");
         }
+
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()

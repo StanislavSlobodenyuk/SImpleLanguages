@@ -1,77 +1,63 @@
-import { useState } from 'react';
-import { sendLoginData } from '/src/api/AuthenticationApi/authenticationApi.js';
-import { useNavigate, Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import checkAuthentication from '../checkAuthentication.jsx';
-import styles from './login.module.less'
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginThunk } from "../../Redux/authSlice";
+import { useNavigate } from "react-router-dom";
+import GoogleAuthenticatedButton from "../GoogleAuth/GoogleAuthenticatedButton";
 
-
-export default function LoginPage() {
+function LoginPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [formData, setFormData] = useState({
-        userNameOrEmail: "",
-        password: '',
-        isRemember: '',
-    })
+    const { loading, error, isAuthenticated } = useSelector((state) => state.auth);
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prev) => ({ ...prev, [name]: value }))
+    const [loginData, setLoginData] = useState({
+        usernameOrEmail: '',
+        password: ''
+    });
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/');
+        }
+    }, [isAuthenticated, navigate]);
+
+    const handleUserDataLoginChange = (e) => {
+        setLoginData({ ...loginData, [e.target.name]: e.target.value });
     }
 
-    const sendData = async () => {
-        console.log("a")
-        var responseData = {}
-        try {
-            const response = await sendLoginData(formData);
-            responseData = { success: true, message: "Реєстрація успішна!" };
-        } catch (error) {
-            responseData = { success: false, message: "Помилка при реєстрації!" };
+    const hendleValidateLogin = () => {
+        if (!loginData.password || !loginData.usernameOrEmail) {
+            console.log("Не всі поля заповнені");
+            return
         }
 
-        checkAuthentication(responseData, dispatch, navigate);
-    };
+        dispatch(loginThunk(loginData));
+    }
 
     return (
-        <div className={styles.login}>
-            <div className={styles.loginContainer}>
-                <div className={styles.headBar}>
-                    <img src='/src/img/logo.svg' className={styles.formImg}></img>
-                    <span className={styles.headTitle}>Simple Languages</span>
-                </div>
-                <form className={styles.form} action="" method="post">
-                    <div className={styles.formBlock}>
-                        <label className={styles.label} htmlFor="userNameOrEmail">Ім'я акаунтку або пошта</label>
-                        <input
-                            type="text"
-                            id="userNameOrEmail"
-                            name="userNameOrEmail"
-                            value={formData.userNameOrEmail}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                    <div className={styles.formBlock}>
-                        <label className={styles.label} htmlFor="password">Пароль</label>
-                        <input
-                            type="password"
-                            id="password"
-                            name="password"
-                            value={formData.password}
-                            onChange={handleInputChange}
-                            required
-                        />
-                    </div>
-                </form>
-                <div>
-                    <Link to="/register">Не пам'ятаю дані входу</Link>
-                </div>
-                <div className={styles.buttons}>
-                    <Link to="/register">Зареєструватись</Link>
-                    <div className={styles.linkLogin} onClick={sendData}>Увійти</div>
-                </div>
-            </div>
+        <div>
+            <h2>Вхід</h2>
+            <form>
+                <input
+                    type="text"
+                    name="usernameOrEmail"
+                    value={loginData.usernameOrEmail}
+                    onChange={handleUserDataLoginChange}
+                    placeholder="Email"
+                />
+                <input
+                    type="password"
+                    name="password"
+                    value={loginData.password}
+                    onChange={handleUserDataLoginChange}
+                    placeholder="Пароль"
+                />
+                <button onClick={hendleValidateLogin}>Увійти</button>
+            </form>
+
+            <button onClick={() => navigate('/register')}>Ще не маєте аккаунту? Зареєструйтеся.</button>
+            <GoogleAuthenticatedButton />
         </div>
     );
-}
+};
+
+export default LoginPage;

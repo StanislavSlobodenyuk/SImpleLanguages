@@ -39,7 +39,7 @@ export default function Sidebar({ authenticated }) {
                         </ul>
                     </div>)
                     : (<div className={styles.sidebarButtons}>
-                        <Link to="/register"> <Button>Авторизоватись</Button></Link>
+                        <Link to="/login"> <Button>Увійти</Button></Link>
                     </div>)
                 }
                 <div className={styles.sidebarSociables}>

@@ -1,4 +1,4 @@
-import { LandingPage, Account, Courses, Course, Lessons, LessonTheory, LessonPractice, LessonResult } from './pages';
+import { LandingPage, Courses, Course, Lessons, LessonTheory, LessonPractice, LessonResult } from './pages';
 import { LoginPage, RegisterPage } from './auth/index'
 
 const routes = {
@@ -8,7 +8,6 @@ const routes = {
         { path: "/register", element: <RegisterPage /> },
     ],
     protected: [
-        { path: "/account/:id", element: <Account /> },
         { path: "/courses", element: <Courses /> },
         { path: "/course/:id", element: <Course /> },
         { path: "/course/:id/lessons", element: <Lessons /> },

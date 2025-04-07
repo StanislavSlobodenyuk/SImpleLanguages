@@ -1,57 +1,133 @@
-import { useState } from "react";
-import { sendRegistrationData } from "/src/api/AuthenticationApi/authenticationApi.js";
-import FirstStep from './RegisterSteps/FirstStep.jsx';
-import SecondStep from './RegisterSteps/SecondStep.jsx';
-import ThirdStep from './RegisterSteps/ThirdStep.jsx';
-import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { registerThunk } from "../../Redux/authSlice.js";
 import { useNavigate } from "react-router-dom";
-import checkAuthentication from '../checkAuthentication.jsx';
+import GoogleAuthenticatedButton from "../GoogleAuth/GoogleAuthenticatedButton";
 
-export default function RegisterPage() {
+function RegisterPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [currentStep, setCurrentStep] = useState(1)
-    const [formData, setFormData] = useState({
-        userName: "",
-        password: '',
-        confirmedPassword: '',
+    const { isAuthenticated } = useSelector(state => state.auth);
+
+    const [step, setStep] = useState(1);
+    const [userData, setUserData] = useState({
+        userName: '',
         email: '',
+        password: '',
+        confirmedPassword: ''
+    });
+
+    const [languageData, setLanguageData] = useState({
         nativeLanguage: '',
-        learningLanguage: '',
-        learningLevel: '',
-        studySchedule: { time: '', days: [] }
-    })
+        targetLanguage: '',
+        levelTargetLanguage: ''
+    });
 
-    const handlePrev = () => setCurrentStep((prev => prev - 1))
-    const handleNext = () => { setCurrentStep(prev => prev + 1) }
+    useEffect(() => {
+        if (isAuthenticated) {
+            navigate('/');
+        }
+    }, [isAuthenticated, navigate]);
 
-    const handleCharge = (key, value) => {
-        setFormData((prev) => ({ ...prev, [key]: value }))
+    const handleUserDataChange = (e) => {
+        setUserData({ ...userData, [e.target.name]: e.target.value });
+    }
+    const handleLanguageDataChange = (e) => {
+        setLanguageData({ ...languageData, [e.target.name]: e.target.value });
     }
 
-    const sendData = async () => {
-        var responseData = {}
-        try {
-            const response = await sendRegistrationData(formData);
-            responseData = { success: true, message: "Реєстрація успішна!" };
-        } catch (error) {
-            responseData = { success: false, message: "Помилка при реєстрації!" };
+    const handleValidateStep1 = () => {
+        if (userData.password !== userData.confirmedPassword) {
+            console.log("Паролі не збігаються")
+            return;
+        }
+        if (!userData.password || !userData.email || !userData.userName) {
+            console.log("Не всі поля заповнені")
+            return
         }
 
-        checkAuthentication(responseData, dispatch, navigate);
-    };
+        setStep(2);
+    }
+    const handleValidateStep2 = () => {
+        if (!languageData.nativeLanguage || !languageData.targetLanguage || !languageData.levelTargetLanguage) {
+            console.log("Не всі поля заповнені")
+            return
+        }
+
+        const registerData = { ...userData, ...languageData }
+        dispatch(registerThunk(registerData));
+    }
 
     return (
-        <div className="content-container">
-            {currentStep === 1 && (
-                <FirstStep formData={formData} onChange={handleCharge} onNext={handleNext} />
+        <>
+            {step === 1 && (
+                <div>
+                    <h2>Крок 1</h2>
+                    <input
+                        type="text"
+                        name="userName"
+                        value={userData.userName}
+                        onChange={handleUserDataChange}
+                        placeholder="User name"
+                    />
+                    <input
+                        type="email"
+                        name="email"
+                        value={userData.email}
+                        onChange={handleUserDataChange}
+                        placeholder="Email"
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        value={userData.password}
+                        onChange={handleUserDataChange}
+                        placeholder="Password"
+                    />
+                    <input
+                        type="password"
+                        name="confirmedPassword"
+                        value={userData.confirmedPassword}
+                        onChange={handleUserDataChange}
+                        placeholder="Confim password"
+                    />
+                    <button onClick={handleValidateStep1}>Далі</button>
+                </div>
             )}
-            {currentStep === 2 && (
-                <SecondStep formData={formData} onChange={handleCharge} onNext={handleNext} onPrev={handlePrev} />
+
+            {step === 2 && (
+                <div>
+                    <h2>Крок 2</h2>
+                    <form>
+                        <input
+                            type="text"
+                            name="nativeLanguage"
+                            value={languageData.nativeLanguage}
+                            onChange={handleLanguageDataChange}
+                            placeholder="Ваш родной язык"
+                        />
+                        <input
+                            type="text"
+                            name="targetLanguage"
+                            value={languageData.targetLanguage}
+                            onChange={handleLanguageDataChange}
+                            placeholder="Язык, который хотите изучать"
+                        />
+                        <input
+                            type="text"
+                            name="levelTargetLanguage"
+                            value={languageData.levelTargetLanguage}
+                            onChange={handleLanguageDataChange}
+                            placeholder="Уровень"
+                        />
+                        <button onClick={handleValidateStep2}>Зареєструватись</button>
+                    </form>
+                    <button onClick={() => navigate('/login')}> Вже маєте аккаунт? Увійти.</button>
+                </div>
             )}
-            {currentStep === 3 && (
-                <ThirdStep formData={formData} onChange={handleCharge} onNext={handleNext} onPrev={handlePrev} sendData={sendData} />
-            )}
-        </div>
-    );
+            <GoogleAuthenticatedButton />
+        </>
+    )
 }
+
+export default RegisterPage;

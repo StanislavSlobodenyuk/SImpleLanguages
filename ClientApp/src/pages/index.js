@@ -1,5 +1,4 @@
 // src/pages/index.js
-export { default as Account } from './Account/Account.jsx';
 export { default as LandingPage } from './Landing/Landing.jsx';
 export { default as Courses } from './Courses/Courses.jsx';
 export { default as Course } from './Course/Course.jsx';
