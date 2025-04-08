@@ -1,10 +1,9 @@
-import api from './api';
+import api from "./Interseptor";
 
 // POST /login
 export const loginUser = async (formData) => {
     try {
         const { data } = await api.post("/api/Authorization/login", formData);
-        console.log('login:', data);
         return data;
     } catch (error) {
         console.error('Login error:', error.response?.data || error);
@@ -15,8 +14,9 @@ export const loginUser = async (formData) => {
 // POST /register
 export const registerUser = async (formData) => {
     try {
-        const { data } = await api.post("/api/Authorization/register", formData);
+        const data = await api.post("/api/Authorization/register", formData);
         console.log('register:', data);
+
         return data;
     } catch (error) {
         console.error('Register error:', error.response?.data || error);
@@ -27,7 +27,6 @@ export const registerUser = async (formData) => {
 // Redirect to Google OAuth
 export const startGoogleLogin = () => {
     window.location.href = `${api.defaults.baseURL}/signin-google`;
-    console.log("Redirecting to Google login...");
 };
 
 // POST /logout
@@ -41,13 +40,18 @@ export const logoutUser = async () => {
 };
 
 // POST /refresh
-export const refreshTokens = async (formData) => {
+export const refreshTokens = async (accessToken, refreshToken) => {
     try {
-        const { data } = await api.post("/api/Authorization/refresh", formData);
-        console.log('refresh:', data);
+        const requestData = {
+            accessToken,
+            refreshToken,
+        };
+
+        const { data } = await api.post("/api/Authorization/refresh", requestData);
+        console.log("refresh:", data);
         return data;
     } catch (error) {
-        console.error('Refresh error:', error.response?.data || error);
+        console.error("Refresh error:", error.response?.data || error);
         throw error.response?.data || error;
     }
 };

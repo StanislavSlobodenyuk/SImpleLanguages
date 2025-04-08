@@ -2,6 +2,7 @@
 using Common.Response.ErrorResponse;
 using Domain.Entity.Content.CourseContent;
 using Dto;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Service.Interfaces;
 
@@ -9,6 +10,7 @@ namespace Application.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CourseController : Controller
     {
         private readonly ICourseService _courseService;
@@ -60,6 +62,7 @@ namespace Application.Controllers
         }
 
         [HttpGet("{courseId}")]
+        [Authorize]
         public async Task<IActionResult> GetCourse(int courseId) 
         {
             var response = await _courseService.GetCourse(courseId);
@@ -84,6 +87,7 @@ namespace Application.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> CreateCourse([FromBody] Course languageCourse)
         {
             var response = await _courseService.CreateCourse(languageCourse);
@@ -105,6 +109,7 @@ namespace Application.Controllers
         }
        
         [HttpDelete("{courseId}")]
+        [Authorize]
         public async Task<IActionResult> DeleteCourse(int courseId)
         {
             var response = await _courseService.DeleteCourse(courseId);
@@ -129,6 +134,7 @@ namespace Application.Controllers
         }
        
         [HttpPut("{courseId}")]
+        [Authorize]
         public async Task<IActionResult> UpdateCourse([FromBody] UpdateCourseDto updateData, int courseId)
         {
             var response = await _courseService.UpdateCourse(updateData, courseId);

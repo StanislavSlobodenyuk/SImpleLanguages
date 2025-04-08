@@ -44,6 +44,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidAudience = builder.Configuration["Jwt:Issuer"],
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
         };
+
     })
     .AddGoogle(options =>
     {
@@ -51,7 +52,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         options.ClientSecret = builder.Configuration["Google:ClientSecret"]!;
         options.CallbackPath = "/api/authorization/google-callback";
         options.SaveTokens = true;
-    });
+    })
+     .AddCookie(options =>
+     {
+         options.Events.OnRedirectToLogin = context =>
+         {
+             context.Response.StatusCode = 401;
+             return Task.CompletedTask;
+         };
+     });
 
 builder.Services.AddAuthorization(options =>
 {
@@ -65,6 +74,17 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LogoutPath = "/";
     options.Cookie.Name = "AuthorizationCookies";
     options.Cookie.HttpOnly = true;
+
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = 401;
+        return Task.CompletedTask;
+    };
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        context.Response.StatusCode = 403;
+        return Task.CompletedTask;
+    };
 });
 
 builder.Services.AddCors(options =>

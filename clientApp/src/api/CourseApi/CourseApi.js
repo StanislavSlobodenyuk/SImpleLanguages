@@ -1,8 +1,8 @@
-import axios from "axios";
+import api from "../Interseptor";
 
 export const FetchCourses = async ({ searchTitle, language, level, lessonCount, cost, inDevelopment }) => {
     try {
-        const response = await axios.get('http://localhost:5000/api/course/get-all', {
+        const response = await api.get('/api/course/get-all', {
             params: {
                 searchTitle,
                 language,
@@ -27,7 +27,7 @@ export const FetchCourses = async ({ searchTitle, language, level, lessonCount, 
 export const FetchCourse = async ({ courseId }) => {
     try {
         courseId = typeof courseId === 'string' ? parseInt(courseId, 10) : courseId;
-        const response = await axios.get(`http://localhost:5000/api/course/${courseId}`);
+        const response = await api.get(`/api/course/${courseId}`);
         if (response.data === null) {
             return {};
         };
@@ -42,7 +42,7 @@ export const FetchCourse = async ({ courseId }) => {
 export const FetchCourseModules = async ({ courseId }) => {
     try {
         courseId = typeof courseId === 'string' ? parseInt(courseId, 10) : courseId;
-        const response = await axios.get(`http://localhost:5000/api/coursemodule/get-all${courseId}`);
+        const response = await api.get(`/api/coursemodule/get-all${courseId}`);
 
         if (response.data && response.data.length === 0) {
             return [];
@@ -59,7 +59,7 @@ export const FetchCourseModules = async ({ courseId }) => {
 export const FetchQuestion = async ({ lessonId }) => {
     try {
         lessonId = typeof lessonId === 'string' ? parseInt(lessonId, 10) : lessonId;
-        const response = await axios.get(`http://localhost:5000/api/question/get-all${lessonId}`);
+        const response = await api.get(`/api/question/get-all${lessonId}`);
 
         if (response.data === null) {
             throw error;

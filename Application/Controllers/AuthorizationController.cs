@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Common.Enum;
+﻿using Common.Enum;
 using Domain.Entity.User;
 using Dto.AuthorizationDTO;
 using Microsoft.AspNetCore.Authorization;
@@ -96,9 +95,15 @@ namespace Application.Controllers
             var redirectUrl = Url.Action("GoogleCallback", "Authorization", null, Request.Scheme);
             var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
 
+            // Генерация state вручную
+            var state = Guid.NewGuid().ToString();
+            properties.Items["state"] = state;
+
+            // Сохранение state в сессии (если нужно)
+            HttpContext.Session.SetString("OAuthState", state);
+
             return Challenge(properties, "Google");
         }
-
 
 
         [HttpGet("google-callback")]

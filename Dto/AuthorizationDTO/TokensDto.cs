@@ -1,4 +1,6 @@
-﻿namespace Dto.AuthorizationDTO
+﻿using Domain.Entity.User;
+
+namespace Dto.AuthorizationDTO
 {
     public class TokensDto
     {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginThunk } from "../../Redux/authSlice";
 import { useNavigate } from "react-router-dom";
 import GoogleAuthenticatedButton from "../GoogleAuth/GoogleAuthenticatedButton";
+import { use } from "react";
 
 function LoginPage() {
     const dispatch = useDispatch();
@@ -24,7 +25,8 @@ function LoginPage() {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
     }
 
-    const hendleValidateLogin = () => {
+    const hendleValidateLogin = (e) => {
+        e.preventDefault();
         if (!loginData.password || !loginData.usernameOrEmail) {
             console.log("Не всі поля заповнені");
             return
@@ -51,9 +53,8 @@ function LoginPage() {
                     onChange={handleUserDataLoginChange}
                     placeholder="Пароль"
                 />
-                <button onClick={hendleValidateLogin}>Увійти</button>
+                <button type="button" onClick={hendleValidateLogin}>Увійти</button>
             </form>
-
             <button onClick={() => navigate('/register')}>Ще не маєте аккаунту? Зареєструйтеся.</button>
             <GoogleAuthenticatedButton />
         </div>

@@ -1,0 +1,14 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Launch Opera against Vite",
+            "type": "pwa-chrome", // Используем pwa-chrome для отладки с Vite
+            "request": "launch",
+            "runtimeExecutable": "C:/Program Files/Opera/launcher.exe", // Путь к файлу Opera
+            "url": "http://localhost:3000", // Адрес Vite, по умолчанию это http://localhost:3000
+            "webRoot": "${workspaceFolder}/src",
+            "sourceMaps": true // Включаем поддержку исходных карт для отладки
+        }
+    ]
+}

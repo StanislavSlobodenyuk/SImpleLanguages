@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { registerThunk } from "../../Redux/authSlice.js";
+import  registerThunk  from "../../Redux/authSlice.js";
 import { useNavigate } from "react-router-dom";
 import GoogleAuthenticatedButton from "../GoogleAuth/GoogleAuthenticatedButton";
 
@@ -122,10 +122,10 @@ function RegisterPage() {
                         />
                         <button onClick={handleValidateStep2}>Зареєструватись</button>
                     </form>
-                    <button onClick={() => navigate('/login')}> Вже маєте аккаунт? Увійти.</button>
                 </div>
             )}
             <GoogleAuthenticatedButton />
+            <button onClick={() => navigate('/login')}> Вже маєте аккаунт? Увійти.</button>
         </>
     )
 }
