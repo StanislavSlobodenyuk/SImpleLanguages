@@ -1,5 +1,4 @@
-﻿
-using Domain.Enum;
+﻿using Domain.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Domain.Entity.Content.Question

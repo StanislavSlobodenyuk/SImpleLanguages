@@ -6,7 +6,7 @@ namespace Domain.Entity.Content.Question.Answer
     {
         public string? Option { get; set; }
 
-        public AnswerOption(){}
+        public AnswerOption() { }
         public AnswerOption(string option)
         {
             Option = option;

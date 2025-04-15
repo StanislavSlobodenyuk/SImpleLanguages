@@ -3,15 +3,15 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Domain.Entity.Content.CourseContent;
 using Domain.Entity.Content.Lessons;
-using Domain.Entity.Content.Question;
 using Dal.Configuration;
 using Domain.Entity.Content;
 using Dal.Configuration.Questions;
 using Dal.Configuration.Lessonsconfiguration;
 using Dal.Configuration.QuestionConfiguration;
-using Domain.Entity.Content.Question.Answer;
 using Domain.Entity.User;
 using Dal.Configuration.UserConfiguration;
+using Domain.Entity.Content.Question;
+using Domain.Entity.Content.Question.Answer;
 
 
 namespace Dal

@@ -1,6 +1,6 @@
-﻿using Domain.Entity.Content.Question.Answer;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
+﻿using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Domain.Entity.Content.Question.Answer;
 
 namespace Dal.Configuration.QuestionConfiguration
 {

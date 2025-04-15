@@ -15,7 +15,7 @@ namespace Domain.Entity.Content.Question
         public ICollection<RightAnswer> RightAnswers { get; private set; } = new List<RightAnswer>();
         public ICollection<LessonQuestion> LessonQuestions { get; private set; } = new List<LessonQuestion>();
 
-        protected BaseQuestion() { } 
+        protected BaseQuestion() { }
 
         protected BaseQuestion(string questionText, QuestionType QuestionType, AnswerType answerType)
         {

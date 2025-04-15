@@ -1,6 +1,4 @@
-﻿
-
-using Domain.Enum;
+﻿using Domain.Enum;
 
 namespace Domain.Entity.Content.Question
 {

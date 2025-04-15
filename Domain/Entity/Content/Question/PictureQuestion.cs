@@ -1,5 +1,4 @@
-﻿
-using Domain.Enum;
+﻿using Domain.Enum;
 
 namespace Domain.Entity.Content.Question
 {
@@ -7,7 +6,7 @@ namespace Domain.Entity.Content.Question
     {
         public string? ImagePath { get; set; }
 
-        public PictureQuestion(){}
+        public PictureQuestion() { }
         public PictureQuestion(string imagePath, string questionText, QuestionType QuestionType, AnswerType answerType) : base(questionText, QuestionType, answerType)
         {
             ImagePath = imagePath;
