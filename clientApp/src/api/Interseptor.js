@@ -1,23 +1,25 @@
 import axios from "axios";
-import { refreshThunk, logoutThunk } from "../Redux/authSlice";
+import { refreshThunk } from "../Redux/authSlice";
 
+// Создаём axios экземпляр
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000',
     headers: { 'Content-Type': 'application/json' }
-})
+});
 
+// Интерсептор запроса (добавление токена в заголовки)
 api.interceptors.request.use(
     (config) => {
         const accessToken = localStorage.getItem('accessToken');
         if (accessToken) {
             config.headers.Authorization = `Bearer ${accessToken}`;
         }
-
         return config;
     },
     (error) => Promise.reject(error)
 );
 
+// Интерсептор ответа (обработка 401 ошибок и обновление токена)
 api.interceptors.response.use(
     (response) => response,
     async (error) => {
@@ -38,21 +40,23 @@ api.interceptors.response.use(
 
             try {
                 const refreshResult = await refreshThunk({ accessToken, refreshToken })(
-                    () => { }, // пустой dispatch, тк мы не используем store
-                    () => { }, // пустой getState
+                    () => { }, // Пустой dispatch
+                    () => { }, // Пустой getState
                     undefined
                 );
 
                 if (refreshResult.meta.requestStatus === 'fulfilled') {
-                    const newAccessToken = refreshResult.payload.accessToken;
+                    const newAccessToken = refreshResult.payload.data.accessToken;
+                    const newRefreshToken = refreshResult.payload.data.refreshToken;
 
                     localStorage.setItem('accessToken', newAccessToken);
+                    localStorage.setItem('refreshToken', newRefreshToken);
                     localStorage.setItem('authData', JSON.stringify({
                         accessToken: newAccessToken,
-                        refreshToken: refreshToken
+                        refreshToken: newRefreshToken
                     }));
 
-                    originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
+                    originalRequest.headers.Authorization = `Bearer ${localStorage.getItem('accessToken')}`;
                     return api(originalRequest);
                 } else {
                     localStorage.clear();
@@ -67,6 +71,6 @@ api.interceptors.response.use(
         }
         return Promise.reject(error);
     }
-)
+);
 
 export default api;

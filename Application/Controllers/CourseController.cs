@@ -9,8 +9,7 @@ using Service.Interfaces;
 namespace Application.Controllers
 {
     [Route("api/[controller]")]
-    [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin,User")]
     public class CourseController : Controller
     {
         private readonly ICourseService _courseService;
@@ -21,13 +20,8 @@ namespace Application.Controllers
         }
 
         [HttpGet("get-all")]
-        public async Task<IActionResult> GetCourses(
-            [FromQuery] string? searchTitle,
-            [FromQuery] string? language,
-            [FromQuery] string? level,
-            [FromQuery] string? lessonCount,
-            [FromQuery] string? cost,
-            [FromQuery] bool inDevelopment)
+        public async Task<IActionResult> GetCourses([FromQuery] string? searchTitle, [FromQuery] string? language, [FromQuery] string? level,
+            [FromQuery] string? lessonCount, [FromQuery] string? cost, [FromQuery] bool inDevelopment)
         {
             CourseFilterDto filterDto = new CourseFilterDto
             {
@@ -62,9 +56,17 @@ namespace Application.Controllers
         }
 
         [HttpGet("{courseId}")]
-        [Authorize]
         public async Task<IActionResult> GetCourse(int courseId) 
         {
+            var authHeader = Request.Headers["Authorization"].ToString();
+            var token = authHeader.StartsWith("Bearer ") ? authHeader.Substring(7) : null;
+
+            // Логируем токен (не рекомендуется делать это в продакшн-режиме!)
+            if (!string.IsNullOrEmpty(token))
+            {
+                Console.WriteLine($"Received Token: {token}");
+            }
+
             var response = await _courseService.GetCourse(courseId);
 
             switch (response.StatusCode)
@@ -87,7 +89,6 @@ namespace Application.Controllers
         }
 
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> CreateCourse([FromBody] Course languageCourse)
         {
             var response = await _courseService.CreateCourse(languageCourse);
@@ -134,7 +135,6 @@ namespace Application.Controllers
         }
        
         [HttpPut("{courseId}")]
-        [Authorize]
         public async Task<IActionResult> UpdateCourse([FromBody] UpdateCourseDto updateData, int courseId)
         {
             var response = await _courseService.UpdateCourse(updateData, courseId);

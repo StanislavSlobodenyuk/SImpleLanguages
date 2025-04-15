@@ -7,7 +7,6 @@ using Domain.Entity.Content.Question.Answer;
 using Domain.Enum;
 using Dto;
 using Service.Interfaces;
-using System.Collections.Generic;
 
 namespace Service.Implementations
 {
@@ -48,7 +47,7 @@ namespace Service.Implementations
                         AType = baseQuestion?.AType ?? AnswerType.None,
                         AnswerOptions = baseQuestion?.AnswerOptions ?? new List<AnswerOption>(),
                         LessonQuestions = baseQuestion?.LessonQuestions ?? new List<LessonQuestion>(),
-                        ImagePath = question is ImageQuestion iq ? iq.ImagePath : null,
+                        ImagePath = question is PictureQuestion iq ? iq.ImagePath : null,
                         AudioPath = question is AudioQuestion aq ? aq.AudioPath : null,
                         Text = question is TextQuestion tq ? tq.Text : null
                     };

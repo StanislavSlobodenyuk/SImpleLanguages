@@ -5,7 +5,6 @@ using Domain.Entity.User;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
-using System.Security.Cryptography;
 
 namespace Service.JWTService
 {
@@ -44,11 +43,12 @@ namespace Service.JWTService
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Issuer"],
-                expires: DateTime.UtcNow.AddSeconds(15),
+                audience: _configuration["Jwt:Audience"],
+                expires: DateTime.UtcNow.AddMinutes(120),
                 claims: authClaim,
                 signingCredentials: new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256)
             );
+            Console.WriteLine(token);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
@@ -68,7 +68,7 @@ namespace Service.JWTService
 
             var token = new JwtSecurityToken(
                 issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Issuer"], 
+                audience: _configuration["Jwt:Audience"], 
                 claims: claims,
                 expires: expirationDate,
                 signingCredentials: credentials
@@ -84,10 +84,10 @@ namespace Service.JWTService
             {
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidateLifetime = false, 
+                ValidateLifetime = true, 
                 ValidateIssuerSigningKey = true,
                 ValidIssuer = _configuration["Jwt:Issuer"],
-                ValidAudience = _configuration["Jwt:Issuer"],
+                ValidAudience = _configuration["Jwt:Audience"],
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!))
             };
 

@@ -1,10 +1,7 @@
-﻿
-using Common.Enum;
-using Common.Helpers;
+﻿using Common.Enum;
 using Common.Response;
 using Domain.Entity.User;
 using Dto.AuthorizationDTO;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using Service.JWTService;
@@ -102,6 +99,17 @@ namespace Service.AuthorizationService
                 NativeLanguage = registerDto.NativeLanguage,
                 //TODO: target and level target
             };
+
+            if (registerDto.Password != registerDto.ConfirmedPassword)
+            {
+                return new AuthResponse
+                {
+                    StatusCode = MyStatusCode.Unauthorized,
+                    AuthStatus = AuthStatus.NotConfirmedPassword,
+                    Description = "Not confirmed password",
+                    Data = null
+                };
+            }
 
             var result = await _userManager.CreateAsync(user, registerDto.Password);
 

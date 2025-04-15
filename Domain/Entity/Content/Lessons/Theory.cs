@@ -1,5 +1,4 @@
 ﻿using Domain.Entity.Base;
-using Domain.Entity.Content.Image;
 using Domain.Enum;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json;

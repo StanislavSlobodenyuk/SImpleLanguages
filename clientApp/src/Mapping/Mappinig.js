@@ -12,6 +12,22 @@ export const levelMapping = {
     5: 'C1: Просунутий',
     6: 'C2: Досвідчений'
 };
+export const reverseLanguageMapping = {
+    'Англійська': 1,
+    'Українська': 2,
+    'Польська': 3,
+    'Чешська': 4,
+};
+
+export const reverseLevelMapping = {
+    'A1: Початковий': 1,
+    'A2: Базовий': 2,
+    'B1: Середній': 3,
+    'B2: Вище-середнього': 4,
+    'C1: Просунутий': 5,
+    'C2: Досвідчений': 6,
+};
+
 export const contriesImageMapping = {
     1: '/src/img/Flags/United-Kingdom.png',
     2: '/src/img/Flags/Ukraine.png',

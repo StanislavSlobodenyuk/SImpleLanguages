@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../api/Interseptor";
 import {
     registerUser,
     loginUser,
@@ -7,7 +6,6 @@ import {
     refreshTokens as apiRefreshTokens,
 } from "../api/authenticationApi";
 import { decodeToken } from "./decodeToken";
-import { json } from "react-router-dom";
 
 const initialState = {
     isAuthenticated: false,
@@ -21,6 +19,23 @@ const initialState = {
     error: null,
 };
 
+const mapClaims = (decoded) => ({
+    userId: decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"],
+    userName: decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"],
+    email: decoded["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"],
+    role: decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"],
+    firstName: decoded.firstName,
+    lastName: decoded.lastName,
+    userIcon: decoded.userIcon,
+});
+
+function saveUserData(userInfo, data) {
+    localStorage.setItem("user", JSON.stringify(userInfo));
+    localStorage.setItem("accessToken", data.accessToken);
+    localStorage.setItem("refreshToken", data.refreshToken);
+    localStorage.setItem("authData", JSON.stringify({ accessToken: data.accessToken, refreshToken: data.refreshToken }))
+}
+
 // Login thunk
 export const loginThunk = createAsyncThunk(
     "auth/login",
@@ -28,9 +43,9 @@ export const loginThunk = createAsyncThunk(
         try {
             const data = await loginUser(formData);
             const accessToken = data?.data?.accessToken;
-            const userInfo = decodeToken(accessToken);
+            const user = mapClaims(decodeToken(accessToken));
 
-            return { ...data, userInfo };
+            return { ...data, user };
         } catch (err) {
             return rejectWithValue(err);
         }
@@ -44,9 +59,9 @@ export const registerThunk = createAsyncThunk(
         try {
             const data = await registerUser(formData);
             const accessToken = data?.data?.accessToken;
-            const userInfo = decodeToken(accessToken);
+            const user = mapClaims(decodeToken(accessToken));
 
-            return { ...data, userInfo };
+            return { ...data, user };
         } catch (err) {
             return rejectWithValue(err);
         }
@@ -59,11 +74,13 @@ export const refreshThunk = createAsyncThunk(
     async ({ accessToken, refreshToken }, { rejectWithValue }) => {
         try {
             const data = await apiRefreshTokens(accessToken, refreshToken);
-            const newAccessToken = data?.data?.accessToken;
-            const userInfo = decodeToken(newAccessToken);
 
-            return { ...data, userInfo };
+            const newAccessToken = data?.data?.accessToken;
+            const user = mapClaims(decodeToken(accessToken));
+
+            return { ...data, user };
         } catch (error) {
+            console.error('Error in refreshThunk:', error);  // Логирование ошибки
             return rejectWithValue(error);
         }
     }
@@ -90,8 +107,9 @@ export const initAuthThunk = createAsyncThunk(
                 return rejectWithValue("No token found");
             }
 
-            const userInfo = decodeToken(accessToken);
-            const exp = userInfo.exp * 1000;
+            const user = mapClaims(decodeToken(accessToken));
+
+            const exp = user.exp * 1000;
             const now = Date.now();
 
             if (exp < now) {
@@ -104,7 +122,12 @@ export const initAuthThunk = createAsyncThunk(
                 return refreshResult.payload;
             }
 
-            return { accessToken, refreshToken, userInfo };
+            const data = {
+                accessToken: accessToken,
+                refreshToken: refreshToken
+            };
+
+            return { data, user };
         } catch (error) {
             return rejectWithValue("InvalidToken");
         }
@@ -123,6 +146,8 @@ const authSlice = createSlice({
             state.userName = null;
             state.accessToken = null;
             state.refreshToken = null;
+            localStorage.removeItem("user");
+            localStorage.removeItem("authData");
             localStorage.removeItem("accessToken");
             localStorage.removeItem("refreshToken");
         },
@@ -136,22 +161,18 @@ const authSlice = createSlice({
             })
             // login =================================================================
             .addCase(loginThunk.fulfilled, (state, { payload }) => {
-                const { data, userInfo } = payload;
-
-                console.log(userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"])
+                const { data, user } = payload;
 
                 state.loading = false;
                 state.isAuthenticated = true;
-                state.userId = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-                state.userEmail = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-                state.userName = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-                state.role = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                state.userId = user.userId;
+                state.userEmail = user.userEmail;
+                state.userName = user.userName;
+                state.role = user.role;
                 state.accessToken = data.accessToken;
                 state.refreshToken = data.refreshToken;
 
-                localStorage.setItem("accessToken", data.accessToken);
-                localStorage.setItem("refreshToken", data.refreshToken);
-                localStorage.setItem("authData", JSON.stringify({ accessToken: data.accessToken, refreshToken: data.refreshToken }))
+                saveUserData(user, data);
             })
             .addCase(loginThunk.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -161,20 +182,18 @@ const authSlice = createSlice({
 
             // register ===============================================================
             .addCase(registerThunk.fulfilled, (state, { payload }) => {
-                const { data, userInfo } = payload;
+                const { data, user } = payload;
 
                 state.loading = false;
                 state.isAuthenticated = true;
-                state.userId = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-                state.userEmail = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-                state.userName = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-                state.role = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                state.userId = user.userId;
+                state.userEmail = user.userEmail;
+                state.userName = user.userName;
+                state.role = user.role;
                 state.accessToken = data.accessToken;
                 state.refreshToken = data.refreshToken;
 
-                localStorage.setItem("accessToken", data.accessToken);
-                localStorage.setItem("refreshToken", data.refreshToken);
-                localStorage.setItem("authData", JSON.stringify({ accessToken: data.accessToken, refreshToken: data.refreshToken }))
+                saveUserData(user, data);
             })
             .addCase(registerThunk.rejected, (state, { payload }) => {
                 state.loading = false;
@@ -183,20 +202,18 @@ const authSlice = createSlice({
             // register ===================================================================
             // refresh ===================================================================
             .addCase(refreshThunk.fulfilled, (state, { payload }) => {
-                const { data, userInfo } = payload;
+                const { data, user } = payload;
 
                 state.loading = false;
                 state.isAuthenticated = true;
-                state.userId = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-                state.userEmail = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-                state.userName = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-                state.role = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                state.userId = user.userId;
+                state.userEmail = user.userEmail;
+                state.userName = user.userName;
+                state.role = user.role;
                 state.accessToken = data.accessToken;
                 state.refreshToken = data.refreshToken;
 
-                localStorage.setItem("accessToken", data.accessToken);
-                localStorage.setItem("refreshToken", data.refreshToken);
-                localStorage.setItem("authData", JSON.stringify({ accessToken: data.accessToken, refreshToken: data.refreshToken }))
+                saveUserData(user, data);
             })
             .addCase(refreshThunk.rejected, (state, { payload }) => {
                 state.error = payload;
@@ -204,17 +221,17 @@ const authSlice = createSlice({
             // refresh ===================================================================
             // initAuth ================================================================== 
             .addCase(initAuthThunk.fulfilled, (state, { payload }) => {
-                const { accessToken, refreshToken, userInfo } = payload;
+                const { data, user } = payload;
 
                 state.isAuthenticated = true;
-                state.userId = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier"];
-                state.userEmail = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"];
-                state.userName = userInfo["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
-                state.role = userInfo["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+                state.userId = user.userId;
+                state.userEmail = user.userEmail;
+                state.userName = user.userName;
 
-                localStorage.setItem("accessToken", accessToken);
-                localStorage.setItem("refreshToken", refreshToken);
-                localStorage.setItem("authData", JSON.stringify({ accessToken: accessToken, refreshToken: refreshToken }))
+                saveUserData(user, data);
+                state.isAuthenticated = true;
+
+                saveUserData(user, data);
             })
             .addCase(initAuthThunk.rejected, (state) => {
                 state.isAuthenticated = false;

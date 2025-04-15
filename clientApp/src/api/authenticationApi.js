@@ -14,7 +14,8 @@ export const loginUser = async (formData) => {
 // POST /register
 export const registerUser = async (formData) => {
     try {
-        const data = await api.post("/api/Authorization/register", formData);
+        console.log(formData);
+        const { data } = await api.post("/api/Authorization/register", formData);
         console.log('register:', data);
 
         return data;
@@ -26,7 +27,7 @@ export const registerUser = async (formData) => {
 
 // Redirect to Google OAuth
 export const startGoogleLogin = () => {
-    window.location.href = `${api.defaults.baseURL}/signin-google`;
+    window.location.href = `${api.defaults.baseURL}/api/Authorization/google-login`;
 };
 
 // POST /logout
@@ -48,7 +49,6 @@ export const refreshTokens = async (accessToken, refreshToken) => {
         };
 
         const { data } = await api.post("/api/Authorization/refresh", requestData);
-        console.log("refresh:", data);
         return data;
     } catch (error) {
         console.error("Refresh error:", error.response?.data || error);

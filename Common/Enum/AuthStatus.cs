@@ -6,6 +6,7 @@ namespace Common.Enum
     public enum AuthStatus
     {
         IncorrectPassword,
+        NotConfirmedPassword,
         UserNotFound,
         UsernameIsTaken,
         EmailIsAlredyRegister,

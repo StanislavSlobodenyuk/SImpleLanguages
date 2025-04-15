@@ -1,24 +1,29 @@
 import { useState } from 'react';
 import { useTheme } from '../../Hooks/ThemeContext';
+import { logoutThunk } from '../../Redux/authSlice';
+import { useDispatch } from "react-redux";
 import WordsMix from './WordsMix';
-import MiniProfile from './MiniProfile'
+import MiniProfile from './MiniProfile';
 import Button from '../Common/Button/Button';
 import styles from './header.module.less';
-import logo from '../../img/logo.svg';
 
 export default function Header({ authenticated }) {
     const { theme, changeTheme } = useTheme();
     const [currentLanguage, setCurrentLanguage] = useState('Україна(ua)');
     const [isOpenDownlist, setIsOpenDownlist] = useState(false);
+    const dispatch = useDispatch();
 
     const handeOpenDownList = () => {
-        setIsOpenDownlist(!isOpenDownlist)
-    }
+        setIsOpenDownlist(!isOpenDownlist);
+    };
+
+    const handleLogoutClick = () => {
+        dispatch(logoutThunk());
+    };
 
     return (
         <header className={theme === 'dark' ? "dark-theme" : "light-theme"}>
             <div className={styles.headerContainer}>
-                <img className={styles.headerLogo} src={logo} alt="Logo" />
                 {authenticated
                     ? (
                         <MiniProfile />
@@ -43,12 +48,20 @@ export default function Header({ authenticated }) {
                         </>
                     }
                     <button
-                        className={`${styles.headerThemeButton} ${theme === 'dark' ? styles.headerThemeButtonNight : styles.headerThemeButtonDay}`} onClick={changeTheme}
+                        className={`${styles.headerThemeButton} ${theme === 'dark' ? styles.headerThemeButtonNight : styles.headerThemeButtonDay}`}
+                        onClick={changeTheme}
                     >
                     </button>
                     <div className={`${styles.headerLocalizationButton} ${theme === 'dark' ? styles.localizationButtonDark : styles.localizationButtonLight}`}>
                         <Button>{currentLanguage}</Button>
                     </div>
+                    {authenticated && (
+                        <div className={`${styles.headerLogoutButton} ${theme === 'dark' ? styles.headerLogoutButtonNight : styles.headerLogoutButtonnDay}`}>
+                            <Button click={handleLogoutClick} type="button">
+                                Вийти
+                            </Button>
+                        </div>
+                    )}
                 </div>
             </div>
         </header>

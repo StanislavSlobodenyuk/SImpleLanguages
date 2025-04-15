@@ -15,7 +15,7 @@ namespace Domain.Entity.Base
 
         public int? ImageQuestionId { get; set; }
         [JsonIgnore]
-        public ImageQuestion? ImageQuestion { get; set; }
+        public PictureQuestion? ImageQuestion { get; set; }
         public int? TextQuestionId { get; set; }
         [JsonIgnore]
         public TextQuestion? TextQuestion { get; set; }

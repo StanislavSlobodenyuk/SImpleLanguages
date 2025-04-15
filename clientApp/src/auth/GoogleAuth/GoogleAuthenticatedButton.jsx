@@ -7,7 +7,11 @@ const GoogleAuthenticatedButton = () => {
     }
 
     return (
-        <button onClick={handleGoogleLogin}>Google</button>
+        <>
+            <div onClick={handleGoogleLogin}>
+                <img style={{ width: '40px', height: '40px' }} src="/src/img/sociable/Google.png" alt="Google" />
+            </div>
+        </>
     );
 }
 

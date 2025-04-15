@@ -1,14 +1,18 @@
+import { Link } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { loginThunk } from "../../Redux/authSlice";
 import { useNavigate } from "react-router-dom";
 import GoogleAuthenticatedButton from "../GoogleAuth/GoogleAuthenticatedButton";
-import { use } from "react";
+import Button from "../../components/Common/Button/Button";
+import styles from "../authorizationForm.module.less";
 
 function LoginPage() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const { loading, error, isAuthenticated } = useSelector((state) => state.auth);
+    const { loading, isAuthenticated } = useSelector((state) => state.auth);
+
+    const [error, setError] = useState('');
 
     const [loginData, setLoginData] = useState({
         usernameOrEmail: '',
@@ -25,38 +29,73 @@ function LoginPage() {
         setLoginData({ ...loginData, [e.target.name]: e.target.value });
     }
 
-    const hendleValidateLogin = (e) => {
-        e.preventDefault();
-        if (!loginData.password || !loginData.usernameOrEmail) {
-            console.log("Не всі поля заповнені");
-            return
+    const validateLoginData = () => {
+        const { usernameOrEmail, password } = loginData;
+
+        if (!usernameOrEmail || !password) {
+            setError("Не всі поля заповнені");
+            return false;
         }
 
+        const forbiddenCharsRegex = /['"<>;(){}]/;
+        if (
+            forbiddenCharsRegex.test(usernameOrEmail) ||
+            forbiddenCharsRegex.test(password)
+        ) {
+            setError("Одне з ваших полів містить заборонені символи");
+            return false;
+        }
+
+        setError("");
+        return true;
+    };
+
+    const handleLoginClick = () => {
+        if (!validateLoginData()) return;
         dispatch(loginThunk(loginData));
-    }
+    };
 
     return (
-        <div>
-            <h2>Вхід</h2>
-            <form>
-                <input
-                    type="text"
-                    name="usernameOrEmail"
-                    value={loginData.usernameOrEmail}
-                    onChange={handleUserDataLoginChange}
-                    placeholder="Email"
-                />
-                <input
-                    type="password"
-                    name="password"
-                    value={loginData.password}
-                    onChange={handleUserDataLoginChange}
-                    placeholder="Пароль"
-                />
-                <button type="button" onClick={hendleValidateLogin}>Увійти</button>
-            </form>
-            <button onClick={() => navigate('/register')}>Ще не маєте аккаунту? Зареєструйтеся.</button>
-            <GoogleAuthenticatedButton />
+        <div className={`${styles.authorizationForm} ${styles.authorizationForm_logic}`}>
+            <div className={styles.formContainer}>
+                <div className={styles.form}>
+                    <h2 className={styles.formTitle}>Вхід</h2>
+                    <input
+                        type="text"
+                        name="usernameOrEmail"
+                        value={loginData.usernameOrEmail}
+                        onChange={handleUserDataLoginChange}
+                        placeholder="Email"
+                        className={styles.formInput}
+                    />
+                    <input
+                        type="password"
+                        name="password"
+                        value={loginData.password}
+                        onChange={handleUserDataLoginChange}
+                        placeholder="Пароль"
+                        className={styles.formInput}
+                    />
+
+                    {error && (
+                        <div className={styles.formError}>
+                            {error}
+                        </div>
+                    )}
+
+                    <div className={styles.formButton}>
+                        <Button click={handleLoginClick} type="button">Увійти</Button>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.swapAuthLink}>
+                <Link to="/register">Ще не маєте аккаунту? Зареєструватися</Link>
+            </div>
+
+            <div className={styles.exterlaAuthorization}>
+                <GoogleAuthenticatedButton />
+            </div>
         </div>
     );
 };

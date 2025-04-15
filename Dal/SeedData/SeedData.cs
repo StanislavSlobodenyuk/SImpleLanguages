@@ -61,87 +61,6 @@ namespace Dal.SeedData
                         Level = LanguageLevel.Beginner,
                         Cost = 0,
                         ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Англійська для туристів",
-                        Description = "Курс з англійської для тих, хто подорожує.",
-                        Language = LanguageName.English,
-                        Level = LanguageLevel.Elementary,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Поглиблене вивчення української мови",
-                        Description = "Цей курс призначений для тих, хто хоче покращити свої знання української.",
-                        Language = LanguageName.Ukrainian,
-                        Level = LanguageLevel.Intermediate,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Основи польської мови",
-                        Description = "Вивчайте польську мову з нуля.",
-                        Language = LanguageName.Polish,
-                        Level = LanguageLevel.Beginner,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Чеська мова для початківців",
-                        Description = "Цей курс є ідеальним для новачків у вивченні чеської мови.",
-                        Language =LanguageName.Cheska,
-                        Level = LanguageLevel.Beginner,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Польська мова для туристів",
-                        Description = "Вивчайте польську для подорожей по Польщі.",
-                        Language = LanguageName.Polish,
-                        Level = LanguageLevel.Elementary,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Просунутий курс англійської мови",
-                        Description = "Поглиблене вивчення англійської для досвідчених.",
-                        Language = LanguageName.English,
-                        Level = LanguageLevel.Advanced,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Середній курс української мови",
-                        Description = "Для тих, хто вже знає основи української мови.",
-                        Language = LanguageName.Ukrainian,
-                        Level = LanguageLevel.Intermediate,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Англійська для бізнесу",
-                        Description = "Цей курс призначений для тих, хто хоче вивчити англійську для роботи.",
-                        Language = LanguageName.English,
-                        Level = LanguageLevel.UpperIntermediate,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
-                    },
-                    new Course
-                    {
-                        Title = "Чеська для бізнесу",
-                        Description = "Вивчайте чеську мову для роботи у Чехії.",
-                        Language = LanguageName.Cheska,
-                        Level = LanguageLevel.UpperIntermediate,
-                        Cost = 0,
-                        ImgPath = "https://i.ibb.co/dQgnLF4/About-Service.png"
                     }
                 };
 
@@ -260,7 +179,7 @@ namespace Dal.SeedData
                 context.SaveChanges();
             }
 
-            if (!context.AudioQuestions.Any() && !context.SimpleQuestions.Any() && !context.TextQuestions.Any() && !context.ImageQuestions.Any())
+            if (!context.AudioQuestions.Any() && !context.SimpleQuestions.Any() && !context.TextQuestions.Any() && !context.PictureQuestions.Any())
             {
                 List<AudioQuestion> audioQuestionList = new List<AudioQuestion>
                 {
@@ -297,9 +216,9 @@ namespace Dal.SeedData
                         Text = "Anna likes to read books. She reads every day after school. Her favorite book is about animals. She also loves to draw pictures of her favorite animals. Anna wants to become a vet and help animals when she grows up."
                     }
                 };
-                List<ImageQuestion> imageQuestionList = new List<ImageQuestion>
+                List<PictureQuestion> imageQuestionList = new List<PictureQuestion>
                 {
-                    new ImageQuestion
+                    new PictureQuestion
                     {
                         QuestionText = "хХто зображений на малюнку",
                         QType = QuestionType.ImageQuestion,
@@ -311,7 +230,7 @@ namespace Dal.SeedData
                 context.AudioQuestions.AddRange(audioQuestionList);
                 context.SimpleQuestions.AddRange(testQuestionList);
                 context.TextQuestions.AddRange(textQuestionList);
-                context.ImageQuestions.AddRange(imageQuestionList);
+                context.PictureQuestions.AddRange(imageQuestionList);
                 context.SaveChanges();
             }
 

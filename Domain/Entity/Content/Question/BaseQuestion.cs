@@ -1,5 +1,4 @@
 ﻿using Domain.Entity.Base;
-using Domain.Entity.Content.Image;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question.Answer;
 using Domain.Enum;

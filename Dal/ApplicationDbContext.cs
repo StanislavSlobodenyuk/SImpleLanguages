@@ -4,11 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Domain.Entity.Content.CourseContent;
 using Domain.Entity.Content.Lessons;
 using Domain.Entity.Content.Question;
-using Domain.Entity.Content.Image;
 using Dal.Configuration;
 using Domain.Entity.Content;
 using Dal.Configuration.Questions;
-using Dal.Configuration.ImageConfiguration;
 using Dal.Configuration.Lessonsconfiguration;
 using Dal.Configuration.QuestionConfiguration;
 using Domain.Entity.Content.Question.Answer;
@@ -32,10 +30,9 @@ namespace Dal
         public DbSet<AnswerOption> AnswerOptions { get; set; }
         public DbSet<RightAnswer> RightAnswers { get; set; }
         public DbSet<AudioQuestion> AudioQuestions { get; set; }
-        public DbSet<ImageQuestion> ImageQuestions { get; set; }
+        public DbSet<PictureQuestion> PictureQuestions { get; set; }
         public DbSet<SimpleQuestion> SimpleQuestions { get; set; }
         public DbSet<TextQuestion> TextQuestions { get; set; }
-        public DbSet<MyImage> MyImages { get; set; }
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
@@ -52,10 +49,9 @@ namespace Dal
             builder.ApplyConfiguration(new AnswerOptionConfiguration());
             builder.ApplyConfiguration(new RightAnswerConfiguration());
             builder.ApplyConfiguration(new AudioQuestionConfiguration());
-            builder.ApplyConfiguration(new ImageQuestionConfiguration());
+            builder.ApplyConfiguration(new PictureQuestionConfiguration());
             builder.ApplyConfiguration(new SimpleQuestionsConfiguration());
             builder.ApplyConfiguration(new TextQuestionConfiguration());
-            builder.ApplyConfiguration(new MyImageConfiguration());
         }
     }
 }

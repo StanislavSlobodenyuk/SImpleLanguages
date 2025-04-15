@@ -3,7 +3,7 @@ import { LoginPage, RegisterPage } from './auth/index'
 
 const routes = {
     public: [
-        { path: "/landing", element: <LandingPage /> },
+        { path: "/", element: <LandingPage /> },
         { path: "/login", element: <LoginPage /> },
         { path: "/register", element: <RegisterPage /> },
     ],

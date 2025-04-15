@@ -67,6 +67,9 @@ namespace Application.Controllers
                     case AuthStatus.IncorrectPassword:
                         return Unauthorized("Simple password");
 
+                    case AuthStatus.NotConfirmedPassword:
+                        return Unauthorized("Not confirmed password");
+
                     default:
                         return Unauthorized("Unauthorized");
                 }
@@ -94,14 +97,6 @@ namespace Application.Controllers
         {
             var redirectUrl = Url.Action("GoogleCallback", "Authorization", null, Request.Scheme);
             var properties = _signInManager.ConfigureExternalAuthenticationProperties("Google", redirectUrl);
-
-            // Генерация state вручную
-            var state = Guid.NewGuid().ToString();
-            properties.Items["state"] = state;
-
-            // Сохранение state в сессии (если нужно)
-            HttpContext.Session.SetString("OAuthState", state);
-
             return Challenge(properties, "Google");
         }
 
@@ -121,7 +116,6 @@ namespace Application.Controllers
 
             return Redirect($"http://localhost:5173/google-callback?accessToken={result.Data.AccessToken}&refreshToken={result.Data.RefreshToken}");
         }
-
 
         [HttpPost("logout")]
         public async Task<IActionResult> Logout()
