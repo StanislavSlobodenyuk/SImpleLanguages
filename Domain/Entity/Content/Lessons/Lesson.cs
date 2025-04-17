@@ -16,7 +16,7 @@ namespace Domain.Entity.Content.Lessons
         public CourseModule? CourseModules { get; set; }
         public ICollection<Theory> TheoryBlock {  get; set; }  = new List<Theory>();
         public ICollection<LessonQuestion> LessonQuestions { get; set; } = new List<LessonQuestion>();
-        public ICollection<UserLessonResult> UserResults { get; set; } = new List<UserLessonResult>();
+        public ICollection<UserLessonResult> UserLessonsResult { get; set; } = new List<UserLessonResult>();
 
         [NotMapped]
         public int CountQuestion

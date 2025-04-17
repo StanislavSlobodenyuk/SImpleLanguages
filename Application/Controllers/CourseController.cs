@@ -4,7 +4,7 @@ using Domain.Entity.Content.CourseContent;
 using Dto;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Service.Interfaces;
+using Service.Interfaces.ILowLevelServices.LearnContentService;
 
 namespace Application.Controllers
 {
@@ -156,6 +156,5 @@ namespace Application.Controllers
                     return StatusCode(500, new BadResponse { Message = "An unexpected error occurred." });
             }
         }
-        
     }
 }

@@ -1,6 +1,5 @@
-﻿
-using Domain.Entity.Achievements;
-using Domain.Entity.Base;
+﻿using Domain.Entity.Base;
+using Domain.Entity.Content.Achievments;
 
 namespace Domain.Entity.User.UserProgress
 {

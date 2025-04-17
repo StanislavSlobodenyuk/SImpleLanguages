@@ -4,7 +4,7 @@ using Dto.AuthorizationDTO;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Service.AuthorizationService;
+using Service.Implementations.HighLevelServices;
 
 namespace Application.Controllers
 {

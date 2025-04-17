@@ -1,5 +1,6 @@
 using Application.InitRepositories;
 using Dal;
+using Dal.SeedData;
 using Domain.Entity.User;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
@@ -84,6 +85,17 @@ DependencyInjectionSetup.RegisterRepositories(builder.Services);
 DependencyInjectionSetup.RegisterServices(builder.Services);
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<ApplicationDbContext>();
+    var userManager = services.GetRequiredService<UserManager<User>>();
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+
+    await SeedData.Seed(context, userManager, roleManager);
+}
+
 app.Use(async (context, next) =>
 {
     var authHeader = context.Request.Headers["Authorization"].ToString();
@@ -101,7 +113,7 @@ app.Use(async (context, next) =>
         {
             context.Response.StatusCode = 401;
             context.Response.ContentType = "application/json";
-            context.Response.Headers.Add("Access-Control-Allow-Origin", "*"); // Разрешение для всех источников (можно настроить точнее)
+            context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
             await context.Response.WriteAsync("{\"error\":\"Unauthorized: Token has expired or is invalid.\"}");
             return;
         }

@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ExternalServise\GoogleDrive\" />
+    <Folder Include="Interfaces\IHighLevelServices\" />
   </ItemGroup>
 
 </Project>

@@ -1,22 +1,13 @@
-﻿
-using Domain.Entity.Base;
+﻿using Domain.Entity.Base;
 using Domain.Entity.Content.CourseContent;
-using Domain.Enum;
+using Domain.Entity.Content.DictionaryContent;
 
 namespace Domain.Entity.Content
 {
-    public class CourseWord : BaseEntity
+    public class CourseWord : BaseContentCourse
     {
-        public string Word { get; set; } = string.Empty;
+        public int DictionaryId { get; set; }
+        public MyDictionary Dictionary { get; set; } = null!;
 
-        public Course Course { get; set; } = new Course();
-        public int CourseId { get; set; }
-
-        public CourseWord() { }
-
-        public CourseWord(string word) 
-        {
-            Word = word;
-        }
     }
 }

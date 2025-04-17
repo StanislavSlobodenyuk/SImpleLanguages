@@ -1,16 +1,12 @@
-﻿
-using Domain.Entity.Base;
-using Domain.Entity.Content.CourseContent;
+﻿using Domain.Entity.Base;
+
 
 namespace Domain.Entity.User.UserProgress.TaskResult
 {
     public class UserTaskResultBase : BaseEntity
     {
-        public int UserId { get; set; }
+        public string UserId { get; set; } = string.Empty;
         public User User { get; set; } = new User();
-
-        public int CourseId { get; set; }
-        public Course Course { get; set; } = new Course();
 
         public double Score { get; set; } = 0;
         public bool IsCompleted { get; set; } = false;

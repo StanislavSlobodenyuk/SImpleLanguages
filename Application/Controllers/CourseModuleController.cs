@@ -3,7 +3,7 @@ using Common.Enum;
 using Common.Response.ErrorResponse;
 using Dto;
 using Microsoft.AspNetCore.Mvc;
-using Service.Interfaces;
+using Service.Interfaces.ILowLevelServices.LearnContentService;
 
 namespace Application.Controllers
 {

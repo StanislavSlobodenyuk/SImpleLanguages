@@ -1,12 +1,7 @@
 ﻿using Domain.Entity.Content.CourseContent;
-using Domain.Entity.Content.Lessons;
-using Domain.Entity.Content.Question;
-using Domain.Entity.Content.Question.Answer;
 using Domain.Entity.User;
 using Domain.Enum;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
 
 
 namespace Dal.SeedData

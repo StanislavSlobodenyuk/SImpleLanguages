@@ -10,13 +10,9 @@ namespace Domain.Entity.User.UserProfile
         public string IconPath { get; set; } = string.Empty;
 
         public User User { get; set; } = new User();
-        public int UserId { get; set; } 
+        public string UserId { get; set; } = string.Empty;
 
-        public UserSociable()
-        {
-            
-        }
-
+        public UserSociable(){}
         public UserSociable(SociableType sociable, string link)
         {
             Sociable = sociable;    

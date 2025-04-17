@@ -23,8 +23,6 @@ namespace Domain.Entity.Content.CourseContent
         public ICollection<Story> Stories { get; set; } = new List<Story>();
         public ICollection<CourseWord> CourseWords { get; set; } = new List<CourseWord>();
 
-        public ICollection<CourseUserProgress> UserProgresses { get; set; } = new List<CourseUserProgress>();
-
         [NotMapped]
         public int TotalTaskCount => CourseModules?.Sum(m => m.Lessons.Count) ?? 0;
 

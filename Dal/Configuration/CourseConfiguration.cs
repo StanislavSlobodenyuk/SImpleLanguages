@@ -11,8 +11,8 @@ namespace Dal.Configuration
             builder.ToTable("Course", "dbo");
             builder.HasKey(x => x.Id);
             builder.Property(x => x.Id)
-               .ValueGeneratedOnAdd()
-               .HasColumnName("Id");
+                .ValueGeneratedOnAdd()
+                .HasColumnName("Id");
 
             builder.Property(e => e.TimeStamp)
                 .IsRowVersion()
@@ -22,15 +22,15 @@ namespace Dal.Configuration
                 .IsRequired()
                 .HasColumnName("Title")
                 .HasMaxLength(255);
-            
+
             builder.Property(e => e.Description)
                 .HasDefaultValue("Опис ще не написаний")
                 .HasColumnName("Description")
                 .HasMaxLength(1000);
 
             builder.Property(e => e.Level)
-               .IsRequired()
-               .HasColumnName("Level");
+                .IsRequired()
+                .HasColumnName("Level");
 
             builder.Property(e => e.Language)
                 .HasColumnName("Language")
@@ -43,14 +43,36 @@ namespace Dal.Configuration
                 .IsRequired();
 
             builder.Property(e => e.ImgPath)
-                .IsRequired()
-                .HasColumnName("Icon_path");
+                .HasColumnName("Icon_path")
+                .IsRequired();
 
+            // Связь с CourseModules
             builder.HasMany(e => e.CourseModules)
                 .WithOne(e => e.Course)
                 .HasForeignKey(e => e.CourseId)
                 .IsRequired()
                 .HasConstraintName("Course_CourseId_CourseModules")
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Связь с Grammars
+            builder.HasMany(e => e.Grammars)
+                .WithOne()
+                .HasForeignKey(g => g.CourseId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Связь с Stories
+            builder.HasMany(e => e.Stories)
+                .WithOne()
+                .HasForeignKey(s => s.CourseId)
+                .IsRequired()
+                .OnDelete(DeleteBehavior.Cascade);
+
+            // Связь с CourseWords
+            builder.HasMany(e => e.CourseWords)
+                .WithOne()
+                .HasForeignKey(cw => cw.CourseId)
+                .IsRequired()
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

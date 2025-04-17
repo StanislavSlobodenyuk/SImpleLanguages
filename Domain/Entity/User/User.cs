@@ -17,8 +17,6 @@ namespace Domain.Entity.User
 
         public ICollection<UserSociable> UserSociables { get; set; } = new List<UserSociable>();
 
-        public ICollection<CourseUserProgress> CourseUserProgresses { get; set; } = new List<CourseUserProgress>();
-
         public ICollection<UserWord> UserWords { get; set; } = new List<UserWord>();
 
         public ICollection<UserLessonResult> LessonResults { get; set; } = new List<UserLessonResult>();

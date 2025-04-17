@@ -1,6 +1,4 @@
-﻿using Domain.Entity.Base;
-using Domain.Entity.Content.CourseContent;
-using Domain.Entity.Content.GrammarContent;
+﻿using Domain.Entity.Content.GrammarContent;
 
 namespace Domain.Entity.User.UserProgress.TaskResult
 {

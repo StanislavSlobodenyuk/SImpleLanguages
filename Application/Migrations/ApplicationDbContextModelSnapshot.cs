@@ -22,6 +22,56 @@ namespace Application.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("Domain.Entity.Content.Achievments.Achievement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
+                        .HasColumnName("Description");
+
+                    b.Property<string>("IconPath")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("IconPath");
+
+                    b.Property<bool>("IsCourseRelated")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsCourseRelated");
+
+                    b.Property<int>("TargetValue")
+                        .HasColumnType("int")
+                        .HasColumnName("Target_Value");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)")
+                        .HasColumnName("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Achievement", "dbo");
+                });
+
             modelBuilder.Entity("Domain.Entity.Content.CourseContent.Course", b =>
                 {
                     b.Property<int>("Id")
@@ -76,7 +126,7 @@ namespace Application.Migrations
                     b.ToTable("Course", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Image.MyImage", b =>
+            modelBuilder.Entity("Domain.Entity.Content.CourseWord", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,20 +135,87 @@ namespace Application.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasMaxLength(200)
-                        .HasColumnType("nvarchar(200)")
-                        .HasColumnName("Image_path");
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DictionaryId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .HasColumnType("varbinary(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.HasIndex("DictionaryId");
+
+                    b.ToTable("CourseWord", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.DictionaryContent.MyDictionary", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Language")
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
+                        .HasColumnName("Language");
+
+                    b.Property<int>("LanguageLevel")
+                        .HasMaxLength(50)
+                        .HasColumnType("int")
+                        .HasColumnName("LanguageLevel");
 
                     b.Property<byte[]>("TimeStamp")
                         .IsConcurrencyToken()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("rowversion");
 
+                    b.Property<string>("Word")
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)")
+                        .HasColumnName("Word");
+
                     b.HasKey("Id");
 
-                    b.ToTable("MyImage", "dbo");
+                    b.ToTable("Dictionary", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.GrammarContent.Grammar", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Grammar", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
@@ -388,7 +505,7 @@ namespace Application.Migrations
                     b.ToTable("Audio_Question", "dbo");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.ImageQuestion", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Question.PictureQuestion", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -423,7 +540,7 @@ namespace Application.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Image_Question", "dbo");
+                    b.ToTable("Picture_Question", "dbo");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.SimpleQuestion", b =>
@@ -497,6 +614,36 @@ namespace Application.Migrations
                     b.ToTable("Text_Question", "dbo");
                 });
 
+            modelBuilder.Entity("Domain.Entity.Content.StoryContent.Story", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)")
+                        .HasColumnName("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("Story", "dbo");
+                });
+
             modelBuilder.Entity("Domain.Entity.User.User", b =>
                 {
                     b.Property<string>("Id")
@@ -564,7 +711,8 @@ namespace Application.Migrations
 
                     b.Property<string>("UserIcon")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(255)
+                        .HasColumnType("nvarchar(255)");
 
                     b.Property<string>("UserName")
                         .HasMaxLength(256)
@@ -581,6 +729,255 @@ namespace Application.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProfile.UserSociable", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("IconPath")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
+                        .HasColumnName("Icon Path");
+
+                    b.Property<string>("Link")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(300)
+                        .HasColumnType("nvarchar(300)")
+                        .HasDefaultValue("")
+                        .HasColumnName("Link");
+
+                    b.Property<int>("Sociable")
+                        .HasColumnType("int")
+                        .HasColumnName("Sociable");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserSociable", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.TaskResult.UserGrammarResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CompletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("GrammarId")
+                        .HasColumnType("int")
+                        .HasColumnName("GrammarId");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("GrammarId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserGrammarResult", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.TaskResult.UserLessonResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CompletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("LessonId")
+                        .HasColumnType("int")
+                        .HasColumnName("LessonId");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LessonId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserLessonResult", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.TaskResult.UserStoryResult", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CompletedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("Score")
+                        .HasColumnType("float");
+
+                    b.Property<int>("StoryId")
+                        .HasColumnType("int")
+                        .HasColumnName("StoryId");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StoryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserStoryResult", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.UserAchievement", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AchievementId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateEarned")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DateEarned");
+
+                    b.Property<bool>("IsEarned")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsEarned");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AchievementId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAchievement", "dbo");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.UserWord", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("Id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("DateAdded")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DateAdded");
+
+                    b.Property<int>("DictionaryId")
+                        .HasColumnType("int")
+                        .HasColumnName("DictionaryId");
+
+                    b.Property<bool>("IsLearned")
+                        .HasColumnType("bit")
+                        .HasColumnName("IsLearned");
+
+                    b.Property<DateTime?>("LastReviewed")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("LastReviewed");
+
+                    b.Property<int>("RepetitionCount")
+                        .HasColumnType("int")
+                        .HasColumnName("RepetitionCount");
+
+                    b.Property<byte[]>("TimeStamp")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
+                        .HasColumnType("rowversion");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)")
+                        .HasColumnName("UserId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DictionaryId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserWord", "dbo");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -716,6 +1113,47 @@ namespace Application.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Entity.Content.Achievments.Achievement", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.CourseContent.Course", "Course")
+                        .WithMany()
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.CourseWord", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.CourseContent.Course", "Course")
+                        .WithMany("CourseWords")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.Content.DictionaryContent.MyDictionary", "Dictionary")
+                        .WithMany("CourseWords")
+                        .HasForeignKey("DictionaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+
+                    b.Navigation("Dictionary");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.GrammarContent.Grammar", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.CourseContent.Course", "Course")
+                        .WithMany("Grammars")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
             modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
                 {
                     b.HasOne("Domain.Entity.Content.CourseContent.Course", "Course")
@@ -748,7 +1186,7 @@ namespace Application.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .HasConstraintName("FK_LessonQuestions_AudioQuestionId_AudioQuestion");
 
-                    b.HasOne("Domain.Entity.Content.Question.ImageQuestion", "ImageQuestion")
+                    b.HasOne("Domain.Entity.Content.Question.PictureQuestion", "ImageQuestion")
                         .WithMany("LessonQuestions")
                         .HasForeignKey("ImageQuestionId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -803,7 +1241,7 @@ namespace Application.Migrations
                         .HasForeignKey("AudioQuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Domain.Entity.Content.Question.ImageQuestion", "ImageQuestion")
+                    b.HasOne("Domain.Entity.Content.Question.PictureQuestion", "ImageQuestion")
                         .WithMany("AnswerOptions")
                         .HasForeignKey("ImageQuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -834,7 +1272,7 @@ namespace Application.Migrations
                         .HasForeignKey("AudioQuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("Domain.Entity.Content.Question.ImageQuestion", "ImageQuestion")
+                    b.HasOne("Domain.Entity.Content.Question.PictureQuestion", "ImageQuestion")
                         .WithMany("RightAnswers")
                         .HasForeignKey("ImageQuestionId")
                         .OnDelete(DeleteBehavior.Cascade);
@@ -856,6 +1294,123 @@ namespace Application.Migrations
                     b.Navigation("SimpleQuestion");
 
                     b.Navigation("TextQuestion");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.StoryContent.Story", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.CourseContent.Course", "Course")
+                        .WithMany("Stories")
+                        .HasForeignKey("CourseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Course");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProfile.UserSociable", b =>
+                {
+                    b.HasOne("Domain.Entity.User.User", "User")
+                        .WithMany("UserSociables")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.TaskResult.UserGrammarResult", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.GrammarContent.Grammar", "Grammar")
+                        .WithMany("GrammarResults")
+                        .HasForeignKey("GrammarId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.User.User", "User")
+                        .WithMany("GrammarResults")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Grammar");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.TaskResult.UserLessonResult", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.Lessons.Lesson", "Lesson")
+                        .WithMany("UserLessonsResult")
+                        .HasForeignKey("LessonId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.User.User", "User")
+                        .WithMany("LessonResults")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lesson");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.TaskResult.UserStoryResult", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.StoryContent.Story", "Story")
+                        .WithMany("StoryResults")
+                        .HasForeignKey("StoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.User.User", "User")
+                        .WithMany("StoryResults")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Story");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.UserAchievement", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.Achievments.Achievement", "Achievement")
+                        .WithMany("UserAchievements")
+                        .HasForeignKey("AchievementId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.User.User", "User")
+                        .WithMany("UserAchievements")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Achievement");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.UserProgress.UserWord", b =>
+                {
+                    b.HasOne("Domain.Entity.Content.DictionaryContent.MyDictionary", "Dictionary")
+                        .WithMany("UserWords")
+                        .HasForeignKey("DictionaryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entity.User.User", "User")
+                        .WithMany("UserWords")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Dictionary");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -909,9 +1464,32 @@ namespace Application.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Entity.Content.Achievments.Achievement", b =>
+                {
+                    b.Navigation("UserAchievements");
+                });
+
             modelBuilder.Entity("Domain.Entity.Content.CourseContent.Course", b =>
                 {
                     b.Navigation("CourseModules");
+
+                    b.Navigation("CourseWords");
+
+                    b.Navigation("Grammars");
+
+                    b.Navigation("Stories");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.DictionaryContent.MyDictionary", b =>
+                {
+                    b.Navigation("CourseWords");
+
+                    b.Navigation("UserWords");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.GrammarContent.Grammar", b =>
+                {
+                    b.Navigation("GrammarResults");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Lessons.CourseModule", b =>
@@ -924,6 +1502,8 @@ namespace Application.Migrations
                     b.Navigation("LessonQuestions");
 
                     b.Navigation("TheoryBlock");
+
+                    b.Navigation("UserLessonsResult");
                 });
 
             modelBuilder.Entity("Domain.Entity.Content.Question.AudioQuestion", b =>
@@ -935,7 +1515,7 @@ namespace Application.Migrations
                     b.Navigation("RightAnswers");
                 });
 
-            modelBuilder.Entity("Domain.Entity.Content.Question.ImageQuestion", b =>
+            modelBuilder.Entity("Domain.Entity.Content.Question.PictureQuestion", b =>
                 {
                     b.Navigation("AnswerOptions");
 
@@ -960,6 +1540,26 @@ namespace Application.Migrations
                     b.Navigation("LessonQuestions");
 
                     b.Navigation("RightAnswers");
+                });
+
+            modelBuilder.Entity("Domain.Entity.Content.StoryContent.Story", b =>
+                {
+                    b.Navigation("StoryResults");
+                });
+
+            modelBuilder.Entity("Domain.Entity.User.User", b =>
+                {
+                    b.Navigation("GrammarResults");
+
+                    b.Navigation("LessonResults");
+
+                    b.Navigation("StoryResults");
+
+                    b.Navigation("UserAchievements");
+
+                    b.Navigation("UserSociables");
+
+                    b.Navigation("UserWords");
                 });
 #pragma warning restore 612, 618
         }
